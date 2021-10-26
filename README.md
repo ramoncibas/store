@@ -38,7 +38,7 @@ To clone and run this application, you'll need:
 
 1. Clone the repository
 ```
-$ git clone https://github.com/ramoncibas/myHealth
+$ git clone https://github.com/ramoncibas/store
 ```
 3. Install NPM packages in [front-end](https://github.com/ramoncibas/store/tree/master/src) and [back-end](https://github.com/ramoncibas/store/tree/master/backend) folders
 ```bash
