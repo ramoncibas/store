@@ -8,20 +8,22 @@ import { MdAddShoppingCart } from "react-icons/md";
 
 function CardProduct(props) {
   useEffect(() => {
-    //console.log("props", props);
+    // console.log("props", props);
   }, [props]);
 
   // Deixando o preco do produto com o valor atualizado
   const priceWithdiscount = props.price
-    ? (props.price * props.discount) / 100
+    ? Number(props.price * props.discount) / 100
     : 0;
   // Gerando o novo valor do Produto
-  const newPriceProduct = props.price - priceWithdiscount;
+  const newPriceProduct = Number(props.price) - priceWithdiscount;
   // Verificando se tiver discounto, entao retorne
-  const priceHasDiscount = props.discount ? newPriceProduct : props.price;
+  const priceHasDiscount = props.discount
+    ? newPriceProduct
+    : Number(props.price);
   // Valor das parcelas do Produto
   const valueOfInstallments = formatCurrency(
-    priceHasDiscount / props.numberOfInstallments
+    priceHasDiscount / Number(props.number_of_installments)
   );
 
   return (
@@ -39,8 +41,8 @@ function CardProduct(props) {
       </S.Row>
       <S.Row className="image-content">
         <S.Col style={{ display: "flex", justifyContent: "center" }}>
-          {props.imageProduct ? (
-            <img src={props.imageProduct} alt="Sneakers" />
+          {props.product_picture ? (
+            <img src={props.product_picture} alt="Sneakers" />
           ) : (
             <img src={DefaultProductImage} alt="Default Product" />
           )}
@@ -60,8 +62,8 @@ function CardProduct(props) {
           </h1>
           <h4>
             {props.price &&
-              props.numberOfInstallments &&
-              props.numberOfInstallments + " X de " + valueOfInstallments}
+              props.number_of_installments &&
+              props.number_of_installments + " X de " + valueOfInstallments}
           </h4>
         </S.Col>
       </S.Row>
