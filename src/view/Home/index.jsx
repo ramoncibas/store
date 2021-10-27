@@ -10,9 +10,9 @@ const Home = () => {
 
   // Pega os produtos vindos da api
   useEffect(() => {
-    api.get("/").then(({ data }) => {
+    api.get("/").then(({data}) => {
       console.log(data, "Dados da api");
-      setProducts([data]);
+      setProducts(data);
     });
   }, []);
 
