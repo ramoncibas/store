@@ -77,6 +77,8 @@ const AddProduct = () => {
               onChange={handleChange}
             />
             <CheckBox onChange={handleChange} />
+            {/* 
+              // Funcionalidade futura
             <Form.Group controlId="product_image" className="mb-3">
               <Form.Label>Imagem</Form.Label>
               <Form.Control
@@ -84,7 +86,15 @@ const AddProduct = () => {
                 type="file"
                 onChange={handleChange}
               />
-            </Form.Group>
+            </Form.Group> */}
+            <Input
+              id="product_image"
+              name="product_image"
+              label="Url da Imagem do produto"
+              type="text"
+              placeholder="Url da Imagem do produto"
+              onChange={handleChange}
+            />
             <Input
               id="number_of_installments"
               name="numberOfInstallments"
