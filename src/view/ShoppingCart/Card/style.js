@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: #fffafa;
+  background: #fff;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
@@ -9,10 +9,15 @@ export const Container = styled.div`
   .content {
     display: flex;
     align-items: center;
-    justify-items: center;
+    justify-content: center;
+
+    img {
+      max-width: 350px;
+    }
 
     @media (max-width: 720px) {
       flex-direction: column;
+      text-align: center;
     }
   }
 `;
