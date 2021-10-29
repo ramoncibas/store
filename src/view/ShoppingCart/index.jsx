@@ -11,8 +11,7 @@ const ShoppingCart = () => {
   // Pega os produtos salvos pelo usuario vindos da api
   useEffect(() => {
     api.get("/cart").then(({ data }) => {
-      setProducts([data]);
-      console.log(data);
+      setProducts(data);
     });
   }, []);
   return (
@@ -21,14 +20,13 @@ const ShoppingCart = () => {
         <Title>Carrinho de Produtos</Title>
       </Row>
       <Row>
-        {products.map((item, index) => (
-          <Col key={index}>
-            <Card />
-          </Col>
-        ))}
-        <Col>
-          <Card />
-        </Col>
+        {products == "" && "Você ainda nao tem nenhum produto :("}
+        {products !== "" &&
+          products.map((product, index) => (
+            <Col key={index}>
+              <Card {...product} />
+            </Col>
+          ))}
       </Row>
     </Container>
   );

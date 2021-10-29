@@ -10,6 +10,7 @@ const Input = (props) => (
       <Form.Control
         name={props.name}
         type={props.type}
+        value={props.value}
         placeholder={props.placeholder}
         onChange={props.onChange}
         required

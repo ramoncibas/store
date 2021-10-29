@@ -8,25 +8,27 @@ import DefaultProductImage from "../../../assets/img/default-image-product.png";
 const Card = (props) => {
   // Arruma o valor do numero de parcelas
   const valueOfInstallments = formatCurrency(
-    props.priceProduct / props.numberOfInstallments
+    props.price / props.number_of_installments
   );
   return (
     <S.Container>
       <Row>
         <div className="content">
           <Col>
-            {props.imageProduct ? (
-              <img src={props.imageProduct} alt="Produto" />
+            {props.product_picture ? (
+              <img src={props.product_picture} alt="Produto" />
             ) : (
               <img src={DefaultProductImage} alt="Default Product" />
             )}
           </Col>
           <Col>
-            <p>{props.descriptionProduct}</p>
-            <h1>{formatCurrency(props.priceProduct)}</h1>
-            <h4>
-              {props.numberOfInstallments}X de {valueOfInstallments}
-            </h4>
+            <div>
+            <span>{props.name}</span>
+              <h1>{formatCurrency(props.price)}</h1>
+              <h4>
+                {props.number_of_installments}X de {valueOfInstallments}
+              </h4>
+            </div>              
           </Col>
         </div>
       </Row>
