@@ -10,7 +10,7 @@ import api from "../../utils/api";
 const CheckBox = ({ onChange }) => (
   <Form.Group
     className="mb-3"
-    id="formGridCheckbox"
+    id="discount"
     style={{
       display: "flex",
       alignItems: "center",
@@ -47,10 +47,9 @@ const AddProduct = () => {
    * Chama a api para salvar os dados no banco via post
    * @param data dados do produto a serem salvos
    */
-  const handleSaveProduct = (data) => {
-    api.post("/add-product", data).then(({ data }) => {
-      console.log(data);
-    });
+  const handleSaveProduct = (event, data) => {
+    event.preventDefault();
+    api.post("/add-product", data).then(window.location.href = "/");
   };
 
   const windowWidth = window.innerWidth <= 1094 ? true : false;
@@ -82,14 +81,15 @@ const AddProduct = () => {
             <Form.Group controlId="product_image" className="mb-3">
               <Form.Label>Imagem</Form.Label>
               <Form.Control
-                name="imageProduct"
+                id="product_image"
+                name="product_image"
                 type="file"
                 onChange={handleChange}
               />
             </Form.Group> */}
             <Input
-              id="product_image"
-              name="product_image"
+              id="product_picture"
+              name="product_picture"
               label="Url da Imagem do produto"
               type="text"
               placeholder="Url da Imagem do produto"
@@ -97,15 +97,15 @@ const AddProduct = () => {
             />
             <Input
               id="number_of_installments"
-              name="numberOfInstallments"
+              name="number_of_installments"
               label="Nomero máximo de Parcelas"
               type="number"
               placeholder="Numero máximo de Parcelas"
               onChange={handleChange}
             />
             <Button
-              onClick={() => {
-                handleSaveProduct(product);
+              onClick={(event) => {
+                handleSaveProduct(event, product);
               }}
             >
               Adicionar Produto &nbsp;

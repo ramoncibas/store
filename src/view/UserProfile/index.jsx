@@ -8,11 +8,12 @@ import DefaultImage from "../../assets/img/default-image-user.png";
 import api from "../../utils/api";
 
 const UserProfile = () => {
-  const [user, setUser] = useState();  
+  const [user, setUser] = useState({});  
   // Pega o ususario que estiver salvo
   useEffect(() => {
-    api.get("/profile").then(({ data }) => {
-      console.log(data);
+    api.get("/profile/1").then(({ data }) => {
+      const user = {...data}
+      if(user) {setUser(user)}
     });
   }, []);
 
@@ -49,6 +50,7 @@ const UserProfile = () => {
               <Input
                 id="name"
                 name="name"
+                value={user.name || ''}
                 label="Nome do Usuário"
                 type="text"
                 placeholder="Nome do Usuário"
@@ -56,7 +58,8 @@ const UserProfile = () => {
               />
               <Input
                 id="email"
-                name="email"
+                name="email"                
+                value={user.email || ''}
                 label="E-mail"
                 type="mail"
                 placeholder="E-mail"
@@ -64,20 +67,30 @@ const UserProfile = () => {
               />
               <Input
                 id="phone"
-                name="phone"
+                name="phone"                
+                value={user.phone || ''}
                 label="Telefone"
                 type="phone"
                 placeholder="Telefone"
                 onChange={handleChange}
               />
-              <Form.Group controlId="user_picture" className="mb-3">
+              <Input
+                id="user_picture"
+                name="user_picture"                
+                value={user.user_picture || ''}
+                label="Imagem de Perfil"
+                type="text"
+                placeholder="Imagem de Perfil"
+                onChange={handleChange}
+              />
+              {/* <Form.Group controlId="user_picture" className="mb-3">
                 <Form.Label>Imagem de Perfil</Form.Label>
                 <Form.Control
                   name="user_picture"
                   type="file"
                   onChange={handleChange}
                 />
-              </Form.Group>
+              </Form.Group> */}
               <Button
                 onClick={() => {
                   handleSaveUser(user);

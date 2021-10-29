@@ -10,11 +10,15 @@ const Home = () => {
 
   // Pega os produtos vindos da api
   useEffect(() => {
-    api.get("/").then(({data}) => {
-      console.log(data, "Dados da api");
+    api.get("/").then(({ data }) => {
       setProducts(data);
     });
   }, []);
+
+  // Adiconando o produto ao carrinho de compras
+  const handleBuyProduct = product => {
+    api.post("/", product).then(window.location.href = "/cart");
+  };
 
   return (
     <>
@@ -31,7 +35,7 @@ const Home = () => {
         <S.Row>
           {products.map((product, index) => (
             <S.Col key={index}>
-              <CardProduct {...product} />
+              <CardProduct onClick={handleBuyProduct} {...product} />
             </S.Col>
           ))}
         </S.Row>
