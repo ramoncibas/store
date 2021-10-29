@@ -8,7 +8,7 @@ import { MdAddShoppingCart } from "react-icons/md";
 
 function CardProduct(props) {
   useEffect(() => {
-    // console.log("props", props);
+    //console.log("props", props);
   }, [props]);
 
   // Deixando o preco do produto com o valor atualizado
@@ -72,7 +72,7 @@ function CardProduct(props) {
           <Button
             background="white"
             icon={true}
-            onClick={props.onClick}
+            onClick={() => props.onClick(props)}
             disabled={props.disabledButton}
           >
             <MdAddShoppingCart color="000" />
