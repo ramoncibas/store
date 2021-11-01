@@ -1,10 +1,11 @@
-async function getShoppingCartProduct(db) {
-  return db.serialize(() => {
-    db.all(`SELECT * FROM shopping_cart`, [], (err, rows) => {
-      if(err) {console.log(err)}
-      rows.forEach(row => {
-        console.log(row)
-        return row;
+const getShoppingCartProduct = function (db) {
+  return new Promise(function (resolve, reject) {
+    db.serialize(() => {
+      db.all(`SELECT * FROM shopping_cart`, [], (error, rows) => {
+        if (error) {
+          console.log(error);
+        }
+        resolve(rows);
       });
     });
   });
