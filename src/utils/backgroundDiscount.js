@@ -5,13 +5,13 @@
  */
 export const backgroundDiscount = (discount) => {
   let color = {
-    biggestdiscount: "FF705A",
+    biggestDiscount: "FF705A",
     bigDiscount: "FF834E",
     normalDiscount: "FFBE17",
   };
   let background =
     discount >= 45
-      ? color.biggestdiscount
+      ? color.biggestDiscount
       : discount >= 35
       ? color.bigDiscount
       : color.normalDiscount;
