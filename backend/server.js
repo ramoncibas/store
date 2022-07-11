@@ -24,6 +24,7 @@ app.post("/", page.saveProductOnShoppingCart);
 app.post("/profile", page.saveUser);
 app.get("/profile/:id", page.getUser);
 app.get("/cart", page.getShoppingCartProduct);
+app.delete("/cart", page.removeShoppingCartProduct);
 app.post("/add-product", page.saveProduct);
 
 app.listen(5000, () => {

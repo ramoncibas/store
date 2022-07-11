@@ -4,6 +4,7 @@ const saveProduct = require("./utils/saveProduct");
 const getAllProductsFromDb = require("./utils/getAllProductsFromDb");
 const getAllShoppingCartProducts = require("./utils/getAllShoppingCartProducts");
 const saveProductOnShoppingCartDb = require("./utils/saveProductOnShoppingCartDb")
+const deleteShoppingCartProductFromDb = require("./utils/deleteShoppingCartProductFromDb")
 
 module.exports = {
   /**
@@ -137,4 +138,21 @@ module.exports = {
       return res.send("Something went wrong, Select Shopping Cart");
     }
   },
+
+  /**
+   * Remove o produto correspondente do carrinho do usuário
+   * @param {*} req requisição
+   * @param {*} res resposta
+   * @returns uma coleção de produtos
+   */
+  removeShoppingCartProduct(req, res) {
+    const id = req.body.id;
+    try {
+      const db = Database;
+      deleteShoppingCartProductFromDb(db, id).then((product) => res.send(product));
+    } catch (error) {
+      console.log(error);
+      return res.send("Something went wrong, Delete product from Shopping Cart");
+    }
+  }
 };
