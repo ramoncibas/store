@@ -4,12 +4,21 @@ import { Button } from "../../../components";
 import * as S from "./style";
 import { formatCurrency } from "../../../utils/formatCurrency";
 import DefaultProductImage from "../../../assets/img/default-image-product.png";
+import api from "../../../utils/api";
 
 const Card = (props) => {
   // Arruma o valor do numero de parcelas
   const valueOfInstallments = formatCurrency(
     props.price / props.number_of_installments
   );
+
+  const handleDeleteItem = (event, id) => {
+    event.preventDefault();
+    api.delete("/cart", {
+      headers: { Authorization: "*" },
+      data: { id }
+    }).then(window.location.href = '/cart')
+  }
   return (
     <S.Container>
       <Row>
@@ -34,7 +43,7 @@ const Card = (props) => {
       </Row>
       <br />
       <Row>
-        <Button onClick={props.handleClick} background="FF705A">
+        <Button onClick={(event) => handleDeleteItem(event, props.id)} background="FF705A">
           Remover Produto &nbsp;
           <MdAddShoppingCart color="000" />
         </Button>
