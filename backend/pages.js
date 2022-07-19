@@ -1,10 +1,12 @@
 const Database = require("./database/db");
+
 const saveUser = require("./utils/saveUsers");
 const saveProduct = require("./utils/saveProduct");
 const getAllProductsFromDb = require("./utils/getAllProductsFromDb");
 const getAllShoppingCartProducts = require("./utils/getAllShoppingCartProducts");
 const saveProductOnShoppingCartDb = require("./utils/saveProductOnShoppingCartDb")
-const deleteShoppingCartProductFromDb = require("./utils/deleteShoppingCartProductFromDb")
+const deleteShoppingCartProductFromDb = require("./utils/deleteShoppingCartProductFromDb");
+const updateProductFromDb = require("./utils/updateProductFromDb");
 
 module.exports = {
   /**
@@ -112,7 +114,7 @@ module.exports = {
    * @param {*} res resposta
    * @returns uma coleção de produtos
    */
-  getAllProducts(req, res) {
+  getAllProducts(req, res) {    
     try {
       const db = Database;
       getAllProductsFromDb(db).then((products) => res.send(products));
@@ -142,8 +144,7 @@ module.exports = {
   /**
    * Remove o produto correspondente do carrinho do usuário
    * @param {*} req requisição
-   * @param {*} res resposta
-   * @returns uma coleção de produtos
+   * @param {*} res resposta   
    */
   removeShoppingCartProduct(req, res) {
     const id = req.body.id;
@@ -153,6 +154,22 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return res.send("Something went wrong, Delete product from Shopping Cart");
+    }
+  },
+
+  /**
+   * Atualiza informações do produto correspondete selecionado
+   * @param {*} req requisição
+   * @param {*} res resposta   
+   */
+  updateProduct(req, res) {
+    const product = req.body;
+    try {
+      const db = Database;
+      updateProductFromDb(db, product).then((updatedProduct) => res.send(updatedProduct))
+    } catch (error) {
+      console.log(error);
+      return res.send("Something went wrong, Update product");
     }
   }
 };
