@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ProductNull = styled.div`
+export const ProductIsNull = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

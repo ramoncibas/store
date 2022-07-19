@@ -4,7 +4,7 @@ import { Title } from "../../components";
 import { Row, Col } from "react-bootstrap";
 import Card from "./Card";
 import api from "../../utils/api";
-import {ProductNull} from "./style";
+import { ProductIsNull } from "./style";
 
 const ShoppingCart = () => {
   const [products, setProducts] = useState([]);
