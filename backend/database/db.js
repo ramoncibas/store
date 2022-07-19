@@ -29,7 +29,7 @@ function execute(db){
         price TEXT,
         discount TEXT,
         number_of_installments TEXT
-      );
+      );      
     `))
   );
 };
