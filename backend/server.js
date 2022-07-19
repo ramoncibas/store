@@ -25,8 +25,7 @@ app.post("/profile", page.saveUser);
 app.get("/profile/:id", page.getUser);
 app.get("/cart", page.getShoppingCartProduct);
 app.delete("/cart", page.removeShoppingCartProduct);
-app.post("/product", page.saveProduct);
-app.patch("/product", page.updateProduct);
+app.post("/add-product", page.saveProduct);
 
 app.listen(5000, () => {
   console.log("Server is running - Port: 5000...");
