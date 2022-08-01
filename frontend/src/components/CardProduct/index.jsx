@@ -9,9 +9,8 @@ import { MdAddShoppingCart, MdEditNote } from "react-icons/md";
 import { Link, Route, Router, useHistory} from 'react-router-dom'
 
 function CardProduct(props) {  
-  const history = useHistory();
-  console.log(props)
-
+  const history = useHistory();  
+  
   // Deixando o preco do produto com o valor atualizado
   const priceWithdiscount = props.price
     ? Number(props.price * props.discount) / 100
@@ -30,21 +29,24 @@ function CardProduct(props) {
     priceHasDiscount / Number(props.number_of_installments)
   );
   
-  const handleEdit = () => {
-    const product = {
-      id: props.id,
-      discount: props.discount,
-      name: props.name,
-      number_of_installments: props.number_of_installments,
-      price: props.price,
-      product_picture: props.product_picture
+  // Quando o usuário usuário admin for editar um produto, essas propriedades passaram como propriedades para esse mesmo componente '-', habilitando algumas funcionalidade na view de /product
+  const handleEdit = (product) => {
+    const data = {
+      id: product.id,
+      discount: product.discount,
+      name: product.name,
+      number_of_installments: product.number_of_installments,
+      price: product.price,
+      product_picture: product.product_picture,
+      disabledButton: true,
+      displayEditBtn: 'none'
     }
-    history.push('/product', product);
+    history.push(`/product?id=${product.id}`, data);
     // window.sessionStorage.setItem('product-to-edit', JSON.stringify(data))
   }
 
   useEffect(() => {
-    //console.log("props", props);
+    
   }, [props]);
   return (
     <S.Container>
@@ -65,13 +67,14 @@ function CardProduct(props) {
             //user.admin && (AbleToEditProduct())
             props.discount && (
               <Button
-                onClick={handleEdit} 
+                onClick={() => handleEdit(props)}
                 background="white"
                 icon={true}
                 style={{
                   width: '2.75rem',                  
                   color: '#000',
                   fontSize: '1.5rem',
+                  display: props.displayEditBtn
                 }}
               >                
                 {/* <Link to={{
