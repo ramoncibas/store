@@ -1,5 +1,4 @@
-const updateProductFromDb = function (db, product) {
-  console.log(product)
+const updateProductFromDb = function (db, product) {    
   return new Promise(function (resolve, reject) {    
     db.serialize(() => {
       db.run(

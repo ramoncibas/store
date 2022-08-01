@@ -7,7 +7,7 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
 
-  background: #${({ background }) => (background ? `${background}` : "04D483")};
+  background: ${({ background }) => (background ? `${background}` : "#04D483")};
   border-radius: 10px;
   border: none;
   color: #fff;

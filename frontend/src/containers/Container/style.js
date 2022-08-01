@@ -11,4 +11,10 @@ export const Container = styled.div`
     width: 100vw;
     padding: 20px;
   }
+
+  .buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
