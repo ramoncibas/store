@@ -7,7 +7,7 @@ import * as DefautlStyle from "../../assets/style/defaultContainerStyle";
 import { useState } from "react";
 import api from "../../utils/api";
 import { useLocation } from 'react-router-dom';
-
+import { AiTwotoneDelete } from "react-icons/ai"
 
 const CheckBox = ({ onChange }) => (
   <Form.Group
@@ -31,10 +31,11 @@ const CheckBox = ({ onChange }) => (
   </Form.Group>
 );
 
-const AddProduct = () => {
-  const [product, setProduct] = useState({});
+const Product = () => {
   const { state } = useLocation();
-  
+  const initialValue = state || {};
+  const [product, setProduct] = useState(initialValue);
+
   /**
    * Atualiza o estado com o nome e o valor vindos do Input
    * @param event evento do elemento
@@ -47,21 +48,24 @@ const AddProduct = () => {
   };
 
   /**
-   * Chama a api para salvar os dados no banco via post
-   * @param data dados do produto a serem salvos
+   * Chama a api para salvar, ou alterar os dados no banco
+   * @param data dados do produto a serem salvos/modificados
    */
-  const handleSaveProduct = (event, data) => {
+  const handleProduct = (event, data) => {
     event.preventDefault();
-    api.post("/product", data).then(window.location.href = "/");
+
+    if (!state)
+      api.post("/product", data).then(window.location.href = "/");
+    else
+      api.patch("/product", { id: product.id, ...data }).then(window.location.href = "/");
   };
 
-  /**
-   * Chama a api para alterar os dados do produto selecionado,  via post
-   * @param data dados do produto a serem modificados
-   */
-  const handleUpdateProduct = (event, data) => {
+  const handeDelete = (event, id) => {
     event.preventDefault();
-    api.patch("/product", {id: state.id, ...data}).then(window.location.href = "/");
+    api.delete("/product", {
+      headers: { Authorization: "*" },
+      data: { id }
+    }).then(window.location.href = '/')
   }
 
   //Verifica se o tamanho da tela é menor que 1094 pixel (tamanha de tablets)
@@ -78,8 +82,8 @@ const AddProduct = () => {
               label="Nome do Produto"
               type="text"
               placeholder="Nome do Produto"
+              value={product.name || ''}
               onChange={handleChange}
-              value={state ? state.name : ''}
             />
             <Input
               id="price"
@@ -87,8 +91,8 @@ const AddProduct = () => {
               label="Preço do Produto"
               type="number"
               placeholder="Preço do Produto"
+              value={product.price || ''}
               onChange={handleChange}
-              value={state ? state.price : ''}
             />
             <CheckBox onChange={handleChange} />
             {/* 
@@ -108,8 +112,8 @@ const AddProduct = () => {
               label="Url da Imagem do produto"
               type="text"
               placeholder="Url da Imagem do produto"
+              value={product.product_picture || ''}
               onChange={handleChange}
-              value={state ? state.product_picture : ''}
             />
             <Input
               id="number_of_installments"
@@ -117,21 +121,28 @@ const AddProduct = () => {
               label="Nomero máximo de Parcelas"
               type="number"
               placeholder="Numero máximo de Parcelas"
+              value={product.number_of_installments || ''}
               onChange={handleChange}
-              value={state ? state.number_of_installments : ''}
             />
-            <Button
-              onClick={(event) => {
-                {
-                  !state
-                  ? handleSaveProduct(event, product)
-                  : handleUpdateProduct(event, product)
-                }
-              }}
-            >
-              Adicionar Produto &nbsp;
-              <MdAddShoppingCart color="000" />
-            </Button>
+            <div className="buttons-container">
+              <Button
+                onClick={(event) => handleProduct(event, product)}
+              >
+                {!state ? 'Adicionar Produto ' : 'Atualizar Produto '}&nbsp;
+                <MdAddShoppingCart color="000" />
+              </Button>
+              {
+                state && (
+                  <Button
+                    background={'#ff7777'}
+                    onClick={(event) => handeDelete(event, product.id)}
+                  >
+                    deletar &nbsp;
+                    <AiTwotoneDelete color="fff" />
+                  </Button>
+                )
+              }
+            </div>
           </Form>
         </DefautlStyle.Col>
         <DefautlStyle.Col md="auto">
@@ -147,11 +158,11 @@ const AddProduct = () => {
           </DefautlStyle.PreviewContainer>
         </DefautlStyle.Col>
         <DefautlStyle.Col md="auto">
-          <CardProduct key={product} disabledButton={true} {...product} />
+          <CardProduct key={product.name} {...product} />
         </DefautlStyle.Col>
       </DefautlStyle.Row>
     </Container>
   );
 };
 
-export default AddProduct;
+export default Product;

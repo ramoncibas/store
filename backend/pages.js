@@ -4,7 +4,9 @@ const saveProduct = require("./utils/saveProduct");
 const getAllProductsFromDb = require("./utils/getAllProductsFromDb");
 const getAllShoppingCartProducts = require("./utils/getAllShoppingCartProducts");
 const saveProductOnShoppingCartDb = require("./utils/saveProductOnShoppingCartDb")
-const deleteShoppingCartProductFromDb = require("./utils/deleteShoppingCartProductFromDb")
+const deleteShoppingCartProductFromDb = require("./utils/deleteShoppingCartProductFromDb");
+const updateProductFromDb = require("./utils/updateProductFromDb");
+const deleteProductFromDb = require("./utils/deleteProductFromDb");
 
 module.exports = {
   /**
@@ -140,10 +142,24 @@ module.exports = {
   },
 
   /**
+   * Remove o produto correspondente da base de dados (disponivel somente para admins)
+   * @param {*} req requisição
+   * @param {*} res resposta   
+  */
+  removeProduct(req, res) {
+    const id = req.body.id;
+    try {
+      const db = Database;
+      deleteProductFromDb(db, id).then((product) => res.send(product));
+    } catch (error) {
+      console.log(error);
+      return res.send("Something went wrong, Delete product from Shopping Cart");
+    }
+  },
+  /**
    * Remove o produto correspondente do carrinho do usuário
    * @param {*} req requisição
-   * @param {*} res resposta
-   * @returns uma coleção de produtos
+   * @param {*} res resposta   
    */
   removeShoppingCartProduct(req, res) {
     const id = req.body.id;
@@ -153,6 +169,37 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return res.send("Something went wrong, Delete product from Shopping Cart");
+    }
+  },
+  /**
+   * Atualiza um produto
+   * @param {*} req requisição
+   * @param {*} res resposta
+   */
+   updateProduct(req, res) {
+    const fields = req.body;
+    console.log('chegou')
+    if (Object.values(fields).includes("")) {
+      return res.send("Todos os campos devem ser preenchidos!");
+    }
+
+    try {
+      const db = Database;
+
+      updateProductFromDb(db, {
+        name: fields.name,
+        price: fields.price,
+        discount: fields.discount,
+        number_of_installments: fields.number_of_installments,
+        product_picture: fields.product_picture,
+        id: fields.id
+      }).then(() => {
+        res.redirect("/");
+      });
+
+    } catch (error) {
+      console.log(error);
+      return res.send("Something went wrong, SaveProduct");
     }
   }
 };
