@@ -7,17 +7,19 @@ const updateProductFromDb = function (db, product) {
           SET 
             name = ?,
             price = ?,
-            discount = ?,
+            discount_percentage = ?,
             number_of_installments = ?,
-            product_picture = ?
+            product_picture = ?,
+            free_shipping = ?
           WHERE id = ?;
         `,
         [
           product.name,
           product.price,
-          product.discount,
+          product.discount_percentage,
           product.number_of_installments,
           product.product_picture,
+          product.free_shipping,
           product.id
         ],
         (error) => console.log
