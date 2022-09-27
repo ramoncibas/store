@@ -1,4 +1,4 @@
-import { Form, FloatingLabel } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Container } from "../../containers/Container";
 import { Title, Button, Input, CardProduct } from "../../components";
 import { BsArrowDown, BsArrowRight } from "react-icons/bs";
@@ -8,56 +8,61 @@ import { useState } from "react";
 import api from "../../utils/api";
 import { useLocation } from 'react-router-dom';
 import { AiTwotoneDelete } from "react-icons/ai"
-
-const CheckBox = ({ onChange }) => (
-  <Form.Group
-    className="mb-3"
-    id="discount"
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-    }}
-  >
-    <Form.Check type="checkbox" label="Desconto" />
-    <FloatingLabel controlId="discount" label="Ex: 15">
-      <Form.Control
-        name="discount"
-        type="number"
-        placeholder="Valor do Desconto"
-        onChange={onChange}
-      />
-    </FloatingLabel>
-  </Form.Group>
-);
+import {BsCheck2All} from "react-icons/bs"
+import CheckBox from "./components/CheckBox"
+import * as S from "./style"
 
 const Product = () => {
   const { state } = useLocation();
-  const initialValue = state || {};
+  const initialValue = state || { disabledButton: true };
   const [product, setProduct] = useState(initialValue);
-
+  console.log(product)
   /**
    * Atualiza o estado com o nome e o valor vindos do Input
    * @param event evento do elemento
    */
   const handleChange = (event) => {
+    const { value, name } = event.target
+    const checked = event.target.checked
+    console.log(value, name, checked)
+    
+    /**
+     * Altera o valor da "discount_percentage" para zero se o checkbox não estiver marcado
+     * Altera a prop "free_shipping" para true ou false, de acordo com o checkbox
+     */
+    if(checked === false && name === 'hasDiscount') {
+      product.discount_percentage = 0
+    } else if(checked === false && name === 'hasFreeShipping') {
+      product.free_shipping = false
+    } else if(checked === true && name === 'hasFreeShipping') {
+      product.free_shipping = true
+    }
+    console.log(value, name)
     setProduct((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      [name]: checked || value
     }));
   };
-
+    
   /**
    * Chama a api para salvar, ou alterar os dados no banco
    * @param data dados do produto a serem salvos/modificados
    */
   const handleProduct = (event, data) => {
     event.preventDefault();
-
-    if (!state)
-      api.post("/product", data).then(window.location.href = "/");
-    else
-      api.patch("/product", { id: product.id, ...data }).then(window.location.href = "/");
+    const dataFromProductPage = {
+      name: data.name,
+      price: data.price,
+      product_picture: data.product_picture,
+      discount_percentage: data.discount_percentage,
+      number_of_installments: data.number_of_installments,
+      free_shipping: data.free_shipping
+    }
+    if (!state) {
+      api.post("/product", dataFromProductPage).then(window.location.href = "/");
+    } else {
+      api.patch("/product", { id: product.id, ...dataFromProductPage }).then(window.location.href = "/");
+    }      
   };
 
   const handeDelete = (event, id) => {
@@ -76,6 +81,15 @@ const Product = () => {
         <DefautlStyle.Col md="auto">
           <Title>ADICIONE UM PRODUTO PARA VENDA</Title>
           <Form>
+          <CheckBox 
+              id="free"
+              nameCheckBox={"hasFreeShipping"}
+              nameInput={"free_shipping"}
+              labelCheckBox={"Frete Gratis"}
+              onChange={handleChange}              
+              hasFreeShipping={product.hasFreeShipping}
+              children={<S.FreeShipping>FRETE GRATIS &nbsp;<BsCheck2All></BsCheck2All></S.FreeShipping>}
+            />
             <Input
               id="name"
               name="name"
@@ -94,7 +108,22 @@ const Product = () => {
               value={product.price || ''}
               onChange={handleChange}
             />
-            <CheckBox onChange={handleChange} />
+            {/* <CheckBox 
+              onChange={handleChange} 
+              hasDiscount={product.hasDiscount}
+              discountPercentage={product.discount_percentage}
+            /> */}
+            <CheckBox 
+              id="discount"
+              nameCheckBox={"hasDiscount"}
+              nameInput={"discount_percentage"}
+              labelCheckBox={"Desconto"}
+              inputPlaceholder={"Valor do Desconto"}
+              onChange={handleChange}
+              hasDiscount={product.hasDiscount}
+              inputGroupText={true}
+              inputGroupValue={"$"}              
+            />            
             {/* 
               // Funcionalidade futura para adicionar foto via upload
             <Form.Group controlId="product_image" className="mb-3">
@@ -114,7 +143,7 @@ const Product = () => {
               placeholder="Url da Imagem do produto"
               value={product.product_picture || ''}
               onChange={handleChange}
-            />
+            />            
             <Input
               id="number_of_installments"
               name="number_of_installments"
@@ -123,7 +152,7 @@ const Product = () => {
               placeholder="Numero máximo de Parcelas"
               value={product.number_of_installments || ''}
               onChange={handleChange}
-            />
+            />            
             <div className="buttons-container">
               <Button
                 onClick={(event) => handleProduct(event, product)}
