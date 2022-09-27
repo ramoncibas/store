@@ -16,45 +16,47 @@ module.exports = {
    */
   saveProduct(req, res) {
     const fields = req.body;
-
-    if (Object.values(fields).includes("")) {
+    
+    if (Object.values(fields).includes("") || Object.values(fields).includes(undefined)) {
+      console.log(fields)
       return res.send("Todos os campos devem ser preenchidos!");
     }
-
+    console.log(fields)
     try {
       const db = Database;
-
       saveProduct(db, {
         name: fields.name,
         price: fields.price,
-        discount: fields.discount,
+        discount_percentage: Number(fields.discount_percentage),
         number_of_installments: fields.number_of_installments,
         product_picture: fields.product_picture,
+        free_shipping: fields.free_shipping
       }).then(() => {
         res.redirect("/");
       });
 
     } catch (error) {
-      console.log(error);
-      return res.send("Something went wrong, SaveProduct");
+      return res.send("Something went wrong to Save the Product");
     }
   },
 
   saveProductOnShoppingCart(req, res) {
-    const data = req.body;  
+    const data = req.body;
+    
     try {
       const db = Database;
 
       saveProductOnShoppingCartDb(db, {
-        id: data.id, 
-        name: data.name, 
-        product_picture: data.product_picture, 
-        price: data.price, 
-        discount: data.discount, 
-        number_of_installments: data.number_of_installments
+        id: data.id,
+        name: data.name,
+        product_picture: data.product_picture,
+        price: data.price,
+        discount_percentage: data.discount_percentage,
+        number_of_installments: data.number_of_installments,
+        free_shipping: data.free_shipping
       });
 
-    } catch(error) {
+    } catch (error) {
       console.log(error)
       return res.send("Something went wrong, saveProductOnShoppingCart");
     }
@@ -75,7 +77,7 @@ module.exports = {
     try {
       const db = Database;
       saveUser(db, {
-        name: fields.name, 
+        name: fields.name,
         email: fields.email,
         phone: fields.phone,
         user_picture: fields.user_picture
@@ -176,9 +178,10 @@ module.exports = {
    * @param {*} req requisição
    * @param {*} res resposta
    */
-   updateProduct(req, res) {
+  updateProduct(req, res) {
     const fields = req.body;
-    console.log('chegou')
+
+    console.log(fields.discount_percentage, 'chegou')
     if (Object.values(fields).includes("")) {
       return res.send("Todos os campos devem ser preenchidos!");
     }
@@ -187,12 +190,13 @@ module.exports = {
       const db = Database;
 
       updateProductFromDb(db, {
+        id: fields.id,
         name: fields.name,
         price: fields.price,
-        discount: fields.discount,
+        discount_percentage: fields.discount_percentage,
         number_of_installments: fields.number_of_installments,
         product_picture: fields.product_picture,
-        id: fields.id
+        free_shipping: fields.free_shipping
       }).then(() => {
         res.redirect("/");
       });
