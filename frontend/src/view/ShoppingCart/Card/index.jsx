@@ -43,7 +43,7 @@ const Card = (props) => {
       </Row>
       <br />
       <Row>
-        <Button onClick={(event) => handleDeleteItem(event, props.id)} background="FF705A">
+        <Button onClick={(event) => handleDeleteItem(event, props.id)} background="#FF705A">
           Remover Produto &nbsp;
           <MdAddShoppingCart color="000" />
         </Button>
