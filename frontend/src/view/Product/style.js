@@ -1,6 +1,20 @@
 import styled from "styled-components";
 import { Row as RowSC, Col as ColSC } from "react-bootstrap";
 
+
+export const FreeShipping = styled.div`
+  width: 100%;
+  height: 40px;  
+  margin-top: 5px;
+  background: #673dff;
+  color: #fff;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Row = styled(RowSC)`
   display: flex;
   align-items: center;
