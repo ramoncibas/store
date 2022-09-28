@@ -9,4 +9,4 @@ function execute(db){
   );
 };
 
-module.exports = db.on("open", () => execute);
+module.exports = db.on("open", () => execute(db));
