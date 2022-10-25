@@ -8,7 +8,7 @@ const saveProduct = function (db, product) {
             product_picture,
             discount_percentage,
             number_of_installments,
-            free_shipping,
+            free_shipping
           ) VALUES (?, ?, ?, ?, ?, ?);`
         ,[
           product.name,
