@@ -16,7 +16,7 @@ const CheckBox = (props) => (
       type="checkbox"
       label={props.labelCheckBox}
       onChange={props.onChange}
-      checked={props.discount_percentage == true || props.free_shipping == true }
+      checked={props.discount_percentage === true || props.free_shipping }
     />
     {
       props.hasDiscount === true && (
