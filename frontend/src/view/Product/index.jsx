@@ -8,7 +8,7 @@ import { useState } from "react";
 import api from "../../utils/api";
 import { useLocation } from 'react-router-dom';
 import { AiTwotoneDelete } from "react-icons/ai"
-import {BsCheck2All} from "react-icons/bs"
+import { BsCheck2All } from "react-icons/bs"
 import CheckBox from "./components/CheckBox"
 import * as S from "./style"
 
@@ -22,8 +22,8 @@ const Product = () => {
    * @param event evento do elemento
    */
   const handleChange = (event) => {
-    const { value, name } = event.target
-    const checked = event.target.checked
+    const { value, name } = event.target;
+    const checked = event.target.checked;
     console.log(value, name, checked)
     
     /**
@@ -37,7 +37,7 @@ const Product = () => {
     } else if(checked === true && name === 'hasFreeShipping') {
       product.free_shipping = true
     }
-    console.log(value, name)
+    
     setProduct((prevState) => ({
       ...prevState,
       [name]: checked || value
@@ -54,10 +54,11 @@ const Product = () => {
       name: data.name,
       price: data.price,
       product_picture: data.product_picture,
-      discount_percentage: data.discount_percentage,
+      discount_percentage: data.discount_percentage || 0,
       number_of_installments: data.number_of_installments,
-      free_shipping: data.free_shipping
-    }
+      free_shipping: data.free_shipping || false
+    };
+
     if (!state) {
       api.post("/product", dataFromProductPage).then(window.location.href = "/");
     } else {
