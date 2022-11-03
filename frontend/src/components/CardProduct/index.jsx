@@ -6,10 +6,11 @@ import Button from "../Button";
 import DefaultProductImage from "../../assets/img/default-image-product.png";
 import { MdAddShoppingCart, MdEditNote } from "react-icons/md";
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function CardProduct(props) {
-  const history = useHistory();
+  console.log(props)
+  const navigate = useNavigate();
   
   // Deixando o preco do produto com o valor atualizado
   const priceWithdiscount = props.price
@@ -33,16 +34,17 @@ function CardProduct(props) {
   const handleEdit = (product) => {    
     // Add TypeScript
     const data = {
-      id: product.id,
-      discount_percentage: product.discount_percentage,
+      id: product.id,      
       name: product.name,
       number_of_installments: product.number_of_installments,
+      discount_percentage: product.discount_percentage,
+      free_shipping: product.free_shipping,
       price: product.price,
       product_picture: product.product_picture,
       disabledButton: true,
       displayEditBtn: 'none'
     }
-    history.push(`/product?id=${product.id}`, data);
+    navigate(`/product?id=${product.id}`, { state: data });
     // window.sessionStorage.setItem('product-to-edit', JSON.stringify(data))
   }
 
