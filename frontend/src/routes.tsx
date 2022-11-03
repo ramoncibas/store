@@ -1,21 +1,21 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./view/Home";
 import UserProfile from "./view/UserProfile";
 import Product from "./view/Product";
 import ShoppingCart from "./view/ShoppingCart";
 
-function Routes() {
+function Router() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home}></Route>
-        <Route path="/profile" component={UserProfile}></Route>
-        <Route path="/cart" component={ShoppingCart}></Route>
-        <Route path="/product" component={Product}></Route>
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/product" element={<Product />} />
+      </Routes>
     </BrowserRouter>
   );
 }
 
-export default Routes;
+export default Router;
