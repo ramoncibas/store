@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Title, CardProduct } from "../../components";
 import { Container } from "../../containers/Container";
-import * as S from "./style";
+import {
+  Banner, Main, Aside, Row, Col
+} from "./style";
 import api from "../../utils/api";
-import axios from "axios";
+import Filter from "./components/Filter";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -22,24 +24,31 @@ const Home = () => {
 
   return (
     <>
-      <S.Banner>
+      <Banner>
         <div className="content">
           <h1>STORE</h1>
           <span>buy safe</span>
         </div>
-      </S.Banner>
-      <Container>
-        <S.Row>
-          <Title>Mais Vistos</Title>
-        </S.Row>
-        <S.Row>
-          {products.map((product, index) => (
-            <S.Col key={index}>
-              <CardProduct onClick={handleBuyProduct} {...product} />
-            </S.Col>
-          ))}
-        </S.Row>
-      </Container>
+      </Banner>
+      <Main>
+        <Aside className="filter-product">
+          <Filter />
+        </Aside>
+        <Container margin={'2rem'}>
+          <Row>
+            <Title
+              fontsize='32px'
+            >Mais Vistos</Title>
+          </Row>
+          <Row>
+            {products.map((product, index) => (
+              <Col key={index}>
+                <CardProduct onClick={handleBuyProduct} {...product} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </Main>
     </>
   );
 };
