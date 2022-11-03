@@ -1,5 +1,5 @@
 import * as S from "./style";
 
-export const Container = ({ children }) => (
-  <S.Container>{children}</S.Container>
+export const Container = (props) => (
+  <S.Container margin={props.margin}>{props.children}</S.Container>
 );
