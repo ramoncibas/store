@@ -1,12 +1,12 @@
-const Title = ({ children }) => (
+const Title = (props) => (
   <h1
     style={{
-      fontSize: "16px",
-      marginBottom: "30px",
+      fontSize: props.fontsize || '16px',
+      marginBottom: props.marginbottom || "30px",
       textTransform: "uppercase",
     }}
   >
-    {children}
+    {props.children}
   </h1>
 );
 
