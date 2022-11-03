@@ -22,9 +22,10 @@ const Product = () => {
    * @param event evento do elemento
    */
   const handleChange = (event) => {
-    const { value, name } = event.target
-    const checked = event.target.checked    
-    
+    const { value, name } = event.target;
+    const checked = event.target.checked;
+    console.log(value, name, checked)
+
     // Criar um objeto, e ti-palo com uma interface ->> data:Product
     // Migrar para TypeScript, para resolver meus problemas :)
 
@@ -42,6 +43,7 @@ const Product = () => {
     } else if (checked === true && name === 'hasFreeShipping') {
       product.free_shipping = true
     }
+
     setProduct((prevState) => ({
       ...prevState,
       [name]: checked || value
@@ -58,10 +60,11 @@ const Product = () => {
       name: data.name,
       price: data.price,
       product_picture: data.product_picture,
-      discount_percentage: data.discount_percentage,
+      discount_percentage: data.discount_percentage || 0,
       number_of_installments: data.number_of_installments,
-      free_shipping: data.free_shipping
-    }
+      free_shipping: data.free_shipping || false
+    };
+
     if (!state) {
       api.post("/product", dataFromProductPage).then(window.location.href = "/");
     } else {
@@ -114,8 +117,8 @@ const Product = () => {
               value={product.price || ''}
               onChange={handleChange}
             />
-            {/* <CheckBox 
-              onChange={handleChange} 
+            {/* <CheckBox
+              onChange={handleChange}
               hasDiscount={product.hasDiscount}
               discountPercentage={product.discount_percentage}
             /> */}
@@ -132,7 +135,7 @@ const Product = () => {
               inputGroupText={true}
               inputGroupValue={"$"}
             />
-            {/* 
+            {/*
               // Funcionalidade futura para adicionar foto via upload
             <Form.Group controlId="product_image" className="mb-3">
               <Form.Label>Imagem</Form.Label>

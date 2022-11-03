@@ -3,13 +3,13 @@ const saveProductOnShoppingCartDb = function (db, product) {
     db.serialize(() => {
       resolve(
         db.run(
-          `INSERT INTO shopping_cart (product_id, name, product_picture, price, discount, number_of_installments, free_shipping) VALUES (?, ?, ?, ?, ?, ?, ?);`,
+          `INSERT INTO shopping_cart (product_id, name, product_picture, price, discount_percentage, number_of_installments, free_shipping) VALUES (?, ?, ?, ?, ?, ?, ?);`,
           [
             product.id,
             product.name,
             product.product_picture,
             product.price,
-            product.discount,
+            product.discount_percentage,
             product.number_of_installments,
             product.free_shipping
           ],

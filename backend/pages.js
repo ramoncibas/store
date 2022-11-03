@@ -16,12 +16,15 @@ module.exports = {
    */
   saveProduct(req, res) {
     const fields = req.body;
-    
-    if (Object.values(fields).includes("") || Object.values(fields).includes(undefined)) {
-      console.log(fields)
-      return res.send("Todos os campos devem ser preenchidos!");
-    }
+
     console.log(fields)
+  
+    if (Object.values(fields).includes("") || Object.values(fields).includes(undefined)) {      
+      return res.send("Todos os campos devem ser preenchidos!");
+    } else if(Object.values(fields.discount_percentage) > 90) {
+      return res.send("Valor do desconto ultrapassou o limite de 90%");
+    }
+
     try {
       const db = Database;
       saveProduct(db, {
@@ -41,11 +44,10 @@ module.exports = {
   },
 
   saveProductOnShoppingCart(req, res) {
-    const data = req.body;
-    
+    const data = req.body;    
+    console.log(data)
     try {
       const db = Database;
-
       saveProductOnShoppingCartDb(db, {
         id: data.id,
         name: data.name,
@@ -96,7 +98,7 @@ module.exports = {
    * @param {*} res resposta
    * @returns uma coleção de usuarios
    */
-  selectUser(req, res) {
+  getAllUser(req, res) {
     const id = req.params.id;
     try {
       // Code...
@@ -133,7 +135,7 @@ module.exports = {
    * @returns uma coleção de produtos
    */
   getShoppingCartProduct(req, res) {
-    //const id = req.query.id;
+    //const id = req.query.id;    
     try {
       const db = Database;
       getAllShoppingCartProducts(db).then((products) => res.send(products));
