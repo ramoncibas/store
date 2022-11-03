@@ -2,13 +2,13 @@ import { Form } from "react-bootstrap";
 import { Container } from "../../containers/Container";
 import { Title, Button, Input, CardProduct } from "../../components";
 import { BsArrowDown, BsArrowRight } from "react-icons/bs";
-import { MdAddShoppingCart } from "react-icons/md";
+import { CgArrowsExchange } from "react-icons/cg";
 import * as DefautlStyle from "../../assets/style/defaultContainerStyle";
 import { useState } from "react";
 import api from "../../utils/api";
 import { useLocation } from 'react-router-dom';
 import { AiTwotoneDelete } from "react-icons/ai"
-import {BsCheck2All} from "react-icons/bs"
+import { BsCheck2All } from "react-icons/bs"
 import CheckBox from "./components/CheckBox"
 import * as S from "./style"
 
@@ -16,34 +16,38 @@ const Product = () => {
   const { state } = useLocation();
   const initialValue = state || { disabledButton: true };
   const [product, setProduct] = useState(initialValue);
-  console.log(product)
+  console.log(state)
   /**
    * Atualiza o estado com o nome e o valor vindos do Input
    * @param event evento do elemento
    */
   const handleChange = (event) => {
     const { value, name } = event.target
-    const checked = event.target.checked
-    console.log(value, name, checked)
+    const checked = event.target.checked    
     
+    // Criar um objeto, e ti-palo com uma interface ->> data:Product
+    // Migrar para TypeScript, para resolver meus problemas :)
+
+
     /**
      * Altera o valor da "discount_percentage" para zero se o checkbox não estiver marcado
      * Altera a prop "free_shipping" para true ou false, de acordo com o checkbox
      */
-    if(checked === false && name === 'hasDiscount') {
+    if (checked === false && name === 'hasDiscount') {
       product.discount_percentage = 0
-    } else if(checked === false && name === 'hasFreeShipping') {
+    } else if(checked === true && name === 'hasDiscount') {
+      product.discount_percentage = 1
+    } else if (checked === false && name === 'hasFreeShipping') {
       product.free_shipping = false
-    } else if(checked === true && name === 'hasFreeShipping') {
+    } else if (checked === true && name === 'hasFreeShipping') {
       product.free_shipping = true
     }
-    console.log(value, name)
     setProduct((prevState) => ({
       ...prevState,
       [name]: checked || value
     }));
   };
-    
+
   /**
    * Chama a api para salvar, ou alterar os dados no banco
    * @param data dados do produto a serem salvos/modificados
@@ -62,7 +66,7 @@ const Product = () => {
       api.post("/product", dataFromProductPage).then(window.location.href = "/");
     } else {
       api.patch("/product", { id: product.id, ...dataFromProductPage }).then(window.location.href = "/");
-    }      
+    }
   };
 
   const handeDelete = (event, id) => {
@@ -81,12 +85,14 @@ const Product = () => {
         <DefautlStyle.Col md="auto">
           <Title>ADICIONE UM PRODUTO PARA VENDA</Title>
           <Form>
-          <CheckBox 
+            <CheckBox
               id="free"
               nameCheckBox={"hasFreeShipping"}
               nameInput={"free_shipping"}
               labelCheckBox={"Frete Gratis"}
-              onChange={handleChange}              
+              onChange={handleChange}
+              checked={product.free_shipping}
+              freeShipping={product.free_shipping > 0 || false} // provisorio - logica nao ta boa hj
               hasFreeShipping={product.hasFreeShipping}
               children={<S.FreeShipping>FRETE GRATIS &nbsp;<BsCheck2All></BsCheck2All></S.FreeShipping>}
             />
@@ -113,17 +119,19 @@ const Product = () => {
               hasDiscount={product.hasDiscount}
               discountPercentage={product.discount_percentage}
             /> */}
-            <CheckBox 
+            <CheckBox
               id="discount"
               nameCheckBox={"hasDiscount"}
               nameInput={"discount_percentage"}
               labelCheckBox={"Desconto"}
               inputPlaceholder={"Valor do Desconto"}
               onChange={handleChange}
+              checked={product.discount_percentage}
+              discountPercentage={product.discount_percentage} // provisorio - logica nao ta boa hj
               hasDiscount={product.hasDiscount}
               inputGroupText={true}
-              inputGroupValue={"$"}              
-            />            
+              inputGroupValue={"$"}
+            />
             {/* 
               // Funcionalidade futura para adicionar foto via upload
             <Form.Group controlId="product_image" className="mb-3">
@@ -143,7 +151,7 @@ const Product = () => {
               placeholder="Url da Imagem do produto"
               value={product.product_picture || ''}
               onChange={handleChange}
-            />            
+            />
             <Input
               id="number_of_installments"
               name="number_of_installments"
@@ -152,13 +160,13 @@ const Product = () => {
               placeholder="Numero máximo de Parcelas"
               value={product.number_of_installments || ''}
               onChange={handleChange}
-            />            
+            />
             <div className="buttons-container">
               <Button
                 onClick={(event) => handleProduct(event, product)}
               >
-                {!state ? 'Adicionar Produto ' : 'Atualizar Produto '}&nbsp;
-                <MdAddShoppingCart color="000" />
+                {!state ? 'Adicionar Produto ' : 'Atualizar '}&nbsp;
+                <CgArrowsExchange color="fff" />
               </Button>
               {
                 state && (
@@ -166,7 +174,7 @@ const Product = () => {
                     background={'#ff7777'}
                     onClick={(event) => handeDelete(event, product.id)}
                   >
-                    deletar &nbsp;
+                    Deletar &nbsp;
                     <AiTwotoneDelete color="fff" />
                   </Button>
                 )
