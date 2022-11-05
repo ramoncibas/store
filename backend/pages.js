@@ -1,4 +1,4 @@
-const Database = require("./database/db");
+const Database = require("./src/config/db");
 const saveUser = require("./utils/saveUsers");
 const saveProduct = require("./utils/saveProduct");
 const getAllProductsFromDb = require("./utils/getAllProductsFromDb");

@@ -1,5 +1,5 @@
 let sqlite3 = require("sqlite3").verbose();
-let db = new sqlite3.Database(__dirname + "/database.sqlite");
+let db = new sqlite3.Database("src/database/database.sqlite");
 const schema = require('./schema')
 
 //creating the database
