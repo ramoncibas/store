@@ -19,15 +19,15 @@ app.use(
 );
 
 // Rotas
-app.get("/", page.getAllProducts);
-app.get("/cart", page.getShoppingCartProduct);
-app.get("/profile/:id", page.getUser);
-app.post("/", page.saveProductOnShoppingCart);
-app.post("/profile", page.saveUser);
-app.post("/product", page.saveProduct);
-app.delete("/cart", page.removeShoppingCartProduct);
-app.delete("/product", page.removeProduct);
-app.patch("/product", page.updateProduct);
+app.get("/", (req, res) => page.getAllProducts);
+app.get("/cart", (req, res) => page.getShoppingCartProduct);
+app.get("/profile/:id", (req, res) => page.getUser);
+app.post("/", (req, res) => page.saveProductOnShoppingCart);
+app.post("/profile", (req, res) => page.saveUser);
+app.post("/product", (req, res) => page.saveProduct);
+app.delete("/cart", (req, res) => page.removeShoppingCartProduct);
+app.delete("/product", (req, res) => page.removeProduct);
+app.patch("/product", (req, res) => page.updateProduct);
 
 app.listen(5000, () => {
   console.log("Server is running - Port: 5000...");
