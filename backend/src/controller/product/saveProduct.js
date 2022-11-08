@@ -1,3 +1,4 @@
+const Database = require("../../config/db");
 const saveProduct = require("../../models/saveProduct");
 
 module.exports = {
@@ -8,6 +9,7 @@ module.exports = {
    */
   saveProduct(req, res) {
     const fields = req.body;
+    console.log('a')
   
     if (Object.values(fields).includes("") || Object.values(fields).includes(undefined)) {      
       return res.send("Todos os campos devem ser preenchidos!");
@@ -15,9 +17,8 @@ module.exports = {
       return res.send("Valor do desconto ultrapassou o limite de 90%");
     }
 
-    try {
-      const db = Database;
-      saveProduct(db, {
+    try {      
+      saveProduct(Database, {
         name: fields.name,
         price: fields.price,
         discount_percentage: Number(fields.discount_percentage),
