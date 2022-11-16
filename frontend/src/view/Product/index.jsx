@@ -16,7 +16,7 @@ import { BlockPicker } from 'react-color'
 const Product = () => {
   const { state } = useLocation();
   const initialValue = state || { disabledButton: true };
-  const [product, setProduct] = useState(initialValue);
+  const [ product, setProduct ] = useState(initialValue);
   console.log(state)
   /**
    * Atualiza o estado com o nome e o valor vindos do Input
@@ -36,7 +36,7 @@ const Product = () => {
      */
     if (checked === false && name === 'hasDiscount') {
       product.discount_percentage = 0
-    } else if(checked === true && name === 'hasDiscount') {
+    } else if (checked === true && name === 'hasDiscount') {
       product.discount_percentage = 1
     } else if (checked === false && name === 'hasFreeShipping') {
       product.free_shipping = false
@@ -64,28 +64,15 @@ const Product = () => {
       discount_percentage: data.discount_percentage || 0,
       number_of_installments: data.number_of_installments,
       free_shipping: data.free_shipping || false,
-      brand_id: data.brand,
-      gender_id: data.gender,
-      category_id: data.category,
+      brand_product_id: data.brand_product_id,
+      gender_product_id: data.gender_product_id,
+      category_product_id: data.category_product_id,
       size: data.size,
       color: data.color,
-    };    
+    };
 
     if (!state) {
-      api.post("/product",     {
-      name: "Tenis Nike AirMax 90",
-      price: "1200",
-      discount_percentage: 15,
-      number_of_installments: 12,
-      product_picture: "https://vgmultimarcas.com/wp-content/uploads/2021/05/nike-tenis-nike-air-force-1-tm-p-1618505989591.jpg",
-      color: "White",
-      size: 43,
-      free_shipping: 1,
-      brand_product_id: 3,
-      gender_product_id: "Masculino",
-      category_product_id: 1
-    }).then((data) => console.log(data))
-    // .then(window.location.href = "/");
+      api.post("/product", dataFromProductPage).then(window.location.href = "/");
     } else {
       api.patch("/product", { id: product.id, ...dataFromProductPage }).then(window.location.href = "/");
     }
@@ -99,14 +86,7 @@ const Product = () => {
     }).then(window.location.href = '/')
   }
 
-  /*
-  -- Passar esses campos no formulario, e enviar ao backend
-        1.1 - Ja fiz o backend, basta valida-lo com um mock do front mesmo...
-        1.2 - Adicionar esses campos ao formulario do frontend, e enviar ao back
-        brand_id,
-        gender_id,
-        category_id
-  */
+  // Criar o job no backend, que chama a brand, gender, category para utilizar no formulario com um "select"
 
   //Verifica se o tamanho da tela é menor que 1094 pixel (tamanha de tablets)
   const windowWidth = window.innerWidth <= 1094 ? true : false;
@@ -152,6 +132,33 @@ const Product = () => {
               type="text"
               placeholder="Cor do Produto"
               value={product.color || ''}
+              onChange={handleChange}
+            />
+            <Input
+              id="brand_product_id"
+              name="brand_product_id"
+              label="Marca do Produto"
+              type="text"
+              placeholder="Marca do Produto"
+              value={product.brand_product_id || ''}
+              onChange={handleChange}
+            />
+            <Input
+              id="gender_product_id"
+              name="gender_product_id"
+              label="Genero do Produto"
+              type="text"
+              placeholder="Genero do Produto"
+              value={product.gender_product_id || ''}
+              onChange={handleChange}
+            />
+            <Input
+              id="category_product_id"
+              name="category_product_id"
+              label="Categoria do Produto"
+              type="text"
+              placeholder="Categoria do Produto"
+              value={product.category_product_id || ''}
               onChange={handleChange}
             />
             {/* ['#D9E3F0', '#F47373', '#697689', '#37D67A', '#2CCCE4', '#555555', '#dce775', '#ff8a65', '#ba68c8'] */}
