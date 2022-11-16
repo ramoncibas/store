@@ -1,20 +1,20 @@
 const Database = require("../../config/db");
-const getAllShoppingCartProducts = require("../../models/getAllShoppingCartProducts");
+const getAllShoppingCartProductsModel = require("../../models/getAllShoppingCartProductsModel");
 
-module.exports = {
-  /**
- * Pega todos os itens dentro do carrinho de compras do ususario
- * @param {*} req requisição
- * @param {*} res resposta
- * @returns uma coleção de produtos
- */
-  getShoppingCartProduct(req, res) {
-    //const id = req.query.id;    
-    try {
-      getAllShoppingCartProducts(Database).then((products) => res.send(products));
-    } catch (error) {
-      console.log(error);
-      return res.send("Something went wrong, Select Shopping Cart");
-    }
+/**
+* Pega todos os itens dentro do carrinho de compras do ususario
+* @param {*} req requisição
+* @param {*} res resposta
+* @returns uma coleção de produtos
+*/
+const getAllShoppingCartProduct = (req, res) => {
+  //const id = req.query.id;
+  try {
+    getAllShoppingCartProductsModel(Database).then((products) => res.send(products));
+  } catch (error) {
+    console.log(error);
+    return res.send("Something went wrong, Select Shopping Cart");
   }
 }
+
+module.exports = getAllShoppingCartProduct;

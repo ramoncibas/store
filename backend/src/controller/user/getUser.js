@@ -1,9 +1,9 @@
 // import
 
-module.exports = {
-  /** */
-  getUser(req, res) {
-    // Code...
-  }
 
+/** */
+const getUser = (req, res) => {
+  // Code...
 }
+
+module.exports = getUser;
