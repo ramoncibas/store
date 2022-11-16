@@ -6,6 +6,9 @@ const Filter = () => {
   const product = {
     name: "2",
     price: "2",
+
+
+    // Pegar informações do backend
     dessNumber: [45, 43, 42, 39, 46].sort(),
     category: ["Calçados", "Roupas", "Bolsas e Acessórios", "Esporte"],
     gender: ["Feminino", "Masculino", "Infantil"],
@@ -14,7 +17,10 @@ const Filter = () => {
   }
 
   const { dessNumber, brand, color, gender, category } = product
-  
+  // REFERENCIA DE ESTIIZAÇÃO
+  // https://cdn.shopify.com/app-store/listing_images/f44b43e81ef89598c0de05c8ea6dcf80/desktop_screenshot/CKCezOGbqPECEAE=.png?height=360&width=640  
+
+  //adicionar scroll nos componentes genero, categoria, etc..
   return (
     <Container>
       <div className="ul-container">
@@ -64,7 +70,7 @@ const Filter = () => {
           <Form.Control
             placeholder="Digite a coloração"
             aria-label="Digite a coloração"
-            aria-describedby="basic-addon2"            
+            aria-describedby="basic-addon2"
           />
           <Button variant="outline-secondary" id="button-addon2">
             🔎
@@ -82,12 +88,12 @@ const Filter = () => {
         </ul>
       </div>
       <div className="ul-container">
-        <p>COR</p>        
+        <p>COR</p>
         <InputGroup className="search-box-color">
           <Form.Control
             placeholder="Digite a coloração"
             aria-label="Digite a coloração"
-            aria-describedby="basic-addon2"            
+            aria-describedby="basic-addon2"
           />
           <Button variant="outline-secondary" id="button-addon2">
             🔎

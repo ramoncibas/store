@@ -14,12 +14,12 @@ const deleteShoppingCartProduct = require("./src/controller/shoppingCartProduct/
 module.exports = {
   getUser,
   getUsers,
-  saveUser,
-  saveProduct,
   getProducts,
-  deleteProdut,
-  updateProduct,
   getShoppingCartProduct,
+  saveUser,
+  saveProduct,  
   saveShoppingCartProduct,
+  updateProduct,
+  deleteProdut,
   deleteShoppingCartProduct
 };

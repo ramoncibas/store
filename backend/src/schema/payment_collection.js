@@ -3,8 +3,9 @@ const PaymentCollectionSchema = `
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     uuid TEXT,
     type TEXT,
-    amount TEXT,
-    client_transaction_uuid TEXT FORWARD KEY Ref
+    amount TEXT,     
+    client_transaction_uuid TEXT NULL,    
+    FOREIGN KEY(client_transaction_uuid) REFERENCES client_transaction(uuid)
   );
 `;
 

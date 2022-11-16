@@ -8,8 +8,8 @@ module.exports = {
    * @param {*} res resposta
    * @returns uma coleção de produtos
    */
-  getAllProducts(req, res) {
-    try {      
+  getAllProducts(req, res) {    
+    try {
       getAllProductsFromDb(Database).then((products) => res.send(products));
     } catch (error) {
       console.log(error);

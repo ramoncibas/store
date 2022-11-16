@@ -11,6 +11,7 @@ import { AiTwotoneDelete } from "react-icons/ai"
 import { BsCheck2All } from "react-icons/bs"
 import CheckBox from "./components/CheckBox"
 import * as S from "./style"
+import { BlockPicker } from 'react-color'
 
 const Product = () => {
   const { state } = useLocation();
@@ -24,8 +25,7 @@ const Product = () => {
   const handleChange = (event) => {
     const { value, name } = event.target;
     const checked = event.target.checked;
-    console.log(value, name, checked)
-
+    // { hex }
     // Criar um objeto, e ti-palo com uma interface ->> data:Product
     // Migrar para TypeScript, para resolver meus problemas :)
 
@@ -56,17 +56,36 @@ const Product = () => {
    */
   const handleProduct = (event, data) => {
     event.preventDefault();
+    console.log(data)
     const dataFromProductPage = {
       name: data.name,
       price: data.price,
       product_picture: data.product_picture,
       discount_percentage: data.discount_percentage || 0,
       number_of_installments: data.number_of_installments,
-      free_shipping: data.free_shipping || false
-    };
+      free_shipping: data.free_shipping || false,
+      brand_id: data.brand,
+      gender_id: data.gender,
+      category_id: data.category,
+      size: data.size,
+      color: data.color,
+    };    
 
     if (!state) {
-      api.post("/product", dataFromProductPage).then(window.location.href = "/");
+      api.post("/product",     {
+      name: "Tenis Nike AirMax 90",
+      price: "1200",
+      discount_percentage: 15,
+      number_of_installments: 12,
+      product_picture: "https://vgmultimarcas.com/wp-content/uploads/2021/05/nike-tenis-nike-air-force-1-tm-p-1618505989591.jpg",
+      color: "White",
+      size: 43,
+      free_shipping: 1,
+      brand_product_id: 3,
+      gender_product_id: "Masculino",
+      category_product_id: 1
+    }).then((data) => console.log(data))
+    // .then(window.location.href = "/");
     } else {
       api.patch("/product", { id: product.id, ...dataFromProductPage }).then(window.location.href = "/");
     }
@@ -79,6 +98,15 @@ const Product = () => {
       data: { id }
     }).then(window.location.href = '/')
   }
+
+  /*
+  -- Passar esses campos no formulario, e enviar ao backend
+        1.1 - Ja fiz o backend, basta valida-lo com um mock do front mesmo...
+        1.2 - Adicionar esses campos ao formulario do frontend, e enviar ao back
+        brand_id,
+        gender_id,
+        category_id
+  */
 
   //Verifica se o tamanho da tela é menor que 1094 pixel (tamanha de tablets)
   const windowWidth = window.innerWidth <= 1094 ? true : false;
@@ -108,6 +136,30 @@ const Product = () => {
               value={product.name || ''}
               onChange={handleChange}
             />
+            <Input
+              id="size"
+              name="size"
+              label="Tamanho do Produto"
+              type="text"
+              placeholder="Tamanho do Produto"
+              value={product.size || ''}
+              onChange={handleChange}
+            />
+            <Input
+              id="color"
+              name="color"
+              label="Cor do Produto"
+              type="text"
+              placeholder="Cor do Produto"
+              value={product.color || ''}
+              onChange={handleChange}
+            />
+            {/* ['#D9E3F0', '#F47373', '#697689', '#37D67A', '#2CCCE4', '#555555', '#dce775', '#ff8a65', '#ba68c8'] */}
+            {/* <BlockPicker
+              name="cor"
+              color= {product.color}
+              onChange={handleChange}
+            /> */}
             <Input
               id="price"
               name="price"
