@@ -24,7 +24,7 @@ app.get("/cart", (req, res) => Controller.getShoppingCartProduct);
 app.get("/profile/:id", (req, res) => Controller.getUser);
 app.post("/", (req, res) => Controller.saveProductOnShoppingCart);
 app.post("/profile", (req, res) => Controller.saveUser);
-app.post("/product", (req, res) => Controller.saveProduct);
+app.post("/product", Controller.saveProduct);
 app.delete("/cart", (req, res) => Controller.deleteShoppingCartProduct);
 app.delete("/product", (req, res) => Controller.deleteProdut);
 app.patch("/product", (req, res) => Controller.updateProduct);
