@@ -10,8 +10,7 @@ const Filter = () => {
     category: ["Calçados", "Roupas", "Bolsas e Acessórios", "Esporte"],
     gender: ["Feminino", "Masculino", "Infantil"],
     brand: ["Nike", "Adidas", "Puma", "Gucci"],
-    color: ["Azul", "Preto", "Branco"],
-    price: "2"
+    color: ["Azul", "Preto", "Branco"],    
   }
 
   const { dessNumber, brand, color, gender, category } = product

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Row as RowSC, Col as ColSC } from "react-bootstrap";
 import px2vw from "../../utils/px2vw";
-import { parsePath } from "react-router-dom";
 
 export const Banner = styled.div`
   width: 90vw;
