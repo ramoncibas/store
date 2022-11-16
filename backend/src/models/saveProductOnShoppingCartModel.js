@@ -1,4 +1,4 @@
-const saveProductOnShoppingCartDb = function (db, product) {
+const saveProductOnShoppingCartModel = function (db, product) {
   return new Promise(function (resolve, reject) {
     db.serialize(() => {
       resolve(
@@ -20,4 +20,4 @@ const saveProductOnShoppingCartDb = function (db, product) {
   });
 };
 
-module.exports = saveProductOnShoppingCartDb;
+module.exports = saveProductOnShoppingCartModel;

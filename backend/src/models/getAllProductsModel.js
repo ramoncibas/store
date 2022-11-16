@@ -1,4 +1,4 @@
-const getAllProductsFromDb = function (db) {
+const getAllProductsModel = function (db) {
   return new Promise(function getAllProducts(resolve, reject) {
     db.serialize(() => {
       db.all(`SELECT * FROM product`, [], (error, rows) => {
@@ -11,4 +11,4 @@ const getAllProductsFromDb = function (db) {
   });
 };
 
-module.exports = getAllProductsFromDb;
+module.exports = getAllProductsModel;

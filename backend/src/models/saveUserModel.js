@@ -1,4 +1,4 @@
-const saveUser = function (db, user) {
+const saveUserModel = function (db, user) {
   return new Promise(function (resolve, reject) {
     db.serialize(() => {
       resolve(
@@ -12,4 +12,4 @@ const saveUser = function (db, user) {
   });
 };
 
-module.exports = saveUser;
+module.exports = saveUserModel;

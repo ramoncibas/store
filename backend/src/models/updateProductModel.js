@@ -1,4 +1,4 @@
-const updateProductFromDb = function (db, product) {    
+const updateProductModel = function (db, product) {    
   return new Promise(function (resolve, reject) {    
     db.serialize(() => {
       db.run(
@@ -28,7 +28,7 @@ const updateProductFromDb = function (db, product) {
   });
 };
 
-module.exports = updateProductFromDb;
+module.exports = updateProductModel;
 
 /*
 

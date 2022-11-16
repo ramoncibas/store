@@ -1,4 +1,4 @@
-const saveProduct = function (db, product) {  
+const saveProductModel = function (db, product) {  
   return new Promise(function (resolve, reject) {
     db.serialize(() => {
       db.run(
@@ -12,7 +12,7 @@ const saveProduct = function (db, product) {
             number_of_installments,
             free_shipping,
             brand_product_id,
-            product.gender_product_id,
+            gender_product_id,
             category_product_id
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`
         ,[
@@ -34,4 +34,4 @@ const saveProduct = function (db, product) {
   });
 };
 
-module.exports = saveProduct;
+module.exports = saveProductModel;
