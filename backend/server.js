@@ -19,9 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 // );
 
 // Rotas
-app.get("/", (req, res) => Controller.getProducts);
-app.get("/cart", (req, res) => Controller.getShoppingCartProduct);
-app.get("/profile/:id", (req, res) => Controller.getUser);
+app.get("/", Controller.getProducts);
+app.get("/cart", Controller.getShoppingCartProduct);
+app.get("/profile/:id", Controller.getUser);
+app.get("/product", Controller.getAllAspects);
+
 app.post("/", (req, res) => Controller.saveProductOnShoppingCart);
 app.post("/profile", (req, res) => Controller.saveUser);
 app.post("/product", Controller.saveProduct);
