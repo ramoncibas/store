@@ -4,20 +4,31 @@ import { Title, Button, Input, CardProduct } from "../../components";
 import { BsArrowDown, BsArrowRight } from "react-icons/bs";
 import { CgArrowsExchange } from "react-icons/cg";
 import * as DefautlStyle from "../../assets/style/defaultContainerStyle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { useLocation } from 'react-router-dom';
 import { AiTwotoneDelete } from "react-icons/ai"
 import { BsCheck2All } from "react-icons/bs"
 import CheckBox from "./components/CheckBox"
 import * as S from "./style"
-import { BlockPicker } from 'react-color'
+// import { BlockPicker } from 'react-color'
 
 const Product = () => {
   const { state } = useLocation();
   const initialValue = state || { disabledButton: true };
-  const [ product, setProduct ] = useState(initialValue);
-  console.log(state)
+  const [ product, setProduct ] = useState(initialValue);  
+
+  const [data, setData] = useState([]);
+
+  // Pega os produtos vindos da api
+  useEffect(() => {
+    api.get("/product").then(({ data }) => {      
+      console.log(data)
+      setData(data);
+    });
+  }, []);
+
+  
   /**
    * Atualiza o estado com o nome e o valor vindos do Input
    * @param event evento do elemento
@@ -56,7 +67,7 @@ const Product = () => {
    */
   const handleProduct = (event, data) => {
     event.preventDefault();
-    console.log(data)
+        
     const dataFromProductPage = {
       name: data.name,
       price: data.price,
@@ -140,7 +151,8 @@ const Product = () => {
               label="Marca do Produto"
               type="text"
               placeholder="Marca do Produto"
-              value={product.brand_product_id || ''}
+              // value={product.brand_product_id || ''}
+              value={data.brands[0].name}
               onChange={handleChange}
             />
             <Input
