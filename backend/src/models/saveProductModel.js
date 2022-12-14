@@ -30,7 +30,9 @@ const saveProductModel = function (db, product) {
         ],
         (error) => console.log(error)
       );
-    });
+    });  
+    
+    db.close();
   });
 };
 

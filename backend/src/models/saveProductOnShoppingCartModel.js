@@ -13,10 +13,12 @@ const saveProductOnShoppingCartModel = function (db, product) {
             product.number_of_installments,
             product.free_shipping
           ],
-          (error) => console.log
+          (error) => console.log(error)
         )
       );
     });
+    
+    db.close();
   });
 };
 
