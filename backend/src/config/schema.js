@@ -1,4 +1,4 @@
-const UserSchema = require('../schema/user');
+const UserSchema = require('../schema/users');
 const ProductSchema = require('../schema/product');
 const ShoppingCartSchema = require('../schema/shopping_cart');
 const BrandProductSchema = require('../schema/brand_product');
