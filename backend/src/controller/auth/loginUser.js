@@ -10,13 +10,14 @@ const findUserByEmail = require("../../models/fidUserByEmail");
  * @param {*} res resposta
  */
 const loginUser = async (req, res) => {
+  console.log(req.body)
   try {
     // Get user input
     const { email, password } = req.body;
 
     // Validate if user exist in our database
     if (!(email && password)) {
-      res.status(400).send("All input is required");
+      return res.status(400).send("All input is required");
     }
 
     // Validate if user exist in our database
@@ -33,17 +34,19 @@ const loginUser = async (req, res) => {
 
       // save user token
       user.token = token;
+      user.expiresIn = '1h';
 
-      console.log(user)
-      // user
-      res.status(200).json(user);
+      delete user.id;
+      delete user.password;
+      
+      return res.status(200).json(user);
     } else {
-      res.status(400).send("Invalid Credentials");
+      return res.status(400).send("Invalid Credentials");
     }
 
   } catch (error) {
-    res.send("Something went wrong to Save the Product");
     console.log(error)
+    return res.send("Something went wrong to Login");
   }
 }
 
