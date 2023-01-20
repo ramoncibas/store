@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const uuidv4 = require("../../utils/uuidv4");
 const Database = require("../../config/db");
 const saveUserModel = require("../../models/saveUserModel");
@@ -24,7 +24,8 @@ const registerUser = async (req, res) => {
 
     // Validate user input
     if (!(email && password && first_name && last_name)) {
-      res.status(400).send("All input is required");
+      console.log(email,password,first_name,last_name)
+      return res.status(400).send("All input is required");
     }
 
     // check if user already exist
@@ -32,7 +33,7 @@ const registerUser = async (req, res) => {
     const [oldUser] = await findUserByEmail(Database, { email });
 
     if (oldUser) {
-      res.status(409).send("User Already Exist. Please Login");
+      return res.status(409).send("User Already Exist. Please Login");
     }
 
     encryptedPassword = await bcrypt.hash(password, 10);
@@ -54,12 +55,12 @@ const registerUser = async (req, res) => {
     );
 
     user.token = token;
-
-    res.status(201).json(user)
+    console.log(user)
+    return res.status(201).json(user)
 
   } catch (error) {
-    res.status(404).send(error)
-    res.send("Something went wrong to Save the User", error);
+    console.log("Something went wrong to Save the User", error);
+    return res.status(404).send(error)
   }
 }
 
