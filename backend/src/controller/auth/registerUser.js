@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
 
     // check if user already exist
     // Validate if user exist in our database
-    const [oldUser] = await findUserByEmail(Database, { email });
+    const [oldUser] = await findUserByEmail(Database, email);
 
     if (oldUser) {
       return res.status(409).send("User Already Exist. Please Login");

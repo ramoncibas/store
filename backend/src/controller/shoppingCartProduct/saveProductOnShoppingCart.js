@@ -6,10 +6,15 @@ const saveProductOnShoppingCartModel = require("../../models/saveProductOnShoppi
    * @param {*} req requisição
    * @param {*} res resposta
    */
- const saveProductOnShoppingCart = (req, res) => {
-  const data = req.body;    
+const saveProductOnShoppingCart = (req, res) => {
+  const data = req.body;
+
   console.log(data)
-  try {      
+  if (Object.values(data).includes("")) {
+    return res.send("Todos os campos devem ser preenchidos!");
+  }
+
+  try {
     saveProductOnShoppingCartModel(Database, {
       id: data.id,
       name: data.name,
