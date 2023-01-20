@@ -7,7 +7,7 @@ const getProducts = require("./src/controller/product/getProducts");
 const deleteProdut = require("./src/controller/product/deleteProduct");
 const updateProduct = require("./src/controller/product/updateProduct");
 
-const saveShoppingCartProduct = require("./src/controller/shoppingCartProduct/saveProductOnShoppingCart");
+const saveProductOnShoppingCart = require("./src/controller/shoppingCartProduct/saveProductOnShoppingCart");
 const getShoppingCartProduct = require("./src/controller/shoppingCartProduct/getShoppingCartProduct");
 const deleteShoppingCartProduct = require("./src/controller/shoppingCartProduct/deleteShoppingCartProduct");
 const getAllAspects = require("./src/controller/product/getAllAspects");
@@ -25,7 +25,7 @@ module.exports = {
   getAllAspects,
   saveUser,
   saveProduct,  
-  saveShoppingCartProduct,
+  saveProductOnShoppingCart,
   updateProduct,
   deleteProdut,
   deleteShoppingCartProduct
