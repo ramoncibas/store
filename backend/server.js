@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require("express");
+const cookiesMiddleware = require('universal-cookie-express');
+// const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const fileupload = require("express-fileupload");
 const fs = require("fs");
@@ -17,6 +19,9 @@ const port = process.env.PORT || API_PORT;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookiesMiddleware());
+// app.use(cookieParser());
+
 // app.use(session({secret: 'key'}));
 // app.use(
 //   fileupload({
@@ -25,23 +30,24 @@ app.use(express.urlencoded({ extended: true }));
 //   })
 // );
 
-// Rotas
 
 // Autenticação
 app.post("/login", Controller.loginUser);
 app.post("/register", Controller.registerUser);
 
 app.get("/", Controller.getProducts);
-app.get("/cart", Controller.getShoppingCartProduct);
+app.get("/cart", auth, Controller.getShoppingCartProduct);
 app.get("/profile/:id", auth, Controller.getUser);
-app.get("/product", Controller.getAllAspects);
+app.get("/product", auth, Controller.getAllAspects);
 
-app.post("/", (req, res) => Controller.saveProductOnShoppingCart);
-app.post("/profile", auth, (req, res) => Controller.saveUser);
+app.post("/", Controller.saveProductOnShoppingCart); //error: Error: Route.post() requires a callback function but got a [object Undefined]
+
+app.post("/profile", auth, Controller.saveUser);
 app.post("/product", auth, Controller.saveProduct);
-app.delete("/cart", (req, res) => Controller.deleteShoppingCartProduct);
-app.delete("/product", auth, (req, res) => Controller.deleteProdut);
-app.patch("/product", auth, (req, res) => Controller.updateProduct);
+
+app.delete("/cart", Controller.deleteShoppingCartProduct);
+app.delete("/product", auth, Controller.deleteProdut);
+app.patch("/product", auth, Controller.updateProduct);
 
 app.listen(port, () => {
   console.log(`Server is running - Port: ${port}`);
