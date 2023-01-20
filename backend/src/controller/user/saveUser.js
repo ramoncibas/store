@@ -20,7 +20,7 @@ const saveUser = (req, res) => {
       phone: fields.phone,
       user_picture: fields.user_picture
     }).then(() => {
-      res.redirect("profile");
+      res.redirect("/profile");
     });
   } catch (error) {
     console.log(error);
