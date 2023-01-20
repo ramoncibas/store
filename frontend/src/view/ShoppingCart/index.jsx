@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
+import { useCookies } from 'react-cookie';
+import { Row, Col } from "react-bootstrap";
 import { Container } from "../../containers/Container";
 import { Title } from "../../components";
-import { Row, Col } from "react-bootstrap";
 import Card from "./Card";
 import api from "../../utils/api";
 import { ProductIsNull } from "./style";
 
 const ShoppingCart = () => {
   const [products, setProducts] = useState([]);
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
 
   // Pega os produtos salvos pelo usuario vindos da api
   useEffect(() => {
-    api.get("/cart").then(({ data }) => {
+    api.get("/cart", {
+      headers: { "x-access-token": cookies.access_token, }
+    }).then(({ data }) => {
       setProducts(data);
-    });
+    })
 
   }, []);
 
@@ -38,10 +42,10 @@ const ShoppingCart = () => {
           // Valida se o usuário já adicionou algum produto no carrinho
           products.length
             ? products.map((product, index) => (
-              <Col key={index}>
-                <Card {...product} />
-              </Col>
-            ))
+                <Col key={index}>
+                  <Card {...product} />
+                </Col>
+              ))
             : <ShoppingCartIsNull />
         }
       </Row>

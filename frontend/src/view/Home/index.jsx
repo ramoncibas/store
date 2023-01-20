@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { Title, CardProduct } from "../../components";
 import { Container } from "../../containers/Container";
-import {
-  Banner, Main, Aside, Row, Col
-} from "./style";
-import api from "../../utils/api";
+import { Banner, Main, Aside, Row, Col } from "./style";
 import Filter from "./components/Filter";
+import api from "../../utils/api";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
+  console.log(cookies, 'cookie from front-end')
 
   // Pega os produtos vindos da api
   useEffect(() => {
