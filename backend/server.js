@@ -36,19 +36,21 @@ app.post("/login", Controller.loginUser);
 app.post("/register", Controller.registerUser);
 
 app.get("/", Controller.getProducts);
-app.get("/cart", auth, Controller.getShoppingCartProduct);
+app.get("/product/aspect", auth, Controller.getAllAspects);
+app.get("/product/:id",  auth, Controller.getProductById);
 app.get("/profile/:id", auth, Controller.getUser);
-app.get("/product", auth, Controller.getAllAspects);
+app.get("/cart", Controller.getShoppingCartProduct);
 
-app.post("/", Controller.saveProductOnShoppingCart); //error: Error: Route.post() requires a callback function but got a [object Undefined]
-
-app.post("/profile", auth, Controller.saveUser);
+app.post("/", Controller.saveProductOnShoppingCart);
 app.post("/product", auth, Controller.saveProduct);
+app.post("/profile", auth, Controller.saveUser); // autenticado somente para admins adicionarem e editar usuários (post / patch)
+
+app.patch("/product", auth, Controller.updateProduct);
 
 app.delete("/cart", Controller.deleteShoppingCartProduct);
 app.delete("/product", auth, Controller.deleteProdut);
-app.patch("/product", auth, Controller.updateProduct);
 
-app.listen(port, () => {
-  console.log(`Server is running - Port: ${port}`);
+
+app.listen(5000, () => {
+  console.log("Server is running - Port: 5000...");
 });
