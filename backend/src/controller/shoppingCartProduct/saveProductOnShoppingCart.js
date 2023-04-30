@@ -7,22 +7,35 @@ const saveProductOnShoppingCartModel = require("../../models/saveProductOnShoppi
    * @param {*} res resposta
    */
 const saveProductOnShoppingCart = (req, res) => {
-  const data = req.body;
-
-  console.log(data)
-  if (Object.values(data).includes("")) {
-    return res.send("Todos os campos devem ser preenchidos!");
-  }
+  const {
+    id,
+    name,
+    size,
+    color,
+    price,
+    product_picture,    
+    discount_percentage,
+    number_of_installments,
+    free_shipping,
+    brand_product_id,
+    gender_product_id,
+    category_product_id
+  } = req.body;
 
   try {
     saveProductOnShoppingCartModel(Database, {
-      id: data.id,
-      name: data.name,
-      product_picture: data.product_picture,
-      price: data.price,
-      discount_percentage: data.discount_percentage,
-      number_of_installments: data.number_of_installments,
-      free_shipping: data.free_shipping
+      id,
+      name,
+      price,
+      size,
+      color,
+      product_picture,
+      discount_percentage,
+      number_of_installments,
+      free_shipping,
+      brand_product_id,
+      gender_product_id,
+      category_product_id
     });
 
   } catch (error) {

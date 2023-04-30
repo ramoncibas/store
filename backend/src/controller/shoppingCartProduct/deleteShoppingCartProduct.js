@@ -7,7 +7,7 @@ const deleteShoppingCartProductModel = require("../../models/deleteShoppingCartP
  * @param {*} res resposta   
  */
 const deleteShoppingCartProduct = (req, res) => {
-  const id = req.body.id;
+  const { id } = req.body;
   try {
     deleteShoppingCartProductModel(Database, id).then((product) => res.send(product));
   } catch (error) {
