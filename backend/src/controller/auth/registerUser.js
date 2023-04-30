@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const uuidv4 = require("../../utils/uuidv4");
+const { randomUUID } = require('crypto');
 const Database = require("../../config/db");
 const saveUserModel = require("../../models/saveUserModel");
-const findUserByEmail = require("../../models/fidUserByEmail");
+const findUserBy = require("../../models/fidUserBy");
 
 /**
  * Registra um usuário e realiza o login do mesmo
@@ -12,7 +12,6 @@ const findUserByEmail = require("../../models/fidUserByEmail");
  */
 const registerUser = async (req, res) => {
   try {
-    // Get user input
     const {
       first_name,
       last_name,
@@ -22,16 +21,14 @@ const registerUser = async (req, res) => {
       user_picture
     } = req.body;
 
-    // Validate user input
     if (!(email && password && first_name && last_name)) {
-      console.log(email,password,first_name,last_name)
       return res.status(400).send("All input is required");
     }
 
-    // check if user already exist
-    // Validate if user exist in our database
-    const [oldUser] = await findUserByEmail(Database, email);
+    const findUser = new findUserBy();    
+    const [oldUser] = await findUser.email(email);
 
+    // check if user already exist
     if (oldUser) {
       return res.status(409).send("User Already Exist. Please Login");
     }
@@ -39,7 +36,7 @@ const registerUser = async (req, res) => {
     encryptedPassword = await bcrypt.hash(password, 10);
 
     const [user] = await saveUserModel(Database, {
-      uuid: uuidv4(),
+      uuid: randomUUID(),
       first_name,
       last_name,
       email: email.toLowerCase(),
@@ -47,7 +44,7 @@ const registerUser = async (req, res) => {
       phone,
       user_picture
     })
-
+    
     const token = jwt.sign(
       { user_id: user.id, email },
       process.env.TOKEN_KEY,
@@ -65,3 +62,4 @@ const registerUser = async (req, res) => {
 }
 
 module.exports = registerUser;
+

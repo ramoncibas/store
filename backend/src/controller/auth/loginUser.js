@@ -1,8 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const Database = require("../../config/db");
-const findUserByEmail = require("../../models/fidUserByEmail");
+const findUserBy = require("../../models/fidUserBy");
 
 /**
  * Realiza a autenticação de um usuário no banco
@@ -12,27 +11,24 @@ const findUserByEmail = require("../../models/fidUserByEmail");
 const loginUser = async (req, res) => {
   console.log(req.body)
   try {
-    // Get user input
     const { email, password } = req.body;
 
-    // Validate if user exist in our database
     if (!(email && password)) {
       return res.status(400).send("All input is required");
     }
 
-    // Validate if user exist in our database
-    const [user] = await findUserByEmail(Database, email);
+    const findUser = new findUserBy();
+    const [user] = await findUser.email(email);
 
+    console.log('usuario:' ,user)
     if (user && (await bcrypt.compare(password, user.password))) {
 
-      // Create token
       const token = jwt.sign(
         { user_id: user.id, email },
         process.env.TOKEN_KEY,
         { expiresIn: "1h" }
       );
 
-      // save user token
       user.token = token;
       user.expiresIn = '1h';
 
