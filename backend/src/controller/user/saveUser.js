@@ -8,7 +8,8 @@ const saveUserModel = require("../../models/saveUserModel");
  */
 const saveUser = (req, res) => {
   const fields = req.body;
-
+  console.log(fields)
+  
   if (Object.values(fields).includes("")) {
     return res.send("Todos os campos devem ser preenchidos!");
   }
@@ -20,7 +21,8 @@ const saveUser = (req, res) => {
       phone: fields.phone,
       user_picture: fields.user_picture
     }).then(() => {
-      res.redirect("/profile");
+      res.status(201);
+      // res.redirect("/profile");
     });
   } catch (error) {
     console.log(error);

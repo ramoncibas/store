@@ -8,7 +8,7 @@ const updateProductModel = require("../../models/updateProductModel");
  */
 const updateProduct = (req, res) => {
   const fields = req.body;
-
+  
   console.log(fields.discount_percentage, 'chegou')
   if (Object.values(fields).includes("")) {
     return res.send("Todos os campos devem ser preenchidos!");
