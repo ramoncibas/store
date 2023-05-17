@@ -6,16 +6,20 @@ import { Title, Input, Button } from "../../components";
 import * as DefautlStyle from "../../assets/style/defaultContainerStyle";
 import DefaultImage from "../../assets/img/default-image-user.png";
 import api from "../../utils/api";
+import { windowWidth } from "../../utils/checkWindowWidth";
 
 const UserProfile = () => {
   const [user, setUser] = useState({});  
+  
   // Pega o ususario que estiver salvo
   useEffect(() => {
     api.get("/profile/1").then(({ data }) => {
       const user = {...data}
       if(user) {setUser(user)}
+      console.log(data)
     });
   }, []);
+  
 
   /**
    * Atualiza o estado com o nome e o valor vindos do Input
@@ -32,13 +36,17 @@ const UserProfile = () => {
    * Chama a api para salvar os dados no banco via post
    * @param data dados do produto a serem salvos
    */
-  const handleSaveUser = (data) => {
-    api.post("/profile", data).then((res) => {
-      console.log(res.data);
-    });
-    console.log(data);
-  };
-  const windowWidth = window.innerWidth <= 1094 ? true : false;
+  const handleSaveUser = (event) => {
+    event.preventDefault();
+
+    const data = user;
+    
+    api.post("/profile", data).then(({res}) => {
+      console.log(res);
+    })
+    // if (res.status === 201) then redirect to home with token ja no cookie, e deixar o usuario logado
+    // .then(window.location.href = "/");
+  };  
 
   return (
     <>
@@ -92,10 +100,8 @@ const UserProfile = () => {
                 />
               </Form.Group> */}
               <Button
-                onClick={() => {
-                  handleSaveUser(user);
-                }}
-                background="04AFD4"
+                onClick={handleSaveUser}
+                background="#04AFD4"
               >
                 Salvar Informações
               </Button>
@@ -105,7 +111,7 @@ const UserProfile = () => {
             <DefautlStyle.PreviewContainer>
               <div className="content">
                 <span>IMAGE PREVIEW</span>
-                {windowWidth ? (
+                {windowWidth(1024) ? (
                   <BsArrowDown size={72} />
                 ) : (
                   <BsArrowRight size={72} />
