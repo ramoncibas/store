@@ -1,10 +1,10 @@
 import { Row, Col } from "react-bootstrap";
 import { MdAddShoppingCart } from "react-icons/md";
-import { Button } from "../../../components";
+import { Button } from "../../../../../../components";
 import * as S from "./style";
-import { formatCurrency } from "../../../utils/formatCurrency";
-import DefaultProductImage from "../../../assets/img/default-image-product.png";
-import api from "../../../utils/api";
+import { formatCurrency } from "../../../../../../utils/formatCurrency";
+import DefaultProductImage from "../../../../../../assets/img/default-image-product.png";
+import api from "../../../../../../utils/api";
 
 const Card = (props) => {
   // Arruma o valor do numero de parcelas
@@ -14,10 +14,16 @@ const Card = (props) => {
 
   const handleDeleteItem = (event, id) => {
     event.preventDefault();
-    api.delete("/cart", {
-      headers: { Authorization: "*" },
-      data: { id }
-    }).then(window.location.href = '/cart')
+
+    // Mostrar um modal aqui
+    const sureDelete = prompt('Deseja meso remover esse produto?')
+
+    if (sureDelete) {
+      api.delete("/cart", {
+        headers: { Authorization: "*" },
+        data: { id }
+      }).then(window.location.href = '/cart') 
+    }    
   }
   return (
     <S.Container>

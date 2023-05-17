@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useCookies } from 'react-cookie';
 import { Row, Col } from "react-bootstrap";
-import { Container } from "../../containers/Container";
-import { Title } from "../../components";
+import { Container } from "../../../../../containers/Container";
+import { Title } from "../../../../../components";
 import Card from "./Card";
-import api from "../../utils/api";
 import { ProductIsNull } from "./style";
+import api from "../../../../../utils/api";
 
 const ShoppingCart = () => {
   const [products, setProducts] = useState([]);
