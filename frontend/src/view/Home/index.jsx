@@ -9,12 +9,19 @@ import api from "../../utils/api";
 const Home = () => {
   const [products, setProducts] = useState([]);
 
-  const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
-  console.log(cookies, 'cookie from front-end')
+  const [cookies] = useCookies(['access_token']);
 
   // Pega os produtos vindos da api
   useEffect(() => {
-    api.get("/").then(({ data }) => {
+    const header = cookies.access_token && {
+      headers: {
+          Accept: 'version=1',
+          'x-access-token': `${cookies.access_token}`,
+        }
+      };
+      
+    
+    api.get("/", header || null).then(({ data }) => {
       setProducts(data);
     });
   }, []);

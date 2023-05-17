@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { backgroundDiscount } from "../../utils/backgroundDiscount";
 import * as S from "./style";
@@ -6,12 +5,15 @@ import Button from "../Button";
 import DefaultProductImage from "../../assets/img/default-image-product.png";
 import { MdAddShoppingCart, MdEditNote } from "react-icons/md";
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
-function CardProduct(props) {
-  console.log(props)
+function CardProduct(props) {  
   const navigate = useNavigate();
-  
+  const { pathname }  = useLocation();
+
+  let disabledButton;
+  pathname !== '/' ? disabledButton = true : disabledButton = false;
+
   // Deixando o preco do produto com o valor atualizado
   const priceWithdiscount = props.price
     ? Number(props.price * props.discount_percentage) / 100
@@ -20,7 +22,7 @@ function CardProduct(props) {
   // Gerando o novo valor do Produto
   const newPriceProduct = Number(props.price) - priceWithdiscount;
 
-  // Verificando se tiver discounto, entao retorna o novo valor com disconto, se não o valor inteiro
+  // Verificando se tiver desconto, entao retorna o novo valor com disconto, se não o valor inteiro
   const priceHasDiscount = props.discount_percentage
     ? newPriceProduct
     : Number(props.price);
@@ -30,31 +32,20 @@ function CardProduct(props) {
     priceHasDiscount / props.number_of_installments
   );
 
-  // Quando o usuário usuário admin for editar um produto, essas propriedades passaram como propriedades para esse mesmo componente '-', habilitando algumas funcionalidade na view de /product
-  const handleEdit = (product) => {    
-    // Add TypeScript
-    const data = {
-      id: product.id,      
-      name: product.name,
-      number_of_installments: product.number_of_installments,
-      discount_percentage: product.discount_percentage,
-      free_shipping: product.free_shipping,
-      price: product.price,
-      product_picture: product.product_picture,
-      disabledButton: true,
-      displayEditBtn: 'none'
-    }
-    navigate(`/product?id=${product.id}`, { state: data });
+  // Só sera possivel editar um produto caso o "userType" for "admin"
+  const handleEdit = (product) => {
+    navigate(`/product/${product.id}`);
     // window.sessionStorage.setItem('product-to-edit', JSON.stringify(data))
   }
 
   const hasDiscount = props.discount_percentage > 0
-  const hasFreeShipping = props.free_shipping === true || props.free_shipping === 1
+  const hasFreeShipping = props.free_shipping    
 
   const admin = true
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [props]);
+  // }, [props]);
+  
   return (
     <S.Container>
       <S.Row
@@ -83,7 +74,7 @@ function CardProduct(props) {
                   width: '2.75rem',
                   color: '#000',
                   fontSize: '1.5rem',
-                  display: props.displayEditBtn
+                  display: disabledButton && 'none'
                 }}
               >
                 {/* <Link to={{
@@ -143,7 +134,7 @@ function CardProduct(props) {
             background="#E5E5E5"
             icon={true}
             onClick={() => props.onClick(props)}
-            disabled={props.disabledButton}
+            disabled={disabledButton}
           >
             <MdAddShoppingCart color="000" />
           </Button>

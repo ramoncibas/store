@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCookies } from 'react-cookie'
 import { Form, FloatingLabel } from "react-bootstrap";
 
