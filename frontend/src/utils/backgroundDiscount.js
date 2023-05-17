@@ -4,16 +4,18 @@
  * @returns uma cor hexadecima sem "#"
  */
 export const backgroundDiscount = (discount) => {
-  let color = {
+  const color = {
     biggestDiscount: "FF705A",
     bigDiscount: "FF834E",
     normalDiscount: "FFBE17",
   };
-  let background =
+
+  const background =
     discount >= 45
       ? color.biggestDiscount
       : discount >= 35
       ? color.bigDiscount
       : color.normalDiscount;
+      
   return background;
 };
