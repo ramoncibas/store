@@ -2,8 +2,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./view/Home";
 import UserProfile from "./view/UserProfile";
-import ProductPage from "./view/Product/";
-import ShoppingCart from "./view/ShoppingCart";
+import ProductPage from "./view/Product/pages/ProductDetails";
+import ShoppingCart from "./view/Product/pages/ProductCart/ShoppingCart";
+
 import Login from "./view/Login";
 import Register from "./view/Register";
 
