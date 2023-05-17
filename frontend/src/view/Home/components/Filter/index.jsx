@@ -1,24 +1,27 @@
+import { useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap"
 import { Container } from "./style"
+import api from "../../../../utils/api"
 
 const Filter = () => {
+  const [aspects, setAspects] = useState()
 
   const product = {
-    name: "2",
-    price: "2",
-
-
-    // Pegar informações do backend
     dessNumber: [45, 43, 42, 39, 46].sort(),
-    category: ["Calçados", "Roupas", "Bolsas e Acessórios", "Esporte"],
-    gender: ["Feminino", "Masculino", "Infantil"],
-    brand: ["Nike", "Adidas", "Puma", "Gucci"],
     color: ["Azul", "Preto", "Branco"],    
   }
 
-  const { dessNumber, brand, color, gender, category } = product
+  const { dessNumber, color } = product
+  
   // REFERENCIA DE ESTIIZAÇÃO
   // https://cdn.shopify.com/app-store/listing_images/f44b43e81ef89598c0de05c8ea6dcf80/desktop_screenshot/CKCezOGbqPECEAE=.png?height=360&width=640  
+
+  useEffect(() => {
+    api.get("/product/aspect").then(({ data }) => {
+      const { brands, categories, genders } = data;      
+      setAspects({ brands, categories, genders });
+    });
+  }, []);
 
   //adicionar scroll nos componentes genero, categoria, etc..
   return (
@@ -27,10 +30,10 @@ const Filter = () => {
         <p>GÊNERO</p>
         <ul className="ul-gender">
           {
-            gender.map((genderName) => (
+            aspects?.genders?.map(({ name }) => (
               <li>
-                <input type="checkbox" name="" id="" className="items-size" value={genderName} key={genderName} />
-                <label htmlFor="input">{genderName}</label>
+                <input type="checkbox" name="" id="" className="items-size" value={name} key={name} />
+                <label htmlFor="input">{name}</label>
               </li>
             ))
           }
@@ -40,10 +43,10 @@ const Filter = () => {
         <p>CATEGORIA</p>
         <ul className="ul-category">
           {
-            category.map((categoryName) => (
+            aspects?.categories?.map(({ name }) => (
               <li>
-                <input type="checkbox" name="" id="" className="items-size" value={categoryName} key={categoryName} />
-                <label htmlFor="input">{categoryName}</label>
+                <input type="checkbox" name="" id="" className="items-size" value={name} key={name} />
+                <label htmlFor="input">{name}</label>
               </li>
             ))
           }
@@ -78,10 +81,10 @@ const Filter = () => {
         </InputGroup>
         <ul className="ul-brad">
           {
-            brand.map((brandName) => (
+            aspects?.brands?.map(({ name }) => (
               <li className="">
-                <input type="checkbox" name="" id="" className="items-size" value={brandName} key={brandName} />
-                <label htmlFor="">{brandName}</label>
+                <input type="checkbox" name="" id="" className="items-size" value={name} key={name} />
+                <label htmlFor="">{name}</label>
               </li>
             ))
           }
