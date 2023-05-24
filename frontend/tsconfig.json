@@ -5,7 +5,7 @@
       "dom",
       "dom.iterable",
       "esnext"
-    ],
+    ],    
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,10 +18,22 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "downlevelIteration": true,
+    "paths": {
+      "assets/*": ["src/assets/*"],
+      "components/*": ["src/shared/*"], 
+      "normalizers": ["src/normalizers"],
+      "tokens": ["src/tokens/"],
+      "hooks/*": ["src/view/Product/hooks/*"],
+      "utils/*": ["src/utils/*"],
+      "lytics": ["src/lytics/"],
+      "view/*": ["src/view/*"],
+    }
   },
   "include": [
-    "src"
+    "src/**/*",
   ],
   "exclude": [
     "./node_modules/**/*"
