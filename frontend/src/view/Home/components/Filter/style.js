@@ -40,3 +40,7 @@ export const Container = styled.div`
     border-bottom: 2px solid #dcdcdc;
   }
 `;
+
+export const Filtered = styled.div`
+  .content {}
+`;
