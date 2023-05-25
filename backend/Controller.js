@@ -13,6 +13,7 @@ const getShoppingCartProduct = require("./src/controller/shoppingCartProduct/get
 const deleteShoppingCartProduct = require("./src/controller/shoppingCartProduct/deleteShoppingCartProduct");
 
 const getAllAspects = require("./src/controller/product/getAllAspects");
+const getFilteredProduct = require("./src/controller/product/getFilteredProduct");
 
 const loginUser = require("./src/controller/auth/loginUser");
 const registerUser = require("./src/controller/auth/registerUser");
@@ -31,5 +32,6 @@ module.exports = {
   saveProductOnShoppingCart,
   updateProduct,
   deleteProdut,
-  deleteShoppingCartProduct
+  deleteShoppingCartProduct,
+  getFilteredProduct
 };
