@@ -36,7 +36,8 @@ app.post("/login", Controller.loginUser);
 app.post("/register", Controller.registerUser);
 
 app.get("/", Controller.getProducts);
-app.get("/product/aspects", auth, Controller.getAllAspects);
+app.get("/filter", Controller.getFilteredProduct);
+app.get("/product/aspects", Controller.getAllAspects);
 app.get("/product/:id",  auth, Controller.getProductById);
 app.get("/profile/:id", auth, Controller.getUser);
 app.get("/cart", Controller.getShoppingCartProduct);

@@ -8,7 +8,7 @@ const getProductByIdModel = require("../../models/getProductByIdModel");
  * @returns uma coleção de produtos
  */
 const getProductById = (req, res) => {  
-  const { id } = req.params
+  const { id } = req.query
     
   try {
     getProductByIdModel(Database, id).then((product) => res.send(product));
