@@ -18,6 +18,12 @@ const fetchProductAspects = (): Promise<AxiosResponse<ProductAspects>> =>
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
+const fetchFilterProduct = (query: string): Promise<AxiosResponse<Product[]>> => 
+  api.get("/filter", {
+    headers: { Accept: "version=1", "x-access-token": getAcessToken() },
+    params: query,
+  });  
+
 const fetchBuyProduct = (product: Product): Promise<AxiosPromise> => 
   api.post("/", product, {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
@@ -61,4 +67,5 @@ export {
   fetchDeleteProduct,
   fetchProductCartProduct,
   fetchDeleteShoppingCartProduct,
-}
+  fetchFilterProduct,
+};

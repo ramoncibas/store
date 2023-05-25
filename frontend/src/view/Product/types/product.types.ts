@@ -58,10 +58,22 @@ export interface CategoryProduct {
   name: string;
 }
 
+export interface ColorsProduct {
+  id: number;
+  name: string;
+}
+
+export interface SizesProduct {
+  id: number;
+  name: string;
+}
+
 export interface ProductAspects {
   brands: BrandProduct[];
   genders: GenderProduct[];
   categories: CategoryProduct[];
+  colors: ColorsProduct[];
+  sizes: SizesProduct[];
 }
 
 export interface ShoppingCart extends Product {
