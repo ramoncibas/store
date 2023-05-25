@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
-import { Input } from "../../../../../../../../components";
-import { InputProps } from "../../../../../../types";
+import { Input } from "shared";
+import { InputProps } from "view/Product/types";
 
 const InputList = ({ fields }: { fields: InputProps[] }): JSX.Element => (
   <>

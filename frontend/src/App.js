@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { NavBar } from "./components";
+import { NavBar } from "./shared";
 import Router from "./routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Filter from "./view/Home/components/Filter";

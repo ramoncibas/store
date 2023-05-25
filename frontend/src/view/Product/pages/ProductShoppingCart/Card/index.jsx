@@ -1,10 +1,10 @@
 import { Row, Col } from "react-bootstrap";
 import { MdAddShoppingCart } from "react-icons/md";
-import { Button } from "../../../../../../components";
+import { Button } from "shared";
 import * as S from "./style";
-import { formatCurrency } from "../../../../../../utils/formatCurrency";
-import DefaultProductImage from "../../../../../../assets/img/default-image-product.png";
-import api from "../../../../../../utils/api";
+import formatCurrency from "utils/formatCurrency";
+import api from "utils/api";
+import DefaultProductImage from "assets/img/default-image-product.png";
 
 const Card = (props) => {
   // Arruma o valor do numero de parcelas

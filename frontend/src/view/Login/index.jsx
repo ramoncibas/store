@@ -4,7 +4,7 @@ import { Form, FloatingLabel } from "react-bootstrap";
 
 import api from "../../utils/api";
 import { Container } from "./style";
-import { Button, Input } from "../../components";
+import { Button, Input } from "../../shared";
 
 const Login = () => {
 

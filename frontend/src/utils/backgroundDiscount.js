@@ -3,7 +3,7 @@
  * @param discount numero inteiro para desconto no produto
  * @returns uma cor hexadecima sem "#"
  */
-export const backgroundDiscount = (discount) => {
+const backgroundDiscount = (discount) => {
   const color = {
     biggestDiscount: "FF705A",
     bigDiscount: "FF834E",
@@ -19,3 +19,5 @@ export const backgroundDiscount = (discount) => {
       
   return background;
 };
+
+export default backgroundDiscount;

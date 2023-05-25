@@ -3,9 +3,11 @@
  * @param value inteiro
  * @returns valor formatado, ex: R$ 0.00
  */
-export function formatCurrency(value) {
+function formatCurrency(value) {
   return Number(value).toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
   });
 }
+
+export default formatCurrency;

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { InputProps, Product, ProductById } from "../types";
 import {
   useProductContext,
-} from "../context/productContext.context";
+} from "../../../context/productContext.context";
 
 const useProduct = (): any => {
   const { id: productID } = useParams();
@@ -28,7 +28,6 @@ const useProduct = (): any => {
     handleSaveNewProduct,
   } = useProductContext();
 
-  // console.log(isLoadingProductById)
   useEffect(() => {
     if (productID) {
       handleGetProductById(productID);

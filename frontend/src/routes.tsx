@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./view/Home";
+import Home from "./view/Home/Home";
 import UserProfile from "./view/UserProfile";
 import ProductPage from "./view/Product/pages/ProductDetails";
-import ShoppingCart from "./view/Product/pages/ProductCart/ShoppingCart";
+import ShoppingCart from "./view/Product/pages/ProductShoppingCart";
 
 import Login from "./view/Login";
 import Register from "./view/Register";
@@ -13,6 +13,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/filter" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<UserProfile />} />

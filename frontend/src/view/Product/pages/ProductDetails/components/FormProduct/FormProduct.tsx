@@ -2,16 +2,13 @@ import React, { FC } from "react";
 // import { BlockPicker } from "react-color";
 
 import { Form } from "react-bootstrap";
-import { Button } from "../../../../../../components";
 
-import { AiTwotoneDelete } from "react-icons/ai";
 import { BsCheck2All } from "react-icons/bs";
 import CheckBox from "../CheckBox";
 import * as S from "../../../../style";
 import useProduct from "../../../../hooks/useProduct.hook";
-import { CgArrowsExchange } from "react-icons/cg";
-import InputList from "./components/InputList/InputList";
-import FormButtons from "./components/FormButtons/FormButtons";
+import InputList from "./components/InputList";
+import Buttons from "./components/Buttons";
 
 const FormProduct: FC = () => {
   const {
@@ -134,7 +131,7 @@ const FormProduct: FC = () => {
           />
         </Form.Group> 
       */}
-      <FormButtons />
+      <Buttons />
     </Form>
   );
 };

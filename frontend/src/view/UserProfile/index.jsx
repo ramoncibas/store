@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { BsArrowRight, BsArrowDown } from "react-icons/bs";
 import { Form } from "react-bootstrap";
-import { Container } from "../../containers/Container";
-import { Title, Input, Button } from "../../components";
-import * as DefautlStyle from "../../assets/style/defaultContainerStyle";
-import DefaultImage from "../../assets/img/default-image-user.png";
-import api from "../../utils/api";
-import { windowWidth } from "../../utils/checkWindowWidth";
+import { Container, Title, Input, Button } from "shared";
+import * as DefautlStyle from "assets/style/defaultContainerStyle";
+import DefaultImage from "assets/img/default-image-user.png";
+import api from "utils/api";
+import windowWidth from "utils/windowWidth";
 
 const UserProfile = () => {
   const [user, setUser] = useState({});  
