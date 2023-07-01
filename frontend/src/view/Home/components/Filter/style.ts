@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+interface FilterProps {
+  open: boolean;
+}
 
 export const Container = styled.div` 
   p {
@@ -41,6 +44,5 @@ export const Container = styled.div`
   }
 `;
 
-export const Filtered = styled.div`
-  .content {}
-`;
+export const FilterContent = styled.div<FilterProps>``;
+export const FilterHeader = styled.div``;
