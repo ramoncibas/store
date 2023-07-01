@@ -1,8 +1,27 @@
-import { FC } from "react";
+import { ChangeEventHandler, FC } from "react";
+import {
+  CheckBoxContainer,
+  InputCheckBox,
+  LabelCheckbox,
+} from "./style";
 
-const CheckBox: FC<any> = ({ name, value, checked, label, onChange }) => (
-  <li>
-    <input
+interface CheckBoxProps {
+  name: string;
+  value: string;
+  checked: boolean;
+  label: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+}
+
+const CheckBox: FC<CheckBoxProps> = ({
+  name,
+  value,
+  checked,
+  label,
+  onChange,
+}): JSX.Element => (
+  <CheckBoxContainer>
+    <InputCheckBox
       type="checkbox"
       name={name}
       id={name}
@@ -12,9 +31,8 @@ const CheckBox: FC<any> = ({ name, value, checked, label, onChange }) => (
       onChange={onChange}
       data-label={label}
     />
-    <label htmlFor="input">{label}</label>
-  </li>
-)
-
+    <LabelCheckbox htmlFor="input">{label}</LabelCheckbox>
+  </CheckBoxContainer>
+);
 
 export default CheckBox;
