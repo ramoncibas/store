@@ -9,7 +9,7 @@ import {
   fetchDeleteProduct,
   fetchBuyProduct,
   fetchFilterProduct,
-} from "../service/productApi";
+} from "./fetchProduct";
 
 const useProductService = () => {
   const [fetchProductState, fetchProductRequest] = useAsyncFn(fetchProduct);
