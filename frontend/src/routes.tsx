@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./view/Home/Home";
-import UserProfile from "./view/UserProfile";
+import UserProfile from "./view/Customer/pages/Profile";
 import ProductPage from "./view/Product/pages/ProductDetails";
 import ShoppingCart from "./view/Product/pages/ProductShoppingCart";
 
-import Login from "./view/Login";
-import Register from "./view/Register";
+import Login from "./view/Customer/pages/Login";
+import Register from "./view/Customer/pages/Register";
 
 function Router() {
   return (
