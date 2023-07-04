@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useCookies } from 'react-cookie'
 import { Form, FloatingLabel } from "react-bootstrap";
 
-import api from "../../utils/api";
 import { Container } from "./style";
-import { Button, Input } from "../../shared";
+import { Button, Input } from "shared";
 
 const Register = () => {
 
@@ -37,22 +36,22 @@ const Register = () => {
       user_picture: credentials.user_picture
     }
 
-    api.post("/register", userData).then((response) => {
-      const { data, status } = response
-      if (status) {
-        let expires = new Date();
-        expires.setTime(expires.getTime() + (data.expiresIn * 1000));
-        setCookie("access_token", data.token, { path: "/", expires });
+    // api.post("/register", userData).then((response) => {
+    //   const { data, status } = response
+    //   if (status) {
+    //     let expires = new Date();
+    //     expires.setTime(expires.getTime() + (data.expiresIn * 1000));
+    //     setCookie("access_token", data.token, { path: "/", expires });
 
-        alert("Usuario criado com sucesso!")
+    //     alert("Usuario criado com sucesso!")
 
-        window.location.href = '/'
-      }
-    }).catch(({ response }) => {
-      if (response.status >= 400) {
-        alert('Usuário não encontrado')
-      }
-    })
+    //     window.location.href = '/'
+    //   }
+    // }).catch(({ response }) => {
+    //   if (response.status >= 400) {
+    //     alert('Usuário não encontrado')
+    //   }
+    // })
   }
 
   return (

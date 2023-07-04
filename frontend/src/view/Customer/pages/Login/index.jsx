@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useCookies } from 'react-cookie'
 import { Form, FloatingLabel } from "react-bootstrap";
 
-import api from "../../utils/api";
+import api from "../../../../utils/api";
 import { Container } from "./style";
-import { Button, Input } from "../../shared";
+import { Button, Input } from "../../../../shared";
 
 const Login = () => {
 

@@ -8,7 +8,7 @@ import CheckBox from "../CheckBox";
 import * as S from "../../../../style";
 import useProduct from "../../../../hooks/useProduct.hook";
 import InputList from "./components/InputList";
-import Buttons from "./components/Buttons";
+import { Buttons } from "./components/Buttons";
 
 const FormProduct: FC = () => {
   const {

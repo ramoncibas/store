@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+interface FilterProps {
+  open: boolean;
+}
 
 export const Container = styled.div` 
   p {
@@ -38,5 +41,23 @@ export const Container = styled.div`
 
     border-radius: 2px;
     border-bottom: 2px solid #dcdcdc;
+  }
+`;
+
+export const FilterContent = styled.div<FilterProps>`
+  padding: 16px 0;
+  display: ${({ open }) => open ? 'block' : 'none'};
+`;
+
+export const FilterHeader = styled.div`
+  button {
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  span {
+    margin-left: 20px;
   }
 `;

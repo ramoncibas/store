@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import useProductService from "../service/useProductService.service";
+import useProductService from "../view/Product/service/useProductService.service";
 import { ProductContext } from "./productContext.context";
 
 const ProductContextProvider: React.FunctionComponent<any> = ({
@@ -16,6 +16,7 @@ const ProductContextProvider: React.FunctionComponent<any> = ({
     handleDeleteProduct,
     handleEditProduct,
     handleSaveNewProduct,
+    handleBuyProduct,
     isLoadingProduct,
     isLoadingEdit,
     isLoadingProductById,
@@ -30,7 +31,7 @@ const ProductContextProvider: React.FunctionComponent<any> = ({
   };
   
   useEffect(() => {
-    handleGetProductAspects();
+    handleInitialRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,6 +53,7 @@ const ProductContextProvider: React.FunctionComponent<any> = ({
         handleDeleteProduct,
         handleEditProduct,
         handleSaveNewProduct,
+        handleBuyProduct
       }}
     >
       {children}

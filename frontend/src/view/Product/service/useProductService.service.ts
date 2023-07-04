@@ -7,7 +7,9 @@ import {
   fetchSaveNewProduct,
   fetchEditProduct,
   fetchDeleteProduct,
-} from "../service/productApi";
+  fetchBuyProduct,
+  fetchFilterProduct,
+} from "./fetchProduct";
 
 const useProductService = () => {
   const [fetchProductState, fetchProductRequest] = useAsyncFn(fetchProduct);
@@ -21,6 +23,10 @@ const useProductService = () => {
     useAsyncFn(fetchProductAspects);
   const [fetchSaveNewProductState, fetchSaveNewProductRequest] =
     useAsyncFn(fetchSaveNewProduct);
+  const [fetchBuyProductState, fetchBuyProductRequest] =
+    useAsyncFn(fetchBuyProduct);
+
+  const [fetchFilterProductState, fetchFilterProductRequest] = useAsyncFn(fetchFilterProduct);
 
   const products = fetchProductState.value?.data || null;
   const aspects = fetchProductAspectsState.value?.data || null;
@@ -30,6 +36,8 @@ const useProductService = () => {
     products,
     aspects,
     productByIdData,
+    filteredProduct: fetchFilterProductState.value?.data || null,
+    buyProductResponse: fetchBuyProductState,
     isLoadingProduct: fetchProductState.loading,
     isLoadingEdit: fetchEditProductState.loading,
     isLoadingProductById: fetchProductByIdState.loading,
@@ -42,6 +50,8 @@ const useProductService = () => {
     handleDeleteProduct: fetchDeleteProductRequest,
     handleEditProduct: fetchEditProductRequest,
     handleSaveNewProduct: fetchSaveNewProductRequest,
+    handleBuyProduct: fetchBuyProductRequest,
+    handleFilterProduct: fetchFilterProductRequest,
   };
 };
 
