@@ -44,5 +44,20 @@ export const Container = styled.div`
   }
 `;
 
-export const FilterContent = styled.div<FilterProps>``;
-export const FilterHeader = styled.div``;
+export const FilterContent = styled.div<FilterProps>`
+  padding: 16px 0;
+  display: ${({ open }) => open ? 'block' : 'none'};
+`;
+
+export const FilterHeader = styled.div`
+  button {
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  span {
+    margin-left: 20px;
+  }
+`;

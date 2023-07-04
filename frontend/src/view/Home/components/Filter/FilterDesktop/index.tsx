@@ -1,11 +1,10 @@
-import { Button, Form, InputGroup } from "react-bootstrap";
-import { Container, FilterContent, FilterHeader } from "./style";
 import CheckBox from "shared/Checkbox";
-import useFilter from "view/Home/components/Filter/Filter.hook";
+import useFilter from "../hooks/Filter.hook";
+import { Container, FilterContent, FilterHeader } from "./style";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 // import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-const Filter = () => {
+const FilterDesktop = () => {
   const {
     aspects,
     queryParamsObj,
@@ -16,7 +15,6 @@ const Filter = () => {
     handleCloseFilter,
   } = useFilter();
 
-  console.log(aspects)
   // REFERENCIA DE ESTIIZAÇÃO
   // https://cdn.shopify.com/app-store/listing_images/f44b43e81ef89598c0de05c8ea6dcf80/desktop_screenshot/CKCezOGbqPECEAE=.png?height=360&width=640
 
@@ -25,7 +23,6 @@ const Filter = () => {
       {aspects && Object.keys(aspects).length > 0 ? (
         Object.keys(aspects).map((key) => {
           const aspect = aspects[key];
-          console.log(aspect)
           return (
             <div className="ul-container" key={key}>
               <FilterHeader>
@@ -64,4 +61,4 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+export default FilterDesktop;
