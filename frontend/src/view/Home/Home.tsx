@@ -21,7 +21,7 @@ const Home: FC = () => {
       </Banner>
       <Main>
         <Aside className="filter-product">
-          <Filter />
+          <Filter.Desktop />
         </Aside>
         <Container margin={"2rem"}>
           <Row>

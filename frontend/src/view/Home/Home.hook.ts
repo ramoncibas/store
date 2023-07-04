@@ -47,6 +47,7 @@ const useHome = (): IUseHome => {
       handleFilterProduct(queryParamsObj);
       setProducts(filteredProduct);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.toString()]);
 
