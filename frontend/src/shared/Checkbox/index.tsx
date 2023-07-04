@@ -22,16 +22,16 @@ const CheckBox: FC<CheckBoxProps> = ({
 }): JSX.Element => (
   <CheckBoxContainer>
     <InputCheckBox
-      type="checkbox"
-      name={name}
       id={name}
-      className="checkbox-items"
+      name={name}
+      type="checkbox"
       value={value}
       checked={checked}
       onChange={onChange}
+      className="checkbox-items"
       data-label={label}
     />
-    <LabelCheckbox htmlFor="input">{label}</LabelCheckbox>
+    <LabelCheckbox htmlFor={name}>{label}</LabelCheckbox>
   </CheckBoxContainer>
 );
 
