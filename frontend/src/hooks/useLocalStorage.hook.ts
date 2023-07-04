@@ -5,8 +5,8 @@ type StorageValue = string | null;
 
 interface UseLocalStorage {
   storedValue: {} | null;
-  handleStorage: (value: any) => void;
-  handleDeleteStorage: () => void;
+  handleStorageItem: (value: any) => void;
+  handleRemoveItem: () => void;
   handleGetStored: () => {} | null;
 }
 
@@ -23,12 +23,12 @@ function useLocalStorage(key: string, initialValue?: StorageValue): UseLocalStor
     }
   }, [key]);
 
-  const handleStorage = (value: StorageValue) => {
-    setStoredValue(value);
-    localStorage.setItem(key, JSON.stringify(value));
+  const handleStorageItem = (data: any) => {
+    setStoredValue(data);
+    localStorage.setItem(key, JSON.stringify(data));
   };
 
-  const handleDeleteStorage = () => {
+  const handleRemoveItem = () => {
     setStoredValue(null);
     localStorage.removeItem(key);
   };
@@ -41,7 +41,7 @@ function useLocalStorage(key: string, initialValue?: StorageValue): UseLocalStor
     return null;
   };
 
-  return { storedValue, handleStorage, handleDeleteStorage, handleGetStored };
+  return { storedValue, handleStorageItem, handleRemoveItem, handleGetStored };
 }
 
 export default useLocalStorage;
