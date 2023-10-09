@@ -1,34 +1,30 @@
-import { AxiosPromise, AxiosResponse } from "axios";
-
 export interface CustomerLogin {
   email: string;
   password: string;
 }
 
 export interface Customer extends CustomerLogin {
-  uuid?: string;
+  uuid: string;
   first_name: string;
   last_name: string;
   phone: string;
   user_picture: string
-  expiresIn: any;
-  token: string;
 }
 
 export type CustomerRegister = Omit<Customer, "uuid" | "phone" | "user_picture">;
 
 export interface UseCustomerServiceProps {
-  customer: Customer | null;
-  customerLogin: Customer | null;
-  customerRegister: AxiosPromise<Customer> | null;
-  customerEdited: AxiosPromise<Customer> | null;
+  customer: Customer;
+  customerLogin: CustomerLogin;
+  customerRegister: CustomerRegister;
+  customerEdited: Customer;
   isLoadingCustomer: boolean;
   isLoadingLogin: boolean;
   isLoadingRegister: boolean;
   isLoadingEditCustomer: boolean;
   isLoadingDeleteCustomer: boolean;
   handleCustomer: (event: any) => void;
-  handleLoginCustomer: (event: any) => any;
+  handleLoginCustomer: (event: any) => void;
   handleRegisterCustomer: (event: any) => void;
   handleEditCustomer: (event: any) => void;
   handleDeleteCustomer: (event: any) => void;
