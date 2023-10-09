@@ -10,7 +10,7 @@ const LoginForm = () => {
 
   return (
     <FormLogin>
-      <FormTitle>Sign In</FormTitle>
+      <FormTitle>Log In</FormTitle>
       <FormLogin.Group
         controlId="email_form_group"
         className="mb-3 form_form_login-w100"

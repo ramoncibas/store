@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Customer } from 'view/Customer/types';
+import { Customer } from 'types';
 
 interface IUseCustomer {
   customer: Customer | null;

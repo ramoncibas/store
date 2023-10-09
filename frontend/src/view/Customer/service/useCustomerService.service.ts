@@ -1,5 +1,5 @@
 import { useAsyncFn } from "react-use";
-import { UseCustomerServiceProps } from "../types";
+import { UseCustomerServiceProps } from "types";
 
 import {
   fetchCustomer,
