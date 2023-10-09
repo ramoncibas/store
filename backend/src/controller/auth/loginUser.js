@@ -20,12 +20,11 @@ const loginUser = async (req, res) => {
     const findUser = new findUserBy();
     const [user] = await findUser.email(email);
 
-    console.log('usuario:' ,user)
     if (user && (await bcrypt.compare(password, user.password))) {
 
       const token = jwt.sign(
         { user_id: user.id, email },
-        process.env.TOKEN_KEY,
+        process.env.JWT_TOKEN_KEY,
         { expiresIn: "1h" }
       );
 
@@ -34,6 +33,7 @@ const loginUser = async (req, res) => {
 
       delete user.id;
       delete user.password;
+      console.log('Usuario Logado:' ,user)
       
       return res.status(200).json(user);
     } else {
@@ -42,7 +42,7 @@ const loginUser = async (req, res) => {
 
   } catch (error) {
     console.log(error)
-    return res.send("Something went wrong to Login");
+    return res.status(500).send("Something went wrong to Login");
   }
 }
 
