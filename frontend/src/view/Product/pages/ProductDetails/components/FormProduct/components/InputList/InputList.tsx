@@ -7,13 +7,13 @@ const InputList = ({ fields }: { fields: InputProps[] }): JSX.Element => (
   <>
     {fields.map(
       ({
-        id,
-        name,
-        label,
+        id = "floatingInput",
+        name = "",
+        label = "",
         type = "text",
-        placeholder,
+        placeholder = "",
         value = "",
-        handleChange,
+        handleChange = () => {},
       }, index) => (
         <Input
           id={id}
