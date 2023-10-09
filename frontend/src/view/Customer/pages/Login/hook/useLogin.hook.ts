@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import useCustomerStorage from "hooks/useCustomerStorage.hook";
 import useCustomerService from "../../../service/useCustomerService.service";
-import { CustomerLogin } from "../../../types";
+import { CustomerLogin } from "types";
 
 interface IUseLoginProps {
   credentials: CustomerLogin;

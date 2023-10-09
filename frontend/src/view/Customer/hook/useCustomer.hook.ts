@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import useCustomerStorage from "hooks/useCustomerStorage.hook";
 import useCustomerService from "../service/useCustomerService.service";
 
-import { UseCustomerProps } from "../types";
+import { UseCustomerProps } from "types";
 
 const useCustomer = (): UseCustomerProps => {
   const {

@@ -21,16 +21,6 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "downlevelIteration": true,
-    "paths": {
-      "assets/*": ["src/assets/*"],
-      "components/*": ["src/shared/*"], 
-      "normalizers": ["src/normalizers"],
-      "tokens": ["src/tokens/"],
-      "hooks/*": ["src/view/Product/hooks/*"],
-      "utils/*": ["src/utils/*"],
-      "lytics": ["src/lytics/"],
-      "view/*": ["src/view/*"],
-    }
   },
   "include": [
     "src/**/*",

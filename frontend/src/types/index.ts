@@ -1,1 +1,1 @@
-export * from './Customer.types';
+export * from './customer.types';

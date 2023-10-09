@@ -6,7 +6,7 @@ export interface CustomerLogin {
 }
 
 export interface Customer extends CustomerLogin {
-  uuid?: string;
+  uuid: string;
   first_name: string;
   last_name: string;
   phone: string;

@@ -1,5 +1,5 @@
 import { AxiosPromise, AxiosResponse } from "axios";
-import { Customer, CustomerLogin, CustomerRegister } from "../types";
+import { Customer, CustomerLogin, CustomerRegister } from "types";
 import api from "utils/api";
 import getAcessToken from "utils/getAcessToken";
 
