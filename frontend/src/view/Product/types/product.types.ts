@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface Product {
   id?: string | number;
   name: string;
@@ -43,49 +45,34 @@ export interface ProductById extends Product {
   category_name: string;
 }
 
-export interface BrandProduct {
-  id: number;
-  name: string;
-}
-
-export interface GenderProduct {
-  id: number;
-  name: string;
-}
-
-export interface CategoryProduct {
-  id: number;
-  name: string;
-}
-
-export interface ColorsProduct {
-  id: number;
-  name: string;
-}
-
-export interface SizesProduct {
+export interface Aspect {
   id: number;
   name: string;
 }
 
 export interface ProductAspects {
-  brands: BrandProduct[];
-  genders: GenderProduct[];
-  categories: CategoryProduct[];
-  colors: ColorsProduct[];
-  sizes: SizesProduct[];
+  [key: string]: Array<{ id: number; name: string }>;
+  brands: Aspect[];
+  genders: Aspect[];
+  categories: Aspect[];
+  colors: Aspect[];
+  sizes: Aspect[];
 }
 
 export interface ShoppingCart extends Product {
   product_id: string;
-}
+} 
 
 export interface InputProps {
-  id: string | number;
+  id: string;
   name: string;
   label: string;
   type: 'text' | 'number';
   placeholder: string;
-  value?: string | number;
-  handleChange: any;
+  value: string;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+export interface FilterQueryParams {
+  [key: string]: string;
 }
