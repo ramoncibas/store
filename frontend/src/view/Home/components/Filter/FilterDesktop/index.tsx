@@ -2,6 +2,7 @@ import CheckBox from "shared/Checkbox";
 import useFilter from "../hooks/Filter.hook";
 import { Container, FilterContent, FilterHeader } from "./style";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { Aspect } from "view/Product/types";
 // import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const FilterDesktop = () => {
@@ -21,8 +22,8 @@ const FilterDesktop = () => {
   return (
     <Container>
       {aspects && Object.keys(aspects).length > 0 ? (
-        Object.keys(aspects).map((key) => {
-          const aspect = aspects[key];
+        Object.keys(aspects).map((key: string) => {
+          const aspect: Array<Aspect> = aspects?.[key];
           return (
             <div className="ul-container" key={key}>
               <FilterHeader>
@@ -36,8 +37,8 @@ const FilterDesktop = () => {
                 </button>
               </FilterHeader>
 
-              <FilterContent className={`ul-${key}`} open={openFilters}>
-                {aspect.map(({ id, name }: { id: number; name: string }) => (
+              <FilterContent className={`ul-${key}`} open={!!openFilters}>
+                {aspect.map(({ id, name }: Aspect) => (
                   <CheckBox
                     key={randomKey()}
                     name={key}

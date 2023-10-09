@@ -1,9 +1,5 @@
-import { useState } from "react";
-import {
-  createSearchParams,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import useHome from "../../../Home.hook";
 import { ProductAspects } from "view/Product/types";
 
@@ -11,15 +7,13 @@ type FilterTitleType = {
   [key: string]: string;
 };
 
-// alterar os 'aspects' por attribute
-
 interface IUseFilter {
-  aspects: ProductAspects | null;
+  aspects: ProductAspects | null | undefined;
   filtered: FilterTitleType | null | undefined;
   openFilters: boolean | null | undefined;
   filterTitle: FilterTitleType;
-  queryParamsObj: {} | null;
-  randomKey: () => void;
+  queryParamsObj: {[key: string]: string | undefined};
+  randomKey: () => number;
   handleFilter: (event: React.ChangeEvent<HTMLElement>) => void;
   handleClearFilter: () => void;
   handleCloseFilter: () => void;
@@ -29,56 +23,61 @@ const useFilter = (): IUseFilter => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [filtered, setFiltered] = useState();
-
-  const [openFilters, setOpenFilters] = useState(true);
+  const [filtered, setFiltered] = useState<FilterTitleType | null>(null);
+  const [openFilters, setOpenFilters] = useState<boolean>(true);
 
   const { aspects, queryParamsObj, randomKey } = useHome();
 
-
-  // substituir tudo isso por useMemo/useCallback
   const handleFilter = (event: any) => {
     const { name, value, dataset } = event.target;
 
     searchParams.set(name, value);
 
-    if(!event.target.checked) {
+    if (!event.target.checked) {
       searchParams.delete(name);
     }
-  
+
     if (Number(value) >= 0) {
-      setSearchParams((prevState: any) => ({
+      setSearchParams((prevState) => ({
         ...prevState,
         [name]: value,
       }));
 
-      // setFiltered((prevState: any) => ({
-      //   ...prevState,
-      //   [name]: dataset.label,
-      // }));
+      setFiltered((prevState) => ({
+        ...prevState,
+        [name]: dataset.label,
+      }));
 
       navigate({
         pathname: "/filter",
         search: `?${createSearchParams(searchParams)}`,
       });
     }
-    // limpar a url, caso não tenha filtros
-    // navigate({pathname: "/"})
   };
-  
-  const handleClearFilter = () => {};
+
+  const handleClearFilter = () => {
+    // Implementar a lógica para limpar os filtros
+  };
 
   const handleCloseFilter = () => {
-    setOpenFilters(!openFilters)
+    setOpenFilters((prevState) => !prevState);
   };
 
+  const hasQueryParams = queryParamsObj && Object.keys(queryParamsObj).length > 0;
+
+  useEffect(() => {
+    if (!hasQueryParams) {
+      navigate({ pathname: "/" });
+    }
+  }, [hasQueryParams, navigate]);
+
   const filterTitle: FilterTitleType = {
-    colors: 'COR',
-    price: 'PREÇO',
-    brands: 'MARCA',
-    sizes: 'TAMANHO',
-    genders: 'GÊNERO',
-    categories: 'CATEGORIA',
+    colors: "COR",
+    price: "PREÇO",
+    brands: "MARCA",
+    sizes: "TAMANHO",
+    genders: "GÊNERO",
+    categories: "CATEGORIA",
   };
 
   return {

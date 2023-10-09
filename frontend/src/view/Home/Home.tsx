@@ -6,6 +6,8 @@ import Filter from "./components/Filter";
 import useHome from "./Home.hook";
 import { withProductContext } from "context/productContext.provider";
 import { Product } from "view/Product/types";
+import Login from "view/Customer/pages/Login";
+import StoreBanner from "view/Home/components/StoreLogo";
 
 
 const Home: FC = () => {
@@ -13,16 +15,13 @@ const Home: FC = () => {
 
   return (
     <>
-      <Banner>
-        <div className="content">
-          <h1>STORE</h1>
-          <span>buy safe</span>
-        </div>
-      </Banner>
+      <StoreBanner />
+
       <Main>
         <Aside className="filter-product">
-          <Filter.Desktop />
+          <Filter />
         </Aside>
+        {/* <Login.Modal /> */}
         <Container margin={"2rem"}>
           <Row>
             <Title fontsize="32px">Mais Vistos</Title>
