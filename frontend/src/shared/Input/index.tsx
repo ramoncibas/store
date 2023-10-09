@@ -2,7 +2,7 @@ import React, { FC, ChangeEventHandler } from "react";
 import { Form, FloatingLabel } from "react-bootstrap";
 
 interface FloatingInputProps {
-  id?: string;
+  id: string;
   label?: string;
   className?: string;
   name?: string;
@@ -15,13 +15,13 @@ interface FloatingInputProps {
 }
 
 const Input: FC<FloatingInputProps> = ({
-  id = '',
-  label = '',
+  id = "",
+  label = "",
   className = "mb-3",
-  name = '',
-  type = '',
-  value = '',
-  placeholder = '',
+  name = "",
+  type = "",
+  value = "",
+  placeholder = "",
   onChange,
   required = false,
   textMuted = null
