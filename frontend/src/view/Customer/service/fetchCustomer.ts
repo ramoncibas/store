@@ -4,12 +4,12 @@ import api from "utils/api";
 import getAcessToken from "utils/getAcessToken";
 
 /** @backend to do */
-const fetchCustomer = (): Promise<AxiosResponse<Customer>> => 
+const fetchCustomer = (): Promise<AxiosResponse<Customer | null>> => 
   api.get("/profile", {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-const fetchLoginCustomer = (customer: CustomerLogin): Promise<AxiosPromise<Customer>> => 
+const fetchLoginCustomer = (customer: CustomerLogin): Promise<AxiosResponse<Customer | null>> => 
   api.post("/login", customer, {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });

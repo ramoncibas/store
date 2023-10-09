@@ -16,11 +16,12 @@ const useCustomerService = (): UseCustomerServiceProps => {
   const [fetchDeleteState, fetchDeleteRequest] = useAsyncFn(fetchDeleteCustomer);
   const [fetchCustomerState, fetchCustomerRequest] = useAsyncFn(fetchCustomer);
 
-  const customer = fetchCustomerState.value?.data ?? null;
-  const customerLogin = fetchLoginState.value?.data ?? null;
-  const customerRegister = fetchRegisterState.value?.data ?? null;
-  const customerEdited = fetchEditState.value?.data ?? [];
+  const customer = fetchCustomerState.value?.data || null;
+  const customerLogin = fetchLoginState.value?.data || null;
+  const customerRegister = fetchRegisterState?.value || null;
+  const customerEdited = fetchEditState?.value || null;
 
+  console.log(fetchLoginState)
   return {
     customer,
     customerLogin,
@@ -32,8 +33,8 @@ const useCustomerService = (): UseCustomerServiceProps => {
     isLoadingEditCustomer: fetchEditState.loading,
     isLoadingDeleteCustomer: fetchDeleteState.loading,
     handleCustomer: fetchCustomerRequest,
-    handleLoginCostumer: fetchLoginRequest,
-    handleRegisterCostumer: fetchRegisterRequest,
+    handleLoginCustomer: fetchLoginRequest,
+    handleRegisterCustomer: fetchRegisterRequest,
     handleEditCustomer: fetchEditRequest,
     handleDeleteCustomer: fetchDeleteRequest,
   };

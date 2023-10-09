@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface FilterProps {
   open: boolean;
+  className: string;
 }
 
 export const Container = styled.div` 

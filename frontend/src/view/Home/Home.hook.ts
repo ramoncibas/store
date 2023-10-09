@@ -8,13 +8,13 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { Product, ProductAspects } from "view/Product/types";
+import { FilterQueryParams, Product, ProductAspects } from "view/Product/types";
 
 interface IUseHome {
   products: Product[] | null;
-  aspects: ProductAspects | null;
-  queryParamsObj: {} | null;
-  randomKey: () => void;
+  aspects: ProductAspects | null | undefined;
+  queryParamsObj: FilterQueryParams;
+  randomKey: () => number;
   handleShoppinCart: (product: Product) => any;
 }
 
@@ -27,7 +27,7 @@ const useHome = (): IUseHome => {
 
   const { filteredProduct, handleFilterProduct } = useProductService();
 
-  const [products, setProducts] = useState<Product>(productsAPIResponse);
+  const [products, setProducts] = useState<Product[]>(productsAPIResponse || []);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { randomKey } = useKey();
@@ -37,16 +37,23 @@ const useHome = (): IUseHome => {
   };
 
   useEffect(() => {
-    setProducts(productsAPIResponse);
+    if (productsAPIResponse)
+      setProducts(productsAPIResponse);
   }, [productsAPIResponse]);
 
   const queryParamsObj = Object.fromEntries(searchParams);
-
+  
   useEffect(() => {
-    if (!!Object.entries(queryParamsObj).length) {
+    if (!!Object.entries(queryParamsObj).length) {      
       handleFilterProduct(queryParamsObj);
+    }
+
+    if(filteredProduct) {
       setProducts(filteredProduct);
     }
+    //  else {
+    //   setProducts(productsAPIResponse);
+    // }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.toString()]);

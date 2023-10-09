@@ -47,7 +47,7 @@ const registerUser = async (req, res) => {
     
     const token = jwt.sign(
       { user_id: user.id, email },
-      process.env.TOKEN_KEY,
+      process.env.JWT_TOKEN_KEY,
       { expiresIn: "1h" }
     );
 
@@ -62,4 +62,3 @@ const registerUser = async (req, res) => {
 }
 
 module.exports = registerUser;
-

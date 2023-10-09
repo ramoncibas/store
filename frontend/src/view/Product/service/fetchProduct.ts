@@ -1,5 +1,5 @@
 import { AxiosPromise, AxiosResponse } from "axios";
-import { Product, ProductAspects, ProductById, ShoppingCart } from "../types";
+import { FilterQueryParams, Product, ProductAspects, ProductById, ShoppingCart } from "../types";
 import api from "../../../utils/api";
 import getAcessToken from "../../../utils/getAcessToken";
 
@@ -18,7 +18,7 @@ const fetchProductAspects = (): Promise<AxiosResponse<ProductAspects>> =>
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-const fetchFilterProduct = (query: string): Promise<AxiosResponse<Product[]>> => 
+const fetchFilterProduct = (query: FilterQueryParams): Promise<AxiosResponse<Product[]>> => 
   api.get("/filter", {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
     params: query,

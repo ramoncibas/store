@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-import useCustomerStored from "hooks/useCustomerStored";
-import useCustomerService from "../service/useCustomerService";
+import useCustomerStorage from "hooks/useCustomerStorage.hook";
+import useCustomerService from "../service/useCustomerService.service";
 
 import { UseCustomerProps } from "../types";
 
@@ -20,7 +20,7 @@ const useCustomer = (): UseCustomerProps => {
     handleCustomer,
   } = useCustomerService();
 
-  const { handleSaveUserStorage } = useCustomerStored();
+  const { setCustomerSession } = useCustomerStorage();
 
   const { id: productID } = useParams();
   const [cookies, setCookie] = useCookies(["access_token", "refresh_token"]);
@@ -63,7 +63,7 @@ const useCustomer = (): UseCustomerProps => {
       expires.setTime(expires.getTime() + data.expiresIn * 1000);
       setCookie("access_token", data.token, { path: "/", expires });
 
-      handleSaveUserStorage(data);
+      setCustomerSession(data);
 
       const timer = setTimeout(() => {
         REDIRECT_HOME();
