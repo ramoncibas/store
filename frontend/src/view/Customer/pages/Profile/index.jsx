@@ -6,19 +6,27 @@ import * as DefautlStyle from "assets/style/defaultContainerStyle";
 import DefaultImage from "assets/img/default-image-user.png";
 import api from "utils/api";
 import windowWidth from "utils/windowWidth";
+import useCustomerStorage from "hooks/useCustomerStorage.hook";
+import getAcessToken from "utils/getAcessToken";
 
 const UserProfile = () => {
-  const [user, setUser] = useState({});  
+  const [user, setUser] = useState({});
+  const {customerUUID} = useCustomerStorage();
   
   // Pega o ususario que estiver salvo
   useEffect(() => {
-    api.get("/profile/1").then(({ data }) => {
-      const user = {...data}
-      if(user) {setUser(user)}
-      console.log(data)
-    });
-  }, []);
+    if(customerUUID) {
+      api.get(`/profile/${customerUUID}`, {
+        headers: { Accept: "version=1", "x-access-token": getAcessToken() },
+      }).then(({ data }) => {
+        const user = {...data}
+        if(user) {setUser(user)}
+        console.log(data)
+      });
+    }
+  }, [customerUUID]);
   
+  console.log(customerUUID)
 
   /**
    * Atualiza o estado com o nome e o valor vindos do Input

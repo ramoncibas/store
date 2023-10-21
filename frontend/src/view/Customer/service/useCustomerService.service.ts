@@ -21,7 +21,6 @@ const useCustomerService = (): UseCustomerServiceProps => {
   const customerRegister = fetchRegisterState?.value || null;
   const customerEdited = fetchEditState?.value || null;
 
-  console.log(fetchLoginState)
   return {
     customer,
     customerLogin,
@@ -39,6 +38,5 @@ const useCustomerService = (): UseCustomerServiceProps => {
     handleDeleteCustomer: fetchDeleteRequest,
   };
 };
-
 
 export default useCustomerService;

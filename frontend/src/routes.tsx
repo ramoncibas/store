@@ -18,7 +18,7 @@ function Router() {
         <Route path="/login" element={<Login.Page />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<UserProfile />} />
-        <Route path="/profile/:id" element={<UserProfile />} />
+        <Route path="/profile/:uuid" element={<UserProfile />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
