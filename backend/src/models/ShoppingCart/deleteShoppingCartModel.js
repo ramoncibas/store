@@ -1,4 +1,4 @@
-const deleteShoppingCartProductModel = function (db, id) {
+const deleteShoppingCartModel = function (db, id) {
   return new Promise(function (resolve, reject) {    
     db.serialize(() => {
       db.run(
@@ -8,4 +8,4 @@ const deleteShoppingCartProductModel = function (db, id) {
   });
 };
 
-module.exports = deleteShoppingCartProductModel;
+module.exports = deleteShoppingCartModel;

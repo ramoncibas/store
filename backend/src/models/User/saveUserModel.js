@@ -2,7 +2,7 @@ const saveUserModel = async function (db, data) {
   return new Promise(function (resolve, reject) {
     db.serialize(() => {
       db.all(        
-        `INSERT INTO users (uuid, first_name, last_name, email, password, phone, user_picture) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *; `,
+        `INSERT INTO user (uuid, first_name, last_name, email, password, phone, user_picture) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *; `,
         [
           data.uuid,
           data.first_name,
@@ -15,6 +15,7 @@ const saveUserModel = async function (db, data) {
         (error, rows) => {
           if (error) {
             console.log(error)
+            reject();
           }
           resolve(rows);
           // db.close();

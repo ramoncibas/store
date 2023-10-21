@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const deleteProductModel = require("../../models/deleteProductModel");
+const deleteProductModel = require("../../models/Product/deleteProductModel");
 
 /**
  * Deleta o produto correspondente da base de dados (disponivel somente para admins)

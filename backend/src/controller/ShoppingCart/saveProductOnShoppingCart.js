@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const saveProductOnShoppingCartModel = require("../../models/saveProductOnShoppingCartModel");
+const saveProductOnShoppingCartModel = require("../../models/ShoppingCart/saveProductOnShoppingCartModel");
 
 /**
    * Salva um produto no carrinho de compras do usuário

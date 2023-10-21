@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const getFilterProduct = require("../../models/getFilterProduct");
+const getFilterProduct = require("../../models/Product/getFilterProduct");
 
 const getFilteredProduct = async (req, res) => {
   try {

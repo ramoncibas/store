@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const getAllAspectsProductModel = require("../../models/getAllAspectsProductModel");
+const getAllAspectsProductModel = require("../../models/Product/getAllAspectsProductModel");
 
 /**
  * Pega generos de roupas disponiveis para todos os produtos

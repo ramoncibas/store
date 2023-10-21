@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const getProductByIdModel = require("../../models/getProductByIdModel");
+const getAllProductsModel = require("../../models/Product/getAllProductsModel");
 
 /**
  * Pega todos os produtos salvos
@@ -7,15 +7,13 @@ const getProductByIdModel = require("../../models/getProductByIdModel");
  * @param {*} res resposta
  * @returns uma coleção de produtos
  */
-const getProductById = (req, res) => {  
-  const { id } = req.query
-    
+const getAllProducts = (req, res) => {
   try {
-    getProductByIdModel(Database, id).then((product) => res.send(product));
-  } catch (error) { 
+    getAllProductsModel(Database).then((products) => res.send(products));
+  } catch (error) {
     console.log(error);
     return res.send("Something went wrong, Select All Products");
   }
 }
 
-module.exports = getProductById;
+module.exports = getAllProducts;

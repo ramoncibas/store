@@ -1,0 +1,23 @@
+const findUserBy = require("../../models/User/findUserBy");
+
+/** 
+ * Pega informações do usuario
+ * @param {*} req requisição
+ * @param {*} res resposta
+ * @returns um objeto contendo as informações do usuario
+*/
+const getUser = async (req, res) => {
+  const { uuid } = req.params
+    
+  try {
+    const findUser = new findUserBy();
+    const [userProfile] = await findUser.uuid(uuid);
+
+    return res.send(userProfile)
+  } catch (error) { 
+    console.log(error);
+    return res.send("Something went wrong, Select All Products");
+  }
+}
+
+module.exports = getUser;

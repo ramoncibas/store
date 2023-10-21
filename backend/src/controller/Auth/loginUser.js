@@ -1,7 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const findUserBy = require("../../models/fidUserBy");
+const findUserBy = require("../../models/User/findUserBy");
 
 /**
  * Realiza a autenticação de um usuário no banco
@@ -9,7 +9,7 @@ const findUserBy = require("../../models/fidUserBy");
  * @param {*} res resposta
  */
 const loginUser = async (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
   try {
     const { email, password } = req.body;
 
