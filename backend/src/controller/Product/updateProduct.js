@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const updateProductModel = require("../../models/updateProductModel");
+const updateProductModel = require("../../models/Product/updateProductModel");
 
 /**
  * Atualiza um produto

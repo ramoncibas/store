@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const deleteShoppingCartProductModel = require("../../models/deleteShoppingCartProductModel");
+const deleteShoppingCartProductModel = require("../../models/ShoppingCart/deleteShoppingCartModel");
 
 /**
  * Deleta o produto correspondente do carrinho do usuário

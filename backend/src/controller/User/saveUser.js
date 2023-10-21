@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const saveUserModel = require("../../models/saveUserModel");
+const saveUserModel = require("../../models/User/saveUserModel");
 
 /**
  * Salva o usuario na base de dados

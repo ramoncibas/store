@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const getAllShoppingCartProductsModel = require("../../models/getAllShoppingCartProductsModel");
+const getAllShoppingCartProductsModel = require("../../models/ShoppingCart/getAllShoppingCartModel");
 
 /**
 * Pega todos os itens dentro do carrinho de compras do ususario

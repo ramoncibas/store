@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const { randomUUID } = require('crypto');
 const Database = require("../../config/db");
-const saveUserModel = require("../../models/saveUserModel");
-const findUserBy = require("../../models/fidUserBy");
+const saveUserModel = require("../../models/User/saveUserModel");
+const findUserBy = require("../../models/User/findUserBy");
 
 /**
  * Registra um usuário e realiza o login do mesmo
@@ -20,6 +20,8 @@ const registerUser = async (req, res) => {
       phone,
       user_picture
     } = req.body;
+
+    console.log(req.body)
 
     if (!(email && password && first_name && last_name)) {
       return res.status(400).send("All input is required");

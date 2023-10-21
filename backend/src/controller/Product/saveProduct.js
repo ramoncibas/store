@@ -1,5 +1,5 @@
 const Database = require("../../config/db");
-const saveProductModel = require("../../models/saveProductModel");
+const saveProductModel = require("../../models/Product/saveProductModel");
 
 /**
  * Salva um produto e redireciona o usuario para home
