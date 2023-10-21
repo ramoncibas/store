@@ -11,6 +11,7 @@ const app = express();
 
 const Controller = require("./Controller");
 const auth = require("./src/middleware/auth");
+const isAdmin = require("./src/middleware/isAdmin");
 
 
 const { API_PORT } = process.env;
@@ -39,18 +40,19 @@ app.get("/", Controller.getProducts);
 app.get("/filter", Controller.getFilteredProduct);
 app.get("/product/aspects", Controller.getAllAspects);
 app.get("/product/:id",  auth, Controller.getProductById);
-app.get("/profile/:id", auth, Controller.getUser);
+app.get("/profile/:uuid", auth, Controller.getUser);
 app.get("/cart", Controller.getShoppingCartProduct);
 
 app.post("/", Controller.saveProductOnShoppingCart);
 app.post("/product", auth, Controller.saveProduct);
-app.post("/profile", auth, Controller.saveUser); // autenticado somente para admins adicionarem e editar usuários (post / patch)
+
+// autenticado somente para admins adicionarem e editar usuários (post / patch)
+app.patch("/profile/:uuid", auth, isAdmin, Controller.saveUser); 
 
 app.patch("/product", auth, Controller.updateProduct);
 
 app.delete("/cart", Controller.deleteShoppingCartProduct);
 app.delete("/product", auth, Controller.deleteProdut);
-
 
 app.listen(5000, () => {
   console.log("Server is running - Port: 5000...");

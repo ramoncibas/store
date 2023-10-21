@@ -13,6 +13,7 @@ export interface Customer extends CustomerLogin {
   user_picture: string
   expiresIn: any;
   token: string;
+  type: string;
 }
 
 export type CustomerRegister = Omit<Customer, "uuid" | "phone" | "user_picture">;
@@ -30,7 +31,7 @@ export interface UseCustomerServiceProps {
   handleCustomer: (event: any) => void;
   handleLoginCustomer: (event: any) => any;
   handleRegisterCustomer: (event: any) => void;
-  handleEditCustomer: (event: any) => void;
+  handleEditCustomer: (customerUUID: string, customer: Customer) => void;
   handleDeleteCustomer: (event: any) => void;
 }
 

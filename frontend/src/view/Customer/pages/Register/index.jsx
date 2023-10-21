@@ -4,11 +4,14 @@ import { Form, FloatingLabel } from "react-bootstrap";
 
 import { Container } from "./style";
 import { Button, Input } from "shared";
+import api from "utils/api";
+import useCustomerStorage from "hooks/useCustomerStorage.hook";
 
 const Register = () => {
 
   const [credentials, setCredentials] = useState({});
   const [cookies, setCookie] = useCookies(['access_token', 'refresh_token'])
+  const {setCustomerSession} = useCustomerStorage();
 
   //email: 'adm@store.com', password: 'store' 
   //httpOnly cookies
@@ -36,22 +39,22 @@ const Register = () => {
       user_picture: credentials.user_picture
     }
 
-    // api.post("/register", userData).then((response) => {
-    //   const { data, status } = response
-    //   if (status) {
-    //     let expires = new Date();
-    //     expires.setTime(expires.getTime() + (data.expiresIn * 1000));
-    //     setCookie("access_token", data.token, { path: "/", expires });
+    api.post("/register", userData).then((response) => {
+      const { data, status } = response
+      if (status) {
+        let expires = new Date();
+        expires.setTime(expires.getTime() + (data.expiresIn * 1000));
+        setCookie("access_token", data.token, { path: "/", expires });
+        setCustomerSession(data)
+        alert("Usuario criado com sucesso!")
 
-    //     alert("Usuario criado com sucesso!")
-
-    //     window.location.href = '/'
-    //   }
-    // }).catch(({ response }) => {
-    //   if (response.status >= 400) {
-    //     alert('Usuário não encontrado')
-    //   }
-    // })
+        window.location.href = '/'
+      }
+    }).catch(({ response }) => {
+      if (response.status >= 400) {
+        alert('Usuário não encontrado')
+      }
+    })
   }
 
   return (

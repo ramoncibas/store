@@ -4,8 +4,8 @@ import api from "utils/api";
 import getAcessToken from "utils/getAcessToken";
 
 /** @backend to do */
-const fetchCustomer = (): Promise<AxiosResponse<Customer | null>> => 
-  api.get("/profile", {
+const fetchCustomer = (customerUUID: string): Promise<AxiosResponse<Customer | null>> => 
+  api.get(`/profile/${customerUUID}`, {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
@@ -20,8 +20,8 @@ const fetchRegisterCustomer = (customer: CustomerRegister): Promise<AxiosPromise
   });
 
 /** @backend to do */
-const fetchEditCustomer = (customer: Customer): Promise<AxiosPromise<Customer>> => 
-  api.patch("/profile", {
+const fetchEditCustomer = (customerUUID: string, customer: Customer): Promise<AxiosPromise<Customer>> => 
+  api.patch(`/profile/${customerUUID}`, {
     headers: { Authorization: "*", "x-access-token": getAcessToken() },
     customer
   });
