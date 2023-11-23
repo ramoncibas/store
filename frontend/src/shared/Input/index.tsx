@@ -12,6 +12,7 @@ interface FloatingInputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   textMuted?: { className: string; labelMessage: string } | null;
+  disabled?: boolean;
 }
 
 const Input: FC<FloatingInputProps> = ({
@@ -24,7 +25,8 @@ const Input: FC<FloatingInputProps> = ({
   placeholder = "",
   onChange,
   required = false,
-  textMuted = null
+  textMuted = null,
+  disabled = false
 }) => (
   <FloatingLabel controlId={id} label={label} className={className}>
     <Form.Control
@@ -34,6 +36,7 @@ const Input: FC<FloatingInputProps> = ({
       placeholder={placeholder}
       onChange={onChange}
       required={required}
+      disabled={disabled}
     />
 
     {textMuted && (
