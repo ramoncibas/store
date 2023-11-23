@@ -10,7 +10,7 @@ export interface Customer extends CustomerLogin {
   first_name: string;
   last_name: string;
   phone: string;
-  user_picture: string
+  user_picture: any;
   expiresIn: any;
   token: string;
   type: string;
@@ -28,7 +28,7 @@ export interface UseCustomerServiceProps {
   isLoadingRegister: boolean;
   isLoadingEditCustomer: boolean;
   isLoadingDeleteCustomer: boolean;
-  handleCustomer: (event: any) => void;
+  handleCustomer: (event: any) => any;
   handleLoginCustomer: (event: any) => any;
   handleRegisterCustomer: (event: any) => void;
   handleEditCustomer: (customerUUID: string, customer: Customer) => void;
