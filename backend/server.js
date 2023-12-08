@@ -55,6 +55,6 @@ app.patch("/product", auth, Controller.updateProduct);
 app.delete("/cart", Controller.deleteShoppingCartProduct);
 app.delete("/product", auth, Controller.deleteProdut);
 
-app.listen(5000, () => {
-  console.log("Server is running - Port: 5000...");
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running - Port: ${process.env.PORT}...`);
 });
