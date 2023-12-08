@@ -10,8 +10,8 @@ const root = createRoot(rootElement)
 
 root.render(
   <CookiesProvider>
-    <StrictMode>
+    {/* <StrictMode> */}
       <App />
-    </StrictMode>
+    {/* </StrictMode> */}
   </CookiesProvider>,
 );

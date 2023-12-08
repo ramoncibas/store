@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import useCustomerStorage from "hooks/useCustomerStorage.hook";
 import useCustomerService from "../../../service/useCustomerService.service";
 import { Customer } from "types";
+import { useDevices } from "hooks/useDevices";
 
 interface IUseProfileProps {
   user: Customer | null;
+  imagePreview: any;
   handleEdit: () => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  isDesktop: any;
   isLoadingCustomer: boolean;
   isLoadingEditCustomer: boolean;
 }
@@ -21,31 +24,31 @@ const useProfile = (): IUseProfileProps => {
     isLoadingEditCustomer
   } = useCustomerService();
 
+  const { isDesktop } = useDevices();
+
   const [user, setUser] = useState<Customer | null>(null);
+  const [imagePreview, setImagePreview] = useState();
 
   const handleSetUser = (newValue: any | null) => {
-    if (newValue) {
-      setUser((prevState) => ({
-        ...prevState,
-        ...newValue,
-      }));
-    }
+    setUser((prevState) => ({
+      ...prevState,
+      ...(newValue instanceof FormData ? Object.fromEntries(newValue) : newValue),
+    }));
   };
+  
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { files, name, value } = event.target;
+  
+    if (files && files[0]) {     
+      const formData = new FormData();
+      formData.set('user_picture', files[0]);
+  
+      handleSetUser(formData);
 
-    if (files && files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target) {
-          const imageData: string | ArrayBuffer | null = e.target.result;
-          if (imageData) {
-            handleSetUser({ [name]: imageData });
-          }
-        }
-      };
+      const previewURL: any = URL.createObjectURL(files[0]);
+      setImagePreview(previewURL);
+
     } else {
       handleSetUser({ [name]: value });
     }
@@ -53,22 +56,34 @@ const useProfile = (): IUseProfileProps => {
 
   useEffect(() => {
     if (customerUUID) {
-      handleCustomer(customerUUID).then((result: any) => {
-        if (result) {
-          handleSetUser(result);
-        }
-      });
+      handleCustomer(customerUUID);
     }
+
+    if (customer) {
+      handleSetUser(customer);
+    }
+
   }, [customerUUID]);
+
+
+  useEffect(() => {
+    if (customer) {
+      handleSetUser(customer);
+    }
+
+  }, [customer]);
+
 
   return {
     user,
+    imagePreview,
     handleEdit: () => {
       if (customerUUID && user) {
         handleEditCustomer(customerUUID, user as Customer);
       }
     },
     handleChange,
+    isDesktop,
     isLoadingCustomer,
     isLoadingEditCustomer,
   };
