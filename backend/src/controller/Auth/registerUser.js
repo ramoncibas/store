@@ -11,6 +11,8 @@ const findUserBy = require("../../models/User/findUserBy");
  * @param {*} res resposta
  */
 const registerUser = async (req, res) => {
+  const { JWT_TOKEN_KEY, BUCKET_USER_PICTURE } = process.env;
+
   try {
     const {
       first_name,
@@ -35,9 +37,9 @@ const registerUser = async (req, res) => {
     }
 
     const userUUID = randomUUID();
-
+    
     if (user_picture) {
-      user_picture.mv(`./uploads/${userUUID}_${user_picture.name}`, (err) => {
+      user_picture.mv(`${BUCKET_USER_PICTURE}/${userUUID}_${user_picture.name}`, (err) => {
         if (err) {
           return res.status(500).send(err);
         }
@@ -58,7 +60,7 @@ const registerUser = async (req, res) => {
     
     const token = jwt.sign(
       { user_id: user.id, email },
-      process.env.JWT_TOKEN_KEY,
+      JWT_TOKEN_KEY,
       { expiresIn: "1h" }
     );
 

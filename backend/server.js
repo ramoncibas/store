@@ -13,16 +13,14 @@ const Controller = require("./Controller");
 const auth = require("./src/middleware/auth");
 const isAdmin = require("./src/middleware/isAdmin");
 
+const { PORT, BUCKET_USER_PICTURE } = process.env;
 
-const { API_PORT } = process.env;
-const port = process.env.PORT || API_PORT;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookiesMiddleware());
 // app.use(cookieParser());
-
 // app.use(session({secret: 'key'}));
 app.use(
   fileupload({
@@ -30,8 +28,10 @@ app.use(
     tempFileDir: path.join(__dirname, "temp"),
   })
 );
-
-app.use('/uploads/user_picture', express.static('src/database/uploads/user_picture'));
+app.use(
+  '/uploads/user_picture',
+  express.static(path.join(__dirname, BUCKET_USER_PICTURE))
+);
 
 // Autenticação
 app.post("/login", Controller.loginUser);
@@ -55,6 +55,7 @@ app.patch("/product", auth, Controller.updateProduct);
 app.delete("/cart", Controller.deleteShoppingCartProduct);
 app.delete("/product", auth, Controller.deleteProdut);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running - Port: ${process.env.PORT}...`);
+
+app.listen(PORT, () => {
+  console.log(`Server is running - Port: ${PORT}...`);
 });
