@@ -11,6 +11,7 @@ export interface Customer extends CustomerLogin {
   last_name: string;
   phone: string;
   user_picture: any;
+  user_picture_url?: any;
   expiresIn: any;
   token: string;
   type: string;
