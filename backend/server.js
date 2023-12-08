@@ -24,13 +24,14 @@ app.use(cookiesMiddleware());
 // app.use(cookieParser());
 
 // app.use(session({secret: 'key'}));
-// app.use(
-//   fileupload({
-//     useTempFiles: true,
-//     tempFileDir: path.join(__dirname, "temp"),
-//   })
-// );
+app.use(
+  fileupload({
+    useTempFiles: true,
+    tempFileDir: path.join(__dirname, "temp"),
+  })
+);
 
+app.use('/uploads/user_picture', express.static('src/database/uploads/user_picture'));
 
 // Autenticação
 app.post("/login", Controller.loginUser);
@@ -47,7 +48,7 @@ app.post("/", Controller.saveProductOnShoppingCart);
 app.post("/product", auth, Controller.saveProduct);
 
 // autenticado somente para admins adicionarem e editar usuários (post / patch)
-app.patch("/profile/:uuid", auth, isAdmin, Controller.saveUser); 
+app.patch("/profile/:uuid", auth, isAdmin, Controller.saveUser);
 
 app.patch("/product", auth, Controller.updateProduct);
 
