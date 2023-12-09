@@ -48,7 +48,7 @@ app.post("/", Controller.saveProductOnShoppingCart);
 app.post("/product", auth, Controller.saveProduct);
 
 // autenticado somente para admins adicionarem e editar usuários (post / patch)
-app.patch("/profile/:uuid", auth, isAdmin, Controller.saveUser);
+app.patch("/profile/:uuid",Controller.updateUser);
 
 app.patch("/product", auth, Controller.updateProduct);
 
