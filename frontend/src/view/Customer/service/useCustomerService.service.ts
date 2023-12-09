@@ -1,5 +1,5 @@
 import { useAsyncFn } from "react-use";
-import { UseCustomerServiceProps } from "types";
+import { Customer, UseCustomerServiceProps } from "types";
 
 import {
   fetchCustomer,
@@ -8,6 +8,7 @@ import {
   fetchEditCustomer,
   fetchDeleteCustomer
 } from "./fetchCustomer";
+import { AxiosError } from "axios";
 
 const useCustomerService = (): UseCustomerServiceProps => {
   const [fetchLoginState, fetchLoginRequest] = useAsyncFn(fetchLoginCustomer);
@@ -21,9 +22,12 @@ const useCustomerService = (): UseCustomerServiceProps => {
   const customerRegister = fetchRegisterState?.value || null;
   const customerEdited = fetchEditState?.value || null;
 
+  const customerLoginError = fetchLoginState?.error as AxiosError<Customer, any> || null;
+
   return {
     customer,
     customerLogin,
+    customerLoginError,
     customerRegister,
     customerEdited,
     isLoadingCustomer: fetchCustomerState.loading,

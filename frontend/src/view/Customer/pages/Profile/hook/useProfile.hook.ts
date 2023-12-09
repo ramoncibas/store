@@ -38,6 +38,7 @@ const useProfile = (): IUseProfileProps => {
   
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    event.preventDefault();
     const { files, name, value } = event.target;
   
     if (files && files[0]) {     

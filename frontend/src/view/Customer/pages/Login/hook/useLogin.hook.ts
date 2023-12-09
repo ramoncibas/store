@@ -5,6 +5,7 @@ import useCustomerService from "../../../service/useCustomerService.service";
 import { CustomerLogin } from "types";
 
 interface IUseLoginProps {
+  error: string | null;
   credentials: CustomerLogin;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   handleLogin: (event: React.FormEvent) => void;
@@ -16,6 +17,7 @@ const useLogin = (): IUseLoginProps => {
 
   const {
     customerLogin,
+    customerLoginError,
     isLoadingLogin,
     handleLoginCustomer
   } = useCustomerService();
@@ -25,7 +27,8 @@ const useLogin = (): IUseLoginProps => {
     password: ''
   });
 
-  const [cookies, setCookie] = useCookies(['access_token', 'refresh_token'])
+  const [cookies, setCookie] = useCookies(['access_token', 'refresh_token']);
+  const [error, setError] = useState<null | string>(null);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value, name } = event.target;
@@ -46,6 +49,17 @@ const useLogin = (): IUseLoginProps => {
   };
 
   useEffect(() => {
+    const { status, data } = (customerLoginError?.response || {}) as {
+      status: number;
+      data: string;
+    };
+
+    if (status == 400) {
+      setError(data)
+    }
+  }, [customerLoginError])
+
+  useEffect(() => {
     if (isLoadingLogin && customerLogin) {
       const expiresIn = customerLogin?.expiresIn;
       const tokenJWT = customerLogin?.token;
@@ -61,6 +75,7 @@ const useLogin = (): IUseLoginProps => {
 
 
   return {
+    error,
     credentials,
     handleChange,
     handleLogin,

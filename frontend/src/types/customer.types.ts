@@ -1,4 +1,4 @@
-import { AxiosPromise, AxiosResponse } from "axios";
+import { AxiosPromise, AxiosResponse, AxiosError } from "axios";
 
 export interface CustomerLogin {
   email: string;
@@ -22,6 +22,7 @@ export type CustomerRegister = Omit<Customer, "uuid" | "phone" | "user_picture">
 export interface UseCustomerServiceProps {
   customer: Customer | null;
   customerLogin: Customer | null;
+  customerLoginError: AxiosError | null;
   customerRegister: AxiosPromise<Customer> | null;
   customerEdited: AxiosPromise<Customer> | null;
   isLoadingCustomer: boolean;
