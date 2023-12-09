@@ -55,7 +55,7 @@ const registerUser = async (req, res) => {
       email: email.toLowerCase(),
       password: encryptedPassword,
       phone,
-      user_picture_name: `${userUUID}_${user_picture.name}`
+      user_picture_name: `${userUUID}_${user_picture.name}` ?? null
     })
     
     const token = jwt.sign(
