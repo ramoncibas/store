@@ -11,7 +11,7 @@ export const Container = styled.div<IProps>`
   margin-bottom: 5px;
 
   border-radius: 20px;
-  background: ${({ background }) => (background ? `${background}` : "#ffefef")};
+  background: ${({ background }) => background || "#ffefef"};
 
   display: flex;
   justify-content: space-between;
