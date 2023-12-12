@@ -7,7 +7,7 @@ import { useDevices } from "hooks/useDevices";
 interface IUseProfileProps {
   user: Customer | null;
   imagePreview: any;
-  handleEdit: () => void;
+  handleEdit: (event: any) => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   isDesktop: any;
   isLoadingCustomer: boolean;
@@ -35,25 +35,34 @@ const useProfile = (): IUseProfileProps => {
       ...(newValue instanceof FormData ? Object.fromEntries(newValue) : newValue),
     }));
   };
+
+  // console.log(user)
   
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     event.preventDefault();
     const { files, name, value } = event.target;
-  
+
     if (files && files[0]) {     
       const formData = new FormData();
-      formData.set('user_picture', files[0]);
+      const previewURL: any = URL.createObjectURL(files[0]);
+
+      formData.append('user_picture', files[0]);
   
       handleSetUser(formData);
-
-      const previewURL: any = URL.createObjectURL(files[0]);
       setImagePreview(previewURL);
-
     } else {
       handleSetUser({ [name]: value });
     }
   };
+
+  const handleEdit = (event: any) => {
+    event.preventDefault();
+
+    if (customerUUID && user) {
+      handleEditCustomer(customerUUID, user as Customer);
+    }
+  }
 
   useEffect(() => {
     if (customerUUID) {
@@ -78,11 +87,7 @@ const useProfile = (): IUseProfileProps => {
   return {
     user,
     imagePreview,
-    handleEdit: () => {
-      if (customerUUID && user) {
-        handleEditCustomer(customerUUID, user as Customer);
-      }
-    },
+    handleEdit,
     handleChange,
     isDesktop,
     isLoadingCustomer,

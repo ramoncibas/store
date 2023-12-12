@@ -4,7 +4,7 @@ import { Input, Button } from "shared";
 
 interface ProfileFormProps {
   data: any;
-  handleEdit: () => void;
+  handleEdit: (event: any) => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
