@@ -3,16 +3,17 @@ const fs = require("fs");
 const path = require("path");
 
 const updateUserModel = require("../../models/User/updateUser");
-const { JWT_TOKEN_KEY, BUCKET_USER_PICTURE } = process.env;
-
+const doesFileExist = require("../../utils/doesFileExist");
+const { BUCKET_USER_PICTURE } = process.env;
 
 /**
  * Atualiza o usuário na base de dados
  * @param {*} req requisição
  * @param {*} res resposta
  */
-const updateUser = (req, res) => {
-  const { phone, email, user_picture = req.files.user_picture } = req.body;
+const updateUser = async(req, res) => {
+  const { phone, email } = req.body;
+  const { user_picture } = req.files
 
   const fields = {
     phone,
@@ -20,7 +21,19 @@ const updateUser = (req, res) => {
     user_picture_name: user_picture
   }
 
-  console.log(user_picture)
+  async function deleteUserPicture(userPicture) {
+    try {
+      if (userPicture) {
+        console.log(userPicture)
+        await fs.unlink(userPicture, (err) => {
+          if (err) throw err;
+          console.log(`${userPicture} was deleted`);
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting user picture:', error);
+    }
+  }
 
   try {
     const allowedFields = ["phone", "email", "user_picture_name"];
@@ -36,9 +49,12 @@ const updateUser = (req, res) => {
       const pictureName = `${userUUID}_${user_picture.name}`;
       const picturePath = path.join(BUCKET_USER_PICTURE, pictureName);
 
-      const directory = path.dirname(BUCKET_USER_PICTURE);
-      if (!fs.existsSync(directory)) {
-        fs.mkdirSync(directory, { recursive: true });
+      const userPictureExist = await doesFileExist(userUUID,BUCKET_USER_PICTURE)
+
+      if(userPictureExist) {
+        const picturePathToDelete = path.join(BUCKET_USER_PICTURE, userPictureExist);
+
+        await deleteUserPicture(picturePathToDelete);
       }
 
       const decodedImage = Buffer.from(user_picture.data, "base64");
@@ -56,11 +72,11 @@ const updateUser = (req, res) => {
 
     const updateValues = [...validFields.map(field => updateData[field]), userUUID];
 
-    return updateUserModel(Database, updateQuery, updateValues).then(() => {
-      res.status(200).send("Usuário atualizado com sucesso!");
-    });
+    const userUpdated = await updateUserModel(Database, updateQuery, updateValues)
+
+    return userUpdated && res.status(200).send("Usuário atualizado com sucesso!");
   } catch (error) {
-    console.log(error);
+    console.error('Error updating user:', error);
     return res.status(500).send("Algo deu errado, updateUser");
   }
 };
