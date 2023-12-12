@@ -1,6 +1,6 @@
 const upload = require("express-fileupload")
 
-const uploadUser = upload({
+const fileUpload = upload({
   useTempFiles: true,
   tempFileDir: "temp",
   limits: { fileSize: 50 * 1024 * 1024 },
@@ -9,4 +9,4 @@ const uploadUser = upload({
   debug: true
 });
 
-module.exports = uploadUser;
+module.exports = fileUpload;
