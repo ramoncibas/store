@@ -14,7 +14,7 @@ const getUser = async (req, res) => {
     const [userProfile] = await findUser.uuid(uuid);
 
     if (userProfile.user_picture_name) {
-      const filePath = `${process.env.HOST}/uploads/user_picture/${userProfile.user_picture_name}`;
+      const filePath = `${process.env.HOST}/profile/user_picture/${userProfile.user_picture_name}`;
       userProfile.user_picture_url = filePath;
     }
 
