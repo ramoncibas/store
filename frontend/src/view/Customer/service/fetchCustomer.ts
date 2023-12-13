@@ -19,13 +19,11 @@ const fetchRegisterCustomer = (customer: CustomerRegister): Promise<AxiosPromise
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-/** @backend to do */
 const fetchEditCustomer = (customerUUID: string, customer: Customer): Promise<AxiosPromise<Customer>> =>
-  api.patch(`/profile/${customerUUID}`, {
+  api.patch(`/profile/${customerUUID}`, customer, {
     headers: {
       Accept: "version=1", "x-access-token": getAcessToken(), "Content-Type": "multipart/form-data",
     },
-    customer
   });
 
 /** @backend to do */
