@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookiesMiddleware());
 // app.use(session({secret: 'key'}));
+app.use('/profile/user_picture', express.static(BUCKET_USER_PICTURE));
 
 // Autenticação
 app.post("/login", Controller.loginUser);
@@ -25,7 +26,7 @@ app.get("/", Controller.getProducts);
 app.get("/filter", Controller.getFilteredProduct);
 app.get("/product/aspects", Controller.getAllAspects);
 app.get("/product/:id", Middleware.auth, Controller.getProductById);
-app.get("/profile/:uuid", Middleware.auth, Middleware.fileStaticUser, Controller.getUser);
+app.get("/profile/:uuid", Middleware.auth, Controller.getUser);
 app.get("/cart", Controller.getShoppingCartProduct);
 
 app.post("/", Controller.saveProductOnShoppingCart);
