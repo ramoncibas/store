@@ -57,9 +57,20 @@ const updateUser = async(req, res) => {
         await deleteUserPicture(picturePathToDelete);
       }
 
-      const decodedImage = Buffer.from(user_picture.data, "base64");
-
-      fs.writeFileSync(picturePath, decodedImage);
+      // Entender o motivo de o codigo abaixo não funcionar para inserir imagens
+      // const decodedImage = Buffer.from(user_picture.data, "base64");
+      // fs.writeFileSync(picturePath, decodedImage);
+      
+      req.files.user_picture.mv(picturePath, (err) => {
+        if (err) {
+          console.error('Erro ao salvar a imagem:', err);
+          res.status(500).send('Erro ao salvar a imagem');
+        } else {
+          console.log('Imagem salva com sucesso!');
+          // Continue com a lógica para responder à requisição conforme necessário
+          res.status(200).send('Imagem salva com sucesso');
+        }
+      });
 
       updateData.user_picture_name = pictureName;
     }
