@@ -3,7 +3,6 @@ import { Customer, CustomerLogin, CustomerRegister } from "types";
 import api from "utils/api";
 import getAcessToken from "utils/getAcessToken";
 
-/** @backend to do */
 const fetchCustomer = (customerUUID: string): Promise<AxiosResponse<Customer | null>> =>
   api.get(`/profile/${customerUUID}`, {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },

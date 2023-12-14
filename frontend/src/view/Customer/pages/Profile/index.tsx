@@ -1,47 +1,62 @@
-import { BsArrowRight, BsArrowDown } from "react-icons/bs";
-import { Container, Title, Input, Button } from "shared";
-import * as DefautlStyle from "assets/style/defaultContainerStyle";
-import useProfile from "./hook/useProfile.hook";
+import { Container, Title } from "shared";
 import Profile from "./components";
+import ProfileSkeleton from "./components/ProfileSkeleton";
+import * as DefautlStyle from "assets/style/defaultContainerStyle";
+
+import useProfile from "./hook/useProfile.hook";
+import { Alert, AlertTitle } from "@mui/material";
 
 const UserProfile = () => {
   const {
     user,
+    showAlert,
     imagePreview,
     handleEdit,
     handleChange,
     isLoadingCustomer,
-    isLoadingEditCustomer,
+    isLoadingEditCustomer
   } = useProfile();
 
-  return (
+  const renderUserProfile = () => (
     <>
-      <Container>
-        <DefautlStyle.Row>
-          
-          <DefautlStyle.Col md="auto">
-            <Title>Informações do Usuário</Title>
-          
-            <Profile.Form
-              data={user}
-              handleEdit={handleEdit}
-              handleChange={handleChange}
-            />
-          </DefautlStyle.Col>
-          
-          <DefautlStyle.Col md="auto">
-            <DefautlStyle.PreviewContainer>
-              <Profile.Preview />
-            </DefautlStyle.PreviewContainer>
-          </DefautlStyle.Col>
+      <DefautlStyle.Col md="auto">
+        <Title>Informações do Usuário</Title>
+        <Profile.Form
+          data={user}
+          isLoading={isLoadingEditCustomer}
+          handleEdit={handleEdit}
+          handleChange={handleChange}
+        />
+      </DefautlStyle.Col>
 
-          <DefautlStyle.Col md="auto" className="image">
-            <Profile.Avatar image={imagePreview ?? user?.user_picture_url}/>
-          </DefautlStyle.Col>
+      <DefautlStyle.Col md="auto">
+        <DefautlStyle.PreviewContainer>
+          <Profile.Preview />
+        </DefautlStyle.PreviewContainer>
+      </DefautlStyle.Col>
 
-        </DefautlStyle.Row>
-      </Container>
+      <DefautlStyle.Col md="auto" className="image">
+        <Profile.Avatar image={imagePreview ?? user?.user_picture_url} />
+      </DefautlStyle.Col>
+
+      {
+        showAlert && (
+          <Alert severity={showAlert.type} onClose={() => { }}>
+            <AlertTitle>{showAlert.title}</AlertTitle>
+            {showAlert.message}
+          </Alert>
+        )
+      }
+
     </>
+  );
+
+  return (
+    <Container>
+      <DefautlStyle.Row>
+        {isLoadingCustomer ? <ProfileSkeleton /> : renderUserProfile()}
+      </DefautlStyle.Row>
+    </Container>
   );
 };
 

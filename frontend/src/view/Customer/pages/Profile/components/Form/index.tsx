@@ -1,14 +1,16 @@
+import { CircularProgress } from "@mui/material";
 import { FC } from "react";
 import { Form } from "react-bootstrap";
 import { Input, Button } from "shared";
 
 interface ProfileFormProps {
   data: any;
+  isLoading: boolean;
   handleEdit: (event: any) => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const ProfileForm: FC<ProfileFormProps> = ({ data, handleChange, handleEdit }) => (
+const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, handleChange, handleEdit }) => (
   <Form encType="multipart/form-data">
     <Input
       id="name"
@@ -48,9 +50,10 @@ const ProfileForm: FC<ProfileFormProps> = ({ data, handleChange, handleEdit }) =
     </Form.Group>
     <Button
       onClick={handleEdit}
+      disable={isLoading}
       background="#04AFD4"
-    >
-      Salvar Informações
+    >      
+      {isLoading ? <CircularProgress variant="indeterminate"/> : "Salvar Informações"}
     </Button>
   </Form>
 )

@@ -4,19 +4,21 @@ import useCustomerService from "../../../service/useCustomerService.service";
 import { Customer } from "types";
 import { useDevices } from "hooks/useDevices";
 
+
 interface IUseProfileProps {
   user: Customer | null;
   imagePreview: any;
   handleEdit: (event: any) => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   isDesktop: any;
+  showAlert: { type: "error" | "warning" | "info" | "success" | undefined, title: string, message: string, status: number };
   isLoadingCustomer: boolean;
   isLoadingEditCustomer: boolean;
 }
 
 const useProfile = (): IUseProfileProps => {
   const { customerUUID } = useCustomerStorage();
-  const { 
+  const {
     customer,
     handleCustomer,
     handleEditCustomer,
@@ -29,6 +31,8 @@ const useProfile = (): IUseProfileProps => {
   const [user, setUser] = useState<Customer | null>(null);
   const [imagePreview, setImagePreview] = useState();
 
+  const [showAlert, setShowAlert] = useState({ type: undefined, title: "", message: "", status: 0 });
+
   const handleSetUser = (newValue: any | null) => {
     setUser((prevState) => ({
       ...prevState,
@@ -36,19 +40,16 @@ const useProfile = (): IUseProfileProps => {
     }));
   };
 
-  // console.log(user)
-  
-
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     event.preventDefault();
     const { files, name, value } = event.target;
 
-    if (files && files[0]) {     
+    if (files && files[0]) {
       const formData = new FormData();
       const previewURL: any = URL.createObjectURL(files[0]);
 
       formData.append('user_picture', files[0]);
-  
+
       handleSetUser(formData);
       setImagePreview(previewURL);
     } else {
@@ -60,8 +61,13 @@ const useProfile = (): IUseProfileProps => {
     event.preventDefault();
 
     if (customerUUID && user) {
-      handleEditCustomer(customerUUID, user as Customer);
+      handleEditCustomer(customerUUID, user as Customer)
+        .then((data: any) => 
+          // setShowAlert({type, title, message, status }));
+          console.log(data));
     }
+
+    console.log(user)
   }
 
   useEffect(() => {
@@ -89,6 +95,7 @@ const useProfile = (): IUseProfileProps => {
     imagePreview,
     handleEdit,
     handleChange,
+    showAlert,
     isDesktop,
     isLoadingCustomer,
     isLoadingEditCustomer,
