@@ -33,7 +33,7 @@ export interface UseCustomerServiceProps {
   handleCustomer: (event: any) => any;
   handleLoginCustomer: (event: any) => any;
   handleRegisterCustomer: (event: any) => void;
-  handleEditCustomer: (customerUUID: string, customer: Customer) => void;
+  handleEditCustomer: (customerUUID: string, customer: Customer) => any;
   handleDeleteCustomer: (event: any) => void;
 }
 

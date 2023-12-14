@@ -67,8 +67,6 @@ const updateUser = async(req, res) => {
           res.status(500).send('Erro ao salvar a imagem');
         } else {
           console.log('Imagem salva com sucesso!');
-          // Continue com a lógica para responder à requisição conforme necessário
-          res.status(200).send('Imagem salva com sucesso');
         }
       });
 
@@ -84,11 +82,11 @@ const updateUser = async(req, res) => {
     const updateValues = [...validFields.map(field => updateData[field]), userUUID];
 
     const userUpdated = await updateUserModel(Database, updateQuery, updateValues)
-
-    return userUpdated && res.status(200).send("Usuário atualizado com sucesso!");
+    console.log('userUpdated', userUpdated)
+    return userUpdated && res.status(200).send({type: "success", title: "Sucesso", message: "Usuário atualizado com sucesso!"});
   } catch (error) {
     console.error('Error updating user:', error);
-    return res.status(500).send("Algo deu errado, updateUser");
+    return res.status(500).send({type: "error", title: "Falhou", message: "Parece que algo deu errado!"});
   }
 };
 
