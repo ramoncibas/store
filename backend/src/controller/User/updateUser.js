@@ -24,10 +24,8 @@ const updateUser = async(req, res) => {
   async function deleteUserPicture(userPicture) {
     try {
       if (userPicture) {
-        console.log(userPicture)
-        await fs.unlink(userPicture, (err) => {
-          if (err) throw err;
-          console.log(`${userPicture} was deleted`);
+        await fs.unlink(userPicture, (error) => {
+          if (error) throw error;
         });
       }
     } catch (error) {
@@ -61,12 +59,9 @@ const updateUser = async(req, res) => {
       // const decodedImage = Buffer.from(user_picture.data, "base64");
       // fs.writeFileSync(picturePath, decodedImage);
       
-      req.files.user_picture.mv(picturePath, (err) => {
-        if (err) {
-          console.error('Erro ao salvar a imagem:', err);
-          res.status(500).send('Erro ao salvar a imagem');
-        } else {
-          console.log('Imagem salva com sucesso!');
+      req.files.user_picture.mv(picturePath, (error) => {
+        if (error) {
+          res.status(500).send(`Erro ao salvar a imagem: ${error}`);
         }
       });
 
@@ -81,9 +76,9 @@ const updateUser = async(req, res) => {
 
     const updateValues = [...validFields.map(field => updateData[field]), userUUID];
 
-    const userUpdated = await updateUserModel(Database, updateQuery, updateValues)
-    console.log('userUpdated', userUpdated)
-    return userUpdated && res.status(200).send({type: "success", title: "Sucesso", message: "Usuário atualizado com sucesso!"});
+    await updateUserModel(Database, updateQuery, updateValues);
+    
+    return res.status(200).send({type: "success", title: "Sucesso", message: "O seu perfil foi atualizado!"});
   } catch (error) {
     console.error('Error updating user:', error);
     return res.status(500).send({type: "error", title: "Falhou", message: "Parece que algo deu errado!"});
