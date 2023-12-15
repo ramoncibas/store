@@ -40,7 +40,7 @@ const UserProfile = () => {
       </DefautlStyle.Col>
 
       {
-        showAlert && (
+        showAlert.status && (
           <Alert severity={showAlert.type} onClose={() => { }}>
             <AlertTitle>{showAlert.title}</AlertTitle>
             {showAlert.message}

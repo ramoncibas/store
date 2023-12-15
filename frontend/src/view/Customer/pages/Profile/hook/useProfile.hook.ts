@@ -62,12 +62,10 @@ const useProfile = (): IUseProfileProps => {
 
     if (customerUUID && user) {
       handleEditCustomer(customerUUID, user as Customer)
-        .then((data: any) => 
-          // setShowAlert({type, title, message, status }));
-          console.log(data));
+      .then(({ data: { type, title, message }, status }: any) => {
+        setShowAlert({ type, title, message, status });
+      });
     }
-
-    console.log(user)
   }
 
   useEffect(() => {
