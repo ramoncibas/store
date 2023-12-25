@@ -12,6 +12,8 @@ export const NavContainer = styled(Nav)`
   left: 0;
   right: 0;
 
+  z-index: 9999;
+
   display: flex;
   justify-content: space-between;
 

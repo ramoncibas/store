@@ -13,8 +13,14 @@ export const Button = styled.button`
   color: #fff;
   transition: 0.3s all;
   text-transform: uppercase;
+  cursor: pointer;
 
   &:hover {
     filter: brightness(90%);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 `;

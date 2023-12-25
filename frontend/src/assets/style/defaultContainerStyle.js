@@ -12,6 +12,8 @@ export const Row = styled(RowSC)`
     justify-content: center;
     flex-direction: column;
   }
+
+  padding: 0 5px;
 `;
 
 export const Col = styled(ColSC)`
