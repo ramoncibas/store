@@ -3,12 +3,12 @@ import { useDevices } from "hooks/useDevices";
 
 
 const ProfileAvatarPreview = () => {
-  const { isDesktop } = useDevices();
+  const { isMobile } = useDevices();
 
   return (
     <div className="content">
       <span>IMAGE PREVIEW</span>
-      {isDesktop ? (
+      {isMobile ? (
         <BsArrowDown size={72} />
       ) : (
         <BsArrowRight size={72} />
