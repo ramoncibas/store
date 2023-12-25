@@ -6,11 +6,12 @@ import { Input, Button } from "shared";
 interface ProfileFormProps {
   data: any;
   isLoading: boolean;
+  hasChangedUser: boolean;
   handleEdit: (event: any) => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, handleChange, handleEdit }) => (
+const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, hasChangedUser, handleChange, handleEdit }) => (
   <Form encType="multipart/form-data">
     <Input
       id="name"
@@ -46,14 +47,15 @@ const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, handleChange, hand
         name="user_picture"
         type="file"
         onChange={handleChange}
+        className="input-file-custom"
       />
     </Form.Group>
     <Button
       onClick={handleEdit}
-      disable={isLoading}
+      disabled={isLoading || !hasChangedUser}
       background="#04AFD4"
-    >      
-      {isLoading ? <CircularProgress variant="indeterminate"/> : "Salvar Informações"}
+    >
+      {isLoading ? <CircularProgress variant="indeterminate" /> : "Salvar Informações"}
     </Button>
   </Form>
 )

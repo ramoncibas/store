@@ -12,13 +12,13 @@ const { BUCKET_USER_PICTURE } = process.env;
  * @param {*} res resposta
  */
 const updateUser = async(req, res) => {
-  const { phone, email } = req.body;
-  const { user_picture } = req.files
+  const { phone, email, user_picture_name } = req.body;
+  const { user_picture } = req.files || {};
 
   const fields = {
     phone,
     email,
-    user_picture_name: user_picture
+    user_picture_name: user_picture || user_picture_name || null
   }
 
   async function deleteUserPicture(userPicture) {
@@ -75,7 +75,7 @@ const updateUser = async(req, res) => {
     `;
 
     const updateValues = [...validFields.map(field => updateData[field]), userUUID];
-
+    
     await updateUserModel(Database, updateQuery, updateValues);
     
     return res.status(200).send({type: "success", title: "Sucesso", message: "O seu perfil foi atualizado!"});

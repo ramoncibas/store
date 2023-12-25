@@ -1,17 +1,24 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useCustomerStorage from "hooks/useCustomerStorage.hook";
 import useCustomerService from "../../../service/useCustomerService.service";
 import { Customer } from "types";
 import { useDevices } from "hooks/useDevices";
 
+interface IAlertMessage {
+  type: "error" | "warning" | "info" | "success" | undefined;
+  title: string;
+  message: string;
+  status: number;
+}
 
 interface IUseProfileProps {
   user: Customer | null;
+  hasChangedUser: boolean;
   imagePreview: any;
   handleEdit: (event: any) => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   isDesktop: any;
-  showAlert: { type: "error" | "warning" | "info" | "success" | undefined, title: string, message: string, status: number };
+  showAlert: IAlertMessage;
   isLoadingCustomer: boolean;
   isLoadingEditCustomer: boolean;
 }
@@ -31,7 +38,13 @@ const useProfile = (): IUseProfileProps => {
   const [user, setUser] = useState<Customer | null>(null);
   const [imagePreview, setImagePreview] = useState();
 
-  const [showAlert, setShowAlert] = useState({ type: undefined, title: "", message: "", status: 0 });
+  const [hasChangedUser, setHasChangedUser] = useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<IAlertMessage>({
+    type: undefined,
+    title: "",
+    message: "",
+    status: 0
+  });
 
   const handleSetUser = (newValue: any | null) => {
     setUser((prevState) => ({
@@ -61,10 +74,10 @@ const useProfile = (): IUseProfileProps => {
     event.preventDefault();
 
     if (customerUUID && user) {
-      handleEditCustomer(customerUUID, user as Customer)
-      .then(({ data: { type, title, message }, status }: any) => {
-        setShowAlert({ type, title, message, status });
-      });
+      handleEditCustomer(customerUUID, user as Customer).then(
+        ({ data: { type, title, message }, status }: any) => {
+          setShowAlert({ type, title, message, status });
+        });
     }
   }
 
@@ -72,24 +85,36 @@ const useProfile = (): IUseProfileProps => {
     if (customerUUID) {
       handleCustomer(customerUUID);
     }
-
-    if (customer) {
-      handleSetUser(customer);
-    }
-
   }, [customerUUID]);
 
-
   useEffect(() => {
-    if (customer) {
-      handleSetUser(customer);
-    }
-
+    setUser(customer);
+    setHasChangedUser(false);
   }, [customer]);
 
+  useEffect(() => {
+    const hasObjectChanged = (oldObj: any | null, newObj: any | null): boolean => {
+      if (!oldObj || !newObj) {
+        return false;
+      }
+
+      const { user_picture: oldUserPicture, ...oldRest } = oldObj;
+      const { user_picture: newUserPicture, ...newRest } = newObj;
+      const restChanged = Object.keys(oldRest).some((key) => oldRest[key] !== newRest[key]);
+
+      // Checks if the image has been modified
+      const pictureChanged = oldUserPicture !== newUserPicture;
+
+      return restChanged || pictureChanged;
+    };
+
+    const changed = customer && hasObjectChanged(customer, user);
+    setHasChangedUser(changed ?? false);
+  }, [customer, user]);
 
   return {
     user,
+    hasChangedUser,
     imagePreview,
     handleEdit,
     handleChange,
