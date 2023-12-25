@@ -7,7 +7,7 @@ const UserSchema = `
     email TEXT NOT NULL,
     password TEXT NOT NULL,
     phone TEXT NOT NULL,
-    user_picture TEXT,
+    user_picture_name TEXT,
     type TEXT DEFAULT user NOT NULL
   );
 `;

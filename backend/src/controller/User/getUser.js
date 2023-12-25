@@ -13,7 +13,12 @@ const getUser = async (req, res) => {
     const findUser = new findUserBy();
     const [userProfile] = await findUser.uuid(uuid);
 
-    return res.send(userProfile)
+    if (userProfile.user_picture_name) {
+      const filePath = `${process.env.HOST}/profile/user_picture/${userProfile.user_picture_name}`;
+      userProfile.user_picture_url = filePath;
+    }
+
+    return res.send(userProfile);
   } catch (error) { 
     console.log(error);
     return res.send("Something went wrong, Select All Products");

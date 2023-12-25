@@ -11,17 +11,18 @@ const findUserBy = require("../../models/User/findUserBy");
  * @param {*} res resposta
  */
 const registerUser = async (req, res) => {
+  const { JWT_TOKEN_KEY, BUCKET_USER_PICTURE } = process.env;
+
   try {
     const {
       first_name,
       last_name,
       email,
       password,
-      phone,
-      user_picture
+      phone
     } = req.body;
 
-    console.log(req.body)
+    const { user_picture } = req.files;
 
     if (!(email && password && first_name && last_name)) {
       return res.status(400).send("All input is required");
@@ -35,21 +36,31 @@ const registerUser = async (req, res) => {
       return res.status(409).send("User Already Exist. Please Login");
     }
 
+    const userUUID = randomUUID();
+    
+    if (user_picture) {
+      user_picture.mv(`${BUCKET_USER_PICTURE}/${userUUID}_${user_picture.name}`, (err) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+      });
+    }
+
     encryptedPassword = await bcrypt.hash(password, 10);
 
     const [user] = await saveUserModel(Database, {
-      uuid: randomUUID(),
+      uuid: userUUID,
       first_name,
       last_name,
       email: email.toLowerCase(),
       password: encryptedPassword,
       phone,
-      user_picture
+      user_picture_name: `${userUUID}_${user_picture.name}` ?? null
     })
     
     const token = jwt.sign(
       { user_id: user.id, email },
-      process.env.JWT_TOKEN_KEY,
+      JWT_TOKEN_KEY,
       { expiresIn: "1h" }
     );
 

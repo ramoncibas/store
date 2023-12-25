@@ -1,6 +1,7 @@
 const getUser = require("./src/controller/User/getUser");
 const getUsers = require("./src/controller/User/getUsers");
 const saveUser = require("./src/controller/User/saveUser");
+const updateUser = require("./src/controller/User/updateUser");
 
 const saveProduct = require("./src/controller/Product/saveProduct");
 const getProducts = require("./src/controller/Product/getProducts");
@@ -19,16 +20,17 @@ const loginUser = require("./src/controller/Auth/loginUser");
 const registerUser = require("./src/controller/Auth/registerUser");
 
 module.exports = {
-  loginUser,
-  registerUser,
   getUser,
   getUsers,
+  saveUser,
+  loginUser,
+  registerUser,
+  updateUser,
   getProducts,
   getProductById,
   getShoppingCartProduct,
   getAllAspects,
-  saveUser,
-  saveProduct,  
+  saveProduct,
   saveProductOnShoppingCart,
   updateProduct,
   deleteProdut,

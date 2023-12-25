@@ -1,13 +1,14 @@
 const Title = (props) => (
-  <h1
+  <p
     style={{
-      fontSize: props.fontsize || '16px',
+      fontSize: props.fontsize || '18px',
+      fontWeight: "bold",
       marginBottom: props.marginbottom || "30px",
       textTransform: "uppercase",
     }}
   >
     {props.children}
-  </h1>
+  </p>
 );
 
 export default Title;

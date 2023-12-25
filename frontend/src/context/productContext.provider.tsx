@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import useProductService from "../view/Product/service/useProductService.service";
 import { ProductContext } from "./productContext.context";
+import useProductService from "../pages/Product/service/useProductService.service";
 
 const ProductContextProvider: React.FunctionComponent<any> = ({
   children,

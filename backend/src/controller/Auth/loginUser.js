@@ -21,7 +21,6 @@ const loginUser = async (req, res) => {
     const [user] = await findUser.email(email);
 
     if (user && (await bcrypt.compare(password, user.password))) {
-
       const token = jwt.sign(
         { user_id: user.id, email },
         process.env.JWT_TOKEN_KEY,
