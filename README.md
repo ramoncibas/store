@@ -39,8 +39,9 @@ To clone and run this application, you'll need:
 1. Clone the repository
 ```
 $ git clone https://github.com/ramoncibas/store
+$ git clone https://github.com/ramoncibas/store-backend
 ```
-3. Install NPM packages in [front-end](https://github.com/ramoncibas/store/tree/master/src) and [back-end](https://github.com/ramoncibas/store/tree/master/backend) folders
+3. Install NPM packages in [front-end](https://github.com/ramoncibas/store) and [back-end](https://github.com/ramoncibas/store-backend) folders
 ```bash
 # you can use yarn too
 $ npm install
