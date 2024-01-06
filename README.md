@@ -1,6 +1,6 @@
 <h1>
   Store - buy safe
-  <img src="frontend/src/assets/img/logo.png" width="25" height="30" />
+  <img src="src/assets/img/logo.png" width="25" height="30" />
 </h1>
 
 <div display="flex" max-width="400px">
