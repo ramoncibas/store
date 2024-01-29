@@ -39,7 +39,7 @@ To clone and run this application, you'll need:
 1. Clone the repository
 ```
 $ git clone https://github.com/ramoncibas/store
-$ git clone https://github.com/ramoncibas/store-backend
+$ git clone https://github.com/ramoncibas/store-api
 ```
 3. Install NPM packages in [front-end](https://github.com/ramoncibas/store) and [back-end](https://github.com/ramoncibas/store-api) folders
 ```bash
