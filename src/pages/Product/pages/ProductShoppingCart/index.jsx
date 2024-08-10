@@ -38,8 +38,7 @@ const ShoppingCart = () => {
       </Row>
       <Row>
         {
-          // Valida se o usuário já adicionou algum produto no carrinho
-          products.length
+          !!products
             ? products.map((product, index) => (
                 <Col key={index}>
                   <Card {...product} />

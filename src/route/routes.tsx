@@ -18,7 +18,7 @@ const Router: FC<RouterProps> = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/filter" element={<Home />} />
+        <Route path="/product/filter" element={<Home />} />
         <Route path="/login" element={<Login.Page />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<UserProfile />} />
