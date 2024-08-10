@@ -7,7 +7,7 @@ import * as DefautlStyle from "assets/style/defaultContainerStyle";
 import { Container, Title, CardProduct } from "shared";
 import FormProduct from "./components/FormProduct/FormProduct";
 
-import { withProductContext } from "../../../../context/productContext.provider";
+import { withProductContext } from "../../../../context/Product/productContext.provider";
 import useProduct from "../../hooks/useProduct.hook";
 
 import windowWidth from "utils/windowWidth";
