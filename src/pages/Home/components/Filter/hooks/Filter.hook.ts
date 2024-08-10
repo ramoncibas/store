@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import useHome from "../../../Home.hook";
-import { ProductAspects } from "pages/Product/types";
+import { ProductAspects } from "types";
 
 type FilterTitleType = {
   [key: string]: string;
@@ -49,7 +49,7 @@ const useFilter = (): IUseFilter => {
       }));
 
       navigate({
-        pathname: "/filter",
+        pathname: "/product/filter",
         search: `?${createSearchParams(searchParams)}`,
       });
     }

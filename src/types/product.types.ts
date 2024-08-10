@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { CustomAxiosPromise } from "./axios.types";
 
 export interface Product {
   id?: string | number;
@@ -57,11 +58,7 @@ export interface ProductAspects {
   categories: Aspect[];
   colors: Aspect[];
   sizes: Aspect[];
-}
-
-export interface ShoppingCart extends Product {
-  product_id: string;
-} 
+};
 
 export interface InputProps {
   id: string;
@@ -76,3 +73,32 @@ export interface InputProps {
 export interface FilterQueryParams {
   [key: string]: string;
 }
+
+export interface IProductContext {
+  products: Product[] | null;
+  aspects: ProductAspects | null;
+  productByIdData: ProductById | null;
+  createProductResponse: Product | null;
+  filteredProduct: Product[] | null;
+  isLoading: {
+    products: boolean;
+    editProduct: boolean;
+    productById: boolean;
+    createProduct: boolean;
+    aspects: boolean;
+    deleteProduct: boolean;
+    filterProduct: boolean;
+  };
+  handleContextProduct: {
+    initialRequest: () => void;
+    getProducts: (productId: string) => CustomAxiosPromise<any>;
+    getProductById: (productId: string) => CustomAxiosPromise<any>;
+    createProduct: (product: Product) => CustomAxiosPromise<any>;
+    editProduct: (product: Product) => CustomAxiosPromise<any>;
+    deleteProduct: (productId: string) => CustomAxiosPromise<any>;
+    getProductAspects: () => CustomAxiosPromise<any>;
+    filterProduct: (query: FilterQueryParams) => CustomAxiosPromise<Product[]>;
+  };
+}
+
+export interface UseProductServiceReturn extends IProductContext {}

@@ -16,7 +16,8 @@ const Filter = (): JSX.Element => {
 
   const { isMobile } = useDevices();
 
-  return isMobile ? <FilterComponent.Mobile /> : <FilterComponent.Desktop />;
+  return <FilterComponent.Desktop />;
+  // return isMobile ? <FilterComponent.Mobile /> : <FilterComponent.Desktop />;
 };
 
 export default Filter;
