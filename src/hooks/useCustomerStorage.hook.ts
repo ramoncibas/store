@@ -3,6 +3,7 @@ import { Customer } from 'types';
 
 interface IUseCustomer {
   customer: Customer | null;
+  customerID: number | undefined;
   customerUUID: string | undefined;
   customerFirstName: string | undefined;
   customerLastName: string | undefined;
@@ -44,6 +45,7 @@ const useCustomerStorage = (): IUseCustomer => {
   
   return {
     customer,
+    customerID: customer?.id,
     customerUUID: customer?.uuid,
     customerFirstName: customer?.first_name,
     customerLastName: customer?.last_name,
