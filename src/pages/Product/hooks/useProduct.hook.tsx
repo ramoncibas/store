@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { InputProps, Product, ProductById } from "../types";
-import {
-  useProductContext,
-} from "../../../context/productContext.context";
+import { InputProps, Product, ProductById } from "types";
+import { useProductContext } from "context/Product/productContext.context";
+
 
 const useProduct = (): any => {
-  const { id: productID } = useParams();
+  const { id: __PRODUCT_ID_PARAMS } = useParams();
   const [product, setProduct] = useState<any>();
 
   const REDIRECT_HOME = () => window.location.assign("/");
@@ -15,22 +14,13 @@ const useProduct = (): any => {
   const {
     aspects,
     productByIdData,
-    isLoadingProduct,
-    isLoadingEdit,
-    isLoadingProductById,
-    isLoadingAspects,
-    isLoadingSave,
-    isLoadingDelete,
-    handleGetProductAspects,
-    handleGetProductById,
-    handleDeleteProduct,
-    handleEditProduct,
-    handleSaveNewProduct,
+    handleContextProduct,
+    isLoading
   } = useProductContext();
 
   useEffect(() => {
-    if (productID) {
-      handleGetProductById(productID);
+    if (__PRODUCT_ID_PARAMS) {
+      handleContextProduct.getProductById(__PRODUCT_ID_PARAMS);
       if (productByIdData !== null) setProduct(productByIdData);      
     }    
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,7 +65,7 @@ const useProduct = (): any => {
     const sureDelete = prompt("Deseja meso remover esse produto?");
 
     if (sureDelete) {
-      handleDeleteProduct(product?.id);
+      handleContextProduct.deleteProduct(product?.id);
 
       REDIRECT_HOME();
     }
@@ -85,8 +75,8 @@ const useProduct = (): any => {
     event.preventDefault();
 
     try {
-      if (productID) handleEditProduct({ id: productID, ...product});
-      if (!productID) handleSaveNewProduct(product);
+      if (__PRODUCT_ID_PARAMS) handleContextProduct.editProduct({ id: __PRODUCT_ID_PARAMS, ...product});
+      if (!__PRODUCT_ID_PARAMS) handleContextProduct.createProduct(product);
     } catch (error) {
       console.log(error);
     } finally {
@@ -156,24 +146,17 @@ const useProduct = (): any => {
     },
   ];
 
-  
-
   return {
     product,
     aspects,
     productByIdData,
-    productID,
+    __PRODUCT_ID_PARAMS,
     fieldsProduct,
     handleChange,
     handleProduct,
     handeDelete,
-    handleGetProductAspects,
-    isLoadingProduct,
-    isLoadingEdit,
-    isLoadingProductById,
-    isLoadingAspects,
-    isLoadingSave,
-    isLoadingDelete,
+    handleContextProduct,
+    isLoading
   };
 };
 

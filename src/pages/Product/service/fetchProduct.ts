@@ -1,71 +1,57 @@
-import { AxiosPromise, AxiosResponse } from "axios";
-import { FilterQueryParams, Product, ProductAspects, ProductById, ShoppingCart } from "../types";
-import api from "../../../utils/api";
-import getAcessToken from "../../../utils/getAcessToken";
+import api from "utils/api";
+import getAcessToken from "utils/getAcessToken";
+import {
+  Product,
+  ProductAspects,
+  ProductById,
+  FilterQueryParams,
+  CustomAxiosPromise
+} from "types";
 
-const fetchProduct = (): Promise<AxiosResponse<Product[]>> => 
-  api.get("/", {
+const fetchProducts = (): CustomAxiosPromise<Product[]> =>
+  api.get("/product/all", {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-const fetchProductById = (productId: string): Promise<AxiosResponse<ProductById[]>> =>
+const fetchProductById = (productId: string): CustomAxiosPromise<ProductById> =>
   api.get(`/product/${productId}`, {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-const fetchProductAspects = (): Promise<AxiosResponse<ProductAspects>> => 
+const fetchProductAspects = (): CustomAxiosPromise<ProductAspects> =>
   api.get("/product/aspects", {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-const fetchFilterProduct = (query: FilterQueryParams): Promise<AxiosResponse<Product[]>> => 
-  api.get("/filter", {
+const fetchFilterProduct = (query: FilterQueryParams): CustomAxiosPromise<Product[]> =>
+  api.get("/product/filter", {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
     params: query,
-  });  
+  });
 
-const fetchBuyProduct = (product: Product): Promise<AxiosPromise> => 
-  api.post("/", product, {
+const fetchCreateProduct = (product: Product): CustomAxiosPromise<Product> =>
+  api.post("/product/create", product, {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-const fetchSaveNewProduct = (product: Product): Promise<AxiosPromise> => 
-  api.post("/product", product, {
-    headers: { Accept: "version=1", "x-access-token": getAcessToken() },
-  });
-
-const fetchEditProduct = (data: Product): Promise<AxiosPromise> => 
-  api.patch("/product", {
+const fetchEditProduct = (data: Product): CustomAxiosPromise<Product> =>
+  api.patch("/product/update", {
     headers: { Authorization: "*", "x-access-token": getAcessToken() },
     data
   });
 
-const fetchDeleteProduct = (productId: string): Promise<AxiosPromise> =>
-  api.delete("/product", {
+const fetchDeleteProduct = (productId: string): CustomAxiosPromise<void> =>
+  api.delete("/product/delete", {
     headers: { Authorization: "*", "x-access-token": getAcessToken() },
     data: { productId },
   });
 
-const fetchProductCartProduct = (): Promise<ShoppingCart> => 
-  api.get("/cart", {
-    headers: { Accept: "version=1", "x-access-token": getAcessToken() },
-  });
-
-const fetchDeleteShoppingCartProduct = (productId: string): Promise<AxiosPromise> => 
-  api.delete("/cart", {
-    headers: { Authorization: "*", "x-access-token": getAcessToken() },
-    data: { productId }
-  });
-
 export {
-  fetchProduct,
+  fetchProducts,
   fetchProductById,
   fetchProductAspects,
-  fetchBuyProduct,
-  fetchSaveNewProduct,
+  fetchCreateProduct,
   fetchEditProduct,
   fetchDeleteProduct,
-  fetchProductCartProduct,
-  fetchDeleteShoppingCartProduct,
   fetchFilterProduct,
 };
