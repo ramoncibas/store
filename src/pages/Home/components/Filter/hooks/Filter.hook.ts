@@ -1,92 +1,73 @@
-import { useEffect, useState } from "react";
-import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import useHome from "../../../Home.hook";
-import { ProductAspects } from "types";
-
-type FilterTitleType = {
-  [key: string]: string;
-};
-
-interface IUseFilter {
-  aspects: ProductAspects | null | undefined;
-  filtered: FilterTitleType | null | undefined;
-  openFilters: boolean | null | undefined;
-  filterTitle: FilterTitleType;
-  queryParamsObj: {[key: string]: string | undefined};
-  randomKey: () => number;
-  handleFilter: (event: React.ChangeEvent<HTMLElement>) => void;
-  handleClearFilter: () => void;
-  handleCloseFilter: () => void;
-}
+import { AspectName, ProductAspects } from "types";
+import { getCurrentArray, updateArray } from "utils/array";
+import { useProductContext } from "context/Product/productContext.context";
+import { FilterTitleType, IUseFilter } from "../types/filter.types";
 
 const useFilter = (): IUseFilter => {
-  const navigate = useNavigate();
+  const { aspects } = useHome();
+  const { handleContextProduct } = useProductContext();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [filtered, setFiltered] = useState<FilterTitleType | null>(null);
+  const initialFilterValue: ProductAspects = {
+    brand_id: [], gender_id: [], category_id: [], size_id: []
+  };  
+  
+  const [filtered, setFiltered] = useState<ProductAspects>(initialFilterValue);
   const [openFilters, setOpenFilters] = useState<boolean>(true);
 
-  const { aspects, queryParamsObj, randomKey } = useHome();
-
-  const handleFilter = (event: any) => {
-    const { name, value, dataset } = event.target;
-
-    searchParams.set(name, value);
-
-    if (!event.target.checked) {
-      searchParams.delete(name);
-    }
-
-    if (Number(value) >= 0) {
-      setSearchParams((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-
-      setFiltered((prevState) => ({
-        ...prevState,
-        [name]: dataset.label,
-      }));
-
-      navigate({
-        pathname: "/product/filter",
-        search: `?${createSearchParams(searchParams)}`,
+  const handleFilter = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    const numericValue = Number(value);
+  
+    if (numericValue >= 0) {
+      setFiltered((prevState) => {
+        const aspectName = name as AspectName;
+        const currentArray = getCurrentArray(prevState, aspectName);
+        const updatedArray = updateArray(currentArray, numericValue);
+  
+        return {
+          ...prevState,
+          [aspectName]: updatedArray,
+        };
       });
     }
-  };
+  }, []);
 
-  const handleClearFilter = () => {
-    // Implementar a lógica para limpar os filtros
-  };
-
-  const handleCloseFilter = () => {
+  const handleClearFilter = useCallback(() => {
+    setFiltered(initialFilterValue);
+  }, []);
+  
+  const handleCloseFilter = useCallback(() => {
     setOpenFilters((prevState) => !prevState);
-  };
-
-  const hasQueryParams = queryParamsObj && Object.keys(queryParamsObj).length > 0;
-
+  }, []);
+  
   useEffect(() => {
-    if (!hasQueryParams) {
-      navigate({ pathname: "/" });
+    if (filtered && typeof filtered === 'object') {
+      const hasFilteredValue = Object.values(filtered).some((arr) => Array.isArray(arr) && arr.length > 0);
+  
+      if (hasFilteredValue) {
+        handleContextProduct.filterProduct(filtered);
+      }
     }
-  }, [hasQueryParams, navigate]);
-
-  const filterTitle: FilterTitleType = {
-    colors: "COR",
-    price: "PREÇO",
-    brands: "MARCA",
-    sizes: "TAMANHO",
-    genders: "GÊNERO",
-    categories: "CATEGORIA",
+  }, [filtered]);
+  
+  const filterTitle: any = {
+    // TODO: ajustar esses retorno do backend, criando um 'alias' lá para simplificar o front
+    // colors: "COR",
+    // price: "PREÇO",
+    // price: "PREÇO",
+    brand_id: "SHOP BY CATEGORY",
+    size_id: "SIZE",
+    gender_id: "GENDER",
+    category_id: "CATEGORY",
   };
 
   return {
     aspects,
     filtered,
-    queryParamsObj,
     filterTitle,
     openFilters,
-    randomKey,
     handleFilter,
     handleClearFilter,
     handleCloseFilter,
