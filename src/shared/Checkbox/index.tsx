@@ -6,6 +6,7 @@ import {
 } from "./style";
 
 interface CheckBoxProps {
+  id: number;
   name: string;
   value: string;
   checked: boolean;
