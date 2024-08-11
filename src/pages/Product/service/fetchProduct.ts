@@ -4,7 +4,6 @@ import {
   Product,
   ProductAspects,
   ProductById,
-  FilterQueryParams,
   CustomAxiosPromise
 } from "types";
 
@@ -23,10 +22,9 @@ const fetchProductAspects = (): CustomAxiosPromise<ProductAspects> =>
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
   });
 
-const fetchFilterProduct = (query: FilterQueryParams): CustomAxiosPromise<Product[]> =>
-  api.get("/product/filter", {
+const fetchFilterProduct = (data: ProductAspects): CustomAxiosPromise<Product[]> =>
+  api.post("/product/filter", data, {
     headers: { Accept: "version=1", "x-access-token": getAcessToken() },
-    params: query,
   });
 
 const fetchCreateProduct = (product: Product): CustomAxiosPromise<Product> =>
