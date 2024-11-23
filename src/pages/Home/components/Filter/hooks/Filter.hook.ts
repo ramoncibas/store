@@ -46,15 +46,26 @@ const useFilter = (): IUseFilter => {
   const handleCloseFilter = useCallback(() => {
     setOpenFilters((prevState) => !prevState);
   }, []);
-  
-  useEffect(() => {
-    if (filtered && typeof filtered === 'object') {
-      const hasFilteredValue = Object.values(filtered).some((arr) => Array.isArray(arr) && arr.length > 0);
-  
+
+  const handleFiltered = useCallback(() => {
+    if (filtered && typeof filtered === "object") {
+      // Check if any value in the 'filtered' object contains a non-empty array.
+      const hasFilteredValue = Object.values(filtered).some(
+        (arr) => Array.isArray(arr) && arr.length > 0
+      );
+
       if (hasFilteredValue) {
+        // Apply filters if there are active values.
         handleContextProduct.filterProduct(filtered);
+      } else {
+        // Clear filtered state if all are empty or absent.
+        handleClearFilteredProducts();
       }
     }
+  }, [filtered, handleContextProduct, handleClearFilteredProducts]);
+  
+  useEffect(() => {
+    handleFiltered();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtered]);
   
