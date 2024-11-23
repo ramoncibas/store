@@ -27,6 +27,7 @@ export const productDefaultValues: IProductContext = {
     editProduct: (data: Product) => Promise.resolve({ data: undefined }) as AxiosPromise<any>,
     deleteProduct: (productId: string) => Promise.resolve({ data: undefined }) as AxiosPromise<any>,
   },
+  handleClearFilteredProducts: () => {}
 };
 
 export const ProductContext = createContext<IProductContext>(productDefaultValues);

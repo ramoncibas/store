@@ -14,8 +14,7 @@ interface ProductListProps {
 }
 
 const Home: FC = () => {
-  const { products, handleShoppinCart, randomKey } = useHome();
-  
+  const { products, handleShoppinCart } = useHome();
   const ProductList: React.FC<ProductListProps> = ({ list }): any => (
     list.map((product: Product) => (
       <Col key={product.id}>

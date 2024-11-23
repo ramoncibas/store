@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { useProductContext } from "context/Product/productContext.context";
-import useKey from "hooks/useKey";
 import { Product, ProductAspects } from "types";
 import { useCartContext } from "context/Cart/cartContext.context";
 import useCustomerStorage from "hooks/useCustomerStorage.hook";
@@ -9,22 +8,18 @@ import useCustomerStorage from "hooks/useCustomerStorage.hook";
 interface IUseHome {
   products: Product[] | null;
   aspects: ProductAspects | null | undefined;
-  randomKey: () => number;
   handleShoppinCart: (product: Product) => any;
 }
 
 const useHome = (): IUseHome => {
+  const { customerID } = useCustomerStorage();
   const {
     products: productsContext,
+    filteredProduct,
     aspects,
   } = useProductContext();
   const { handleContextCart } = useCartContext();
-
-  const { customerID } = useCustomerStorage();
-
   const [products, setProducts] = useState<Product[]>(productsContext || []);
-
-  const { randomKey } = useKey();
 
   const handleShoppinCart = async (product: Product) => {
     if (!product || !customerID || !handleContextCart.addCartItem) {
@@ -41,14 +36,14 @@ const useHome = (): IUseHome => {
   };
 
   useEffect(() => {
-    if (productsContext)
-      setProducts(productsContext);
-  }, [productsContext]);
+    if (filteredProduct || productsContext) {
+      setProducts(filteredProduct || productsContext || []);
+    }
+  }, [filteredProduct, productsContext, products]);
 
   return {
     products,
     aspects,
-    randomKey,
     handleShoppinCart,
   };
 };
