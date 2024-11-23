@@ -7,25 +7,28 @@ import { FilterTitleType, IUseFilter } from "../types/filter.types";
 
 const useFilter = (): IUseFilter => {
   const { aspects } = useHome();
-  const { handleContextProduct } = useProductContext();
+  const { filteredProduct, handleContextProduct, handleClearFilteredProducts } = useProductContext();
 
   const initialFilterValue: ProductAspects = {
-    brand_id: [], gender_id: [], category_id: [], size_id: []
+    // TODO: No size eu vou passar min, e max... então preciso alterar a logica de atualização de estado para comportar essa demanda
+    brand_id: [], gender_id: [], category_id: [], size: {}
   };  
   
   const [filtered, setFiltered] = useState<ProductAspects>(initialFilterValue);
   const [openFilters, setOpenFilters] = useState<boolean>(true);
 
   const handleFilter = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
     const numericValue = Number(value);
-  
-    if (numericValue >= 0) {
+
+    if (numericValue >= 0 && name !== 'size') {
       setFiltered((prevState) => {
         const aspectName = name as AspectName;
         const currentArray = getCurrentArray(prevState, aspectName);
-        const updatedArray = updateArray(currentArray, numericValue);
-  
+        const updatedArray = checked
+          ? updateArray(currentArray, numericValue) // Adiciona se o checkbox estiver marcado
+          : currentArray.filter((item) => item !== numericValue);
+
         return {
           ...prevState,
           [aspectName]: updatedArray,
@@ -36,6 +39,8 @@ const useFilter = (): IUseFilter => {
 
   const handleClearFilter = useCallback(() => {
     setFiltered(initialFilterValue);
+    handleClearFilteredProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   const handleCloseFilter = useCallback(() => {
@@ -50,6 +55,7 @@ const useFilter = (): IUseFilter => {
         handleContextProduct.filterProduct(filtered);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtered]);
   
   const filterTitle: any = {
@@ -58,7 +64,7 @@ const useFilter = (): IUseFilter => {
     // price: "PREÇO",
     // price: "PREÇO",
     brand_id: "SHOP BY CATEGORY",
-    size_id: "SIZE",
+    size: "SIZE",
     gender_id: "GENDER",
     category_id: "CATEGORY",
   };
@@ -67,6 +73,7 @@ const useFilter = (): IUseFilter => {
     aspects,
     filtered,
     filterTitle,
+    filteredProduct,
     openFilters,
     handleFilter,
     handleClearFilter,

@@ -46,18 +46,19 @@ export interface ProductById extends Product {
   category_name: string;
 }
 
-export type AspectName = 'brand_id' | 'gender_id' | 'category_id' | 'size_id';
+export type AspectName = 'brand_id' | 'gender_id' | 'category_id';
 
 export interface Aspect {
   id: number;
   name: string;
 }
 
+
 export interface ProductAspects {
   brand_id: Aspect[];
   gender_id: Aspect[];
   category_id: Aspect[];
-  size_id: Aspect[];
+  size: {min: number, max: number} | {};
   // colors: Aspect[];
 };
 
@@ -100,6 +101,7 @@ export interface IProductContext {
     getProductAspects: () => CustomAxiosPromise<any>;
     filterProduct: (data: ProductAspects) => CustomAxiosPromise<Product[]>;
   };
+  handleClearFilteredProducts: () => void;
 }
 
-export interface UseProductServiceReturn extends IProductContext {}
+export interface UseProductServiceReturn extends Omit<IProductContext, 'handleClearFilteredProducts'> {}
