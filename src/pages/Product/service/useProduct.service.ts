@@ -23,7 +23,7 @@ const useProductService = (): UseProductServiceReturn => {
     useAsyncFn(fetchDeleteProduct);
   const [fetchProductAspectsState, fetchProductAspectsRequest] =
     useAsyncFn(fetchProductAspects);
-
+    
   const [fetchFilterProductState, fetchFilterProductRequest] = useAsyncFn(fetchFilterProduct);
 
   const products = fetchProductsState.value?.data?.data || null;

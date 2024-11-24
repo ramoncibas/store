@@ -18,6 +18,8 @@ export const InputCheckBox = styled.input.attrs({ type: "checkbox" })`
     top: 0;
     left: 0;
     background-color:#e9e9e9;
+    border: 1px solid #3333;
+    border-radius: 2px;
   }
 
   &:checked {

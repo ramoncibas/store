@@ -7,10 +7,8 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 const FilterMobile = () => {
   const {
     aspects,
-    queryParamsObj,
     filterTitle,
     openFilters,
-    randomKey,
     handleFilter,
     handleCloseFilter,
   } = useFilter();

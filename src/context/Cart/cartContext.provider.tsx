@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 
 import { CartContext } from "./cartContext.context";
-import useCartService from "../../pages/Product/service/useCart.service";
+import useCartService from "pages/Product/service/useCart.service";
 import useCustomerStorage from "hooks/useCustomerStorage.hook";
 
 interface CartContextProviderProps {
@@ -16,6 +16,7 @@ const CartContextProvider: React.FunctionComponent<CartContextProviderProps> = (
   } = useCartService();
 
   const handleInitialRequest = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { customerUUID } = useCustomerStorage();
   
     if (!customerUUID) {
@@ -37,7 +38,7 @@ const CartContextProvider: React.FunctionComponent<CartContextProviderProps> = (
   useEffect(() => {
     handleInitialRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleInitialRequest]);
+  }, []);
 
 
   // const contextValue = useMemo(() => {

@@ -6,6 +6,7 @@ import {
 } from "./style";
 
 interface CheckBoxProps {
+  id: number;
   name: string;
   value: string;
   checked: boolean;
@@ -14,6 +15,7 @@ interface CheckBoxProps {
 }
 
 const CheckBox: FC<CheckBoxProps> = ({
+  id,
   name,
   value,
   checked,
@@ -22,7 +24,6 @@ const CheckBox: FC<CheckBoxProps> = ({
 }): JSX.Element => (
   <CheckBoxContainer>
     <InputCheckBox
-      id={name}
       name={name}
       type="checkbox"
       value={value}
